@@ -174,7 +174,7 @@ namespace FinalProjectV1.Helpers
         }
 
 
-
+   
         ~DBHelper()
         {
             if(sqlConnection.State == ConnectionState.Open)

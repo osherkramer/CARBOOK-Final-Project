@@ -186,11 +186,10 @@ namespace FinalProjectV1.Helpers
             part.partValue = Int32.Parse(sqlDR["PartValue"].ToString());
             part.partName = sqlDR["PartName"].ToString();
 
-            return part;
-           
+            return part; 
         }
-
-        public bool insertPart(Parts part)
+		
+		public bool insertPart(Parts part)
         {
             SqlCommand cmd = new SqlCommand(String.Format("INSERT INTO Parts (PartID, PartValue, PartName) VALUES ('{0}' , '{1}' , '{2}' ) ", part.partID, part.partValue, part.partName));
             cmd.Connection = sqlConnection;
@@ -258,8 +257,6 @@ namespace FinalProjectV1.Helpers
             return false;
 
         }
-
-
 
         ~DBHelper()
         {

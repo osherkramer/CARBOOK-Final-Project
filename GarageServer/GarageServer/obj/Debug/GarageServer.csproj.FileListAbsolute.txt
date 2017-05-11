@@ -7,3 +7,9 @@ C:\Users\osher\Documents\Visual Studio 2015\Projects\GarageServer\GarageServer\o
 C:\Users\osher\Documents\Visual Studio 2015\Projects\GarageServer\GarageServer\obj\Debug\Interop.Microsoft.Office.Interop.Excel.dll
 C:\Users\osher\Documents\Visual Studio 2015\Projects\GarageServer\GarageServer\obj\Debug\Interop.VBIDE.dll
 C:\Users\osher\Documents\Visual Studio 2015\Projects\GarageServer\GarageServer\obj\Debug\GarageServer.csproj.ResolveComReference.cache
+C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\GarageServer\GarageServer\obj\Debug\Interop.Microsoft.Office.Core.dll
+C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\GarageServer\GarageServer\obj\Debug\Interop.Microsoft.Office.Interop.Excel.dll
+C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\GarageServer\GarageServer\obj\Debug\Interop.VBIDE.dll
+C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\GarageServer\GarageServer\obj\Debug\GarageServer.csproj.ResolveComReference.cache
+C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\GarageServer\GarageServer\obj\Debug\GarageServer.exe
+C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\GarageServer\GarageServer\obj\Debug\GarageServer.pdb

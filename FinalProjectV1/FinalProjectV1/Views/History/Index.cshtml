@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>היסטוריית רכב</h2>
+<div class="history">
+    <div class="messagesBoard" id="messagesBoardList">
+        <div class="panelHeader row">
+            <div class="col-xs-1"><img src="~/images/img3.png" /></div>
+            <div class="col-xs-2">יצרן-דגם</div>
+            <div class="col-xs-1">נפח</div>
+            <div class="col-xs-1">שנה</div>
+            <div class="col-xs-1">יד</div>
+            <div class="col-xs-2">הילוכים</div>
+            <div class="col-xs-1">מחיר</div>
+            <div class="col-xs-1">איזור</div>
+            <div class="col-xs-1"><img src="~/images/img5.png" /></div>
+            <div class="col-xs-1">תאריך</div>
+        </div>
+        <div class="panel row">
+            <a href="javascript:void(0)" class="btnCollapse row collapsed">
+                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
+                <div class="col-xs-2">טויוטה</div>
+                <div class="col-xs-1">1600</div>
+                <div class="col-xs-1">2010</div>
+                <div class="col-xs-1">2</div>
+                <div class="col-xs-2">אוטומט</div>
+                <div class="col-xs-1">80000</div>
+                <div class="col-xs-1">מרכז</div>
+                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
+                <div class="col-xs-1">10.10.17</div>
+            </a>
+        </div>
+    </div>
+    <div class="historyDetails row">
+        <div class="col-sm-6">
+            <ul class="carDeatilesList ">
+                <li class=""><strong>שנת יצור:</strong> 2010</li>
+                <li class=""><strong>ת.מסירה:</strong> 26.01.2010</li>
+                <li class=""><strong>דגם:</strong> קורולה</li>
+                <li class=""><strong>אחריות:</strong> אחריות יצרן</li>
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <ul class="carDeatilesList ">
+                <li class=""><strong>קוד שילדה:</strong> KDHVV34N45LRF</li>
+                <li class=""><strong>צבע:</strong> כסוף</li>
+                <li class=""><strong>שם דגם:</strong> קורולה</li>
+            </ul>
+        </div>
+    </div>
+    <div class="tableContainer">
+        <table class="table table-bordered table-striped historyTable">
+            <thead>
+                <tr>
+                    <th>תאריך כניסה</th>
+                    <th>מרכז שירות</th>
+                    <th>מד אוץ</th>
+                    <th>מהות</th>
+                    <th>פרטים נוספים</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>15.8.2016</td>
+                    <td>מ. שירות שקד</td>
+                    <td>120,000</td>
+                    <td>מערכת היגוי</td>
+                    <td><a href="#" class="link">לפרטים</a></td>
+                </tr>
+                <tr>
+                    <td>22.2.2014</td>
+                    <td>מ. שירות שקד</td>
+                    <td>103,000</td>
+                    <td>ברקסים</td>
+                    <td><a href="#" class="link">לפרטים</a></td>
+                </tr>
+                <tr>
+                    <td>18.3.2012</td>
+                    <td>מ. שירות שקד</td>
+                    <td>50,103</td>
+                    <td>טיפול שנתי</td>
+                    <td><a href="#" class="link">לפרטים</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

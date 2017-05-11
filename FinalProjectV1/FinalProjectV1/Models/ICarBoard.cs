@@ -7,7 +7,7 @@ using System.Net.Mime;
 using System.Drawing;
 
 
-namespace ConsoleApplication1
+namespace FinalProjectV1
 {
     interface ICarBoard
     {

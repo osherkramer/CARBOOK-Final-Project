@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace ConsoleApplication1
+namespace FinalProjectV1
 {
     class ConstantUser : IConstantUser
     {

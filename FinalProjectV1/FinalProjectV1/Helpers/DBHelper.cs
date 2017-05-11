@@ -69,7 +69,7 @@ namespace FinalProjectV1.Helpers
         public Parts getPart(string PartName)
         {
            
-            SqlCommand cmd = new SqlCommand(String.Format("SELECT * FROM Parts WHERE PartName = '{0}'", PartName ));
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Parts WHERE PartName = '{0}'", PartName ));
             cmd.Connection = sqlConnection;
 
             SqlDataReader sqlDR = cmd.ExecuteReader();

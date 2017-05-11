@@ -174,8 +174,92 @@ namespace FinalProjectV1.Helpers
 
         public Parts getPart(int PartID)
         {
-            return null;
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT * FROM Parts WHERE PartID = {0}", PartID));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+            Parts part = new Parts();
+            part.partID = Int32.Parse(sqlDR["PartID"].ToString());
+            part.partValue = Int32.Parse(sqlDR["PartValue"].ToString());
+            part.partName = sqlDR["PartName"].ToString();
+
+            return part;
+           
         }
+
+        public bool insertPart(Parts part)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("INSERT INTO Parts (PartID, PartValue, PartName) VALUES ('{0}' , '{1}' , '{2}' ) ", part.partID, part.partValue, part.partName));
+            cmd.Connection = sqlConnection;
+
+            if (cmd.ExecuteNonQuery() != -1)
+                return true;
+
+            return false;
+        }
+
+        public int returnPartValueBYID(int partID)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT PartValue FROM Parts WHERE PartID = {0}", partID));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return 65535;
+
+            int partValue = Int32.Parse(sqlDR["PartValue"].ToString());
+            return partValue;
+
+
+        }
+
+        public int returnPartValueByPartName(string partName)
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT PartValue FROM Parts WHERE PartName = '{0}'", partName));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return 65535;
+
+            int partValue = Int32.Parse(sqlDR["PartValue"].ToString());
+            return partValue;
+
+
+        }
+
+        public DateTime getTemproryUsersByCarID(int carID, string password)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT ExpiryDate FROM TemproryUsers WHERE CarID = {0} AND Password = '{1}'", carID, password));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            DateTime expiryDate = new DateTime();
+            if (!sqlDR.Read())
+                return expiryDate;
+
+            
+            expiryDate = DateTime.Parse(sqlDR["ExpiryDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            return expiryDate;
+
+        }
+
+        public bool insertTemproryUsers(TemproryUsers user)
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO TemproryUsers (CarID, ExpiryDate, Password) VALUES ('{0}' , '{1}' , '{2}' ) ", user.carID, user.expiryDate, user.password));
+            cmd.Connection = sqlConnection;
+
+            if (cmd.ExecuteNonQuery() != -1)
+                return true;
+
+            return false;
+
+        }
+
+
 
         ~DBHelper()
         {

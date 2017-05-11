@@ -33,7 +33,23 @@ namespace FinalProjectV1.Helpers
             Car car = new Car();
 
             car.CarNumber = sqlDR["CarID"].ToString();
-            //TO DO
+            car.RoadDate = (DateTime)sqlDR["RoadDate"]; //Check it!!!!!!!!!!!!!
+            car.Yad = sqlDR["Yad"].ToString();
+            car.Year = sqlDR["StartYear"].ToString();
+            car.CarVIN = sqlDR["ShildaNumber"].ToString();
+            car.EngineCapacity = sqlDR["EngineCapacity"].ToString();
+            car.HorsePower = sqlDR["HorsePower"].ToString();
+            car.AirBags = sqlDR["AirBags"].ToString();
+            car.ABS = sqlDR["CarABS"].ToString();
+            car.PowerWindow = sqlDR["PowerWindow"].ToString();
+            car.Roof = sqlDR["Roof"].ToString();
+            car.MagnesiumWheels = sqlDR["MagnesiumWheels"].ToString();
+            car.CarOwnerID = Int32.Parse(sqlDR["OwnerID"].ToString());
+            car.ProductName = sqlDR["ProductName"].ToString();
+            car.FuelType = sqlDR["FuelType"].ToString();
+            car.CarColor = sqlDR["CarColor"].ToString();
+            car.Gaer = sqlDR["Gaer"].ToString();
+            car.CommericalAlias = sqlDR["CarModel"].ToString();
 
             return car;
         }

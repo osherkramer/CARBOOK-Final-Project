@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinalProjectV1.Models;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -64,6 +65,31 @@ namespace FinalProjectV1.Helpers
 
             return false;
         } 
+
+        public Parts getPart(string PartName)
+        {
+           
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT * From Parts WHERE PartName = '{0}'", PartName ));
+            cmd.Connection = sqlConnection;
+
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+            Parts part = new Parts();
+            part.partID = Int32.Parse(sqlDR["PartID"].ToString());
+            part.partValue = Int32.Parse(sqlDR["PartValue"].ToString());
+            part.partName = sqlDR["PartName"].ToString();
+
+            return part;
+
+        }
+
+        public Parts getPart(int PartID)
+        {
+            return null;
+        }
 
         ~DBHelper()
         {

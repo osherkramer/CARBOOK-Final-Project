@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace FinalProjectV1
+namespace FinalProjectV1.Models
 {
-    class HistoryItem
+    public class Treatment
     {
-        public int ID;
-        public String carNumber;
-        public String type;
-        public DateTime date;
-        public int KM;
-        public String reason;
-        public int effect;
+        public int CarID { get; set; }
+        public DateTime CareDate { get; set; }
+        public int TreatmentID { get; set; }
+        public string CareType { get; set; }
+        public int KM { get; set; }
     }
 }

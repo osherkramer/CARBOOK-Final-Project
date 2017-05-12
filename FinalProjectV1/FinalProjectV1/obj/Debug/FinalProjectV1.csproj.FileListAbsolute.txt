@@ -571,3 +571,4 @@ C:\Users\moshi\Desktop\carbookProj\dev\FinalProjectV1\FinalProjectV1\bin\Microso
 C:\Users\moshi\Desktop\carbookProj\dev\FinalProjectV1\FinalProjectV1\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\moshi\Desktop\carbookProj\dev\FinalProjectV1\FinalProjectV1\obj\Debug\FinalProjectV1.dll
 C:\Users\moshi\Desktop\carbookProj\dev\FinalProjectV1\FinalProjectV1\obj\Debug\FinalProjectV1.pdb
+C:\Users\moshi\Desktop\carbookProj\dev\FinalProjectV1\FinalProjectV1\obj\Debug\FinalProjectV1.csprojResolveAssemblyReference.cache

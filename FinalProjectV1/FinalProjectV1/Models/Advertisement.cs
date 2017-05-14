@@ -8,7 +8,7 @@ namespace FinalProjectV1.Models
     public class Advertisement
     {
 
-        public string CarNumber { get; set; }
+        public int CarNumber { get; set; }
         public string SellerName { get; set; }
         public string Tel { get; set; }
         public string Pic { get; set; }

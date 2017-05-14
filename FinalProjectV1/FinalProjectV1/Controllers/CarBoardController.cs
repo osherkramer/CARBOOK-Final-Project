@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinalProjectV1.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,10 @@ namespace FinalProjectV1.Controllers
         // GET: CarBoard
         public ActionResult Index()
         {
+            List<Advertisment> ads = new List<Advertisment>();
+            ads = DBHelper.returnAdvertisments();
+
+
             return View();
         }
     }

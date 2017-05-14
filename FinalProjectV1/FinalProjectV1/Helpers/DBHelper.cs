@@ -56,6 +56,8 @@ namespace FinalProjectV1.Helpers
             return car;
         }
 
+
+
         public bool InsertCar(Car car)
         {
             SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Car (CarID, RoadDate, Yad, StartYear, ShildaNumber, EngineCapacity, HorsePower, AirBags, CarABS, PowerWindow, Roof, MagnesiumWheels, CarTreatment, OwnerID, ProductName, FuelType, CarColor, Gaer, CarModel) VALUES ('{0}' , '{1}' , '{2}' , '{3}' , '{4}' , '{5}' , '{6}' , '{7}' , '{8}' , '{9}' , '{10}' , '{11}' , '{12}' , '{13}' , '{14}' , '{15}' , '{16}' , '{17}' , '{18}')", car.CarNumber, car.RoadDate, car.Yad, car.Year, car.CarVIN, car.EngineCapacity, car.HorsePower, car.AirBags, car.ABS, car.PowerWindow, car.Roof, car.MagnesiumWheels, "", car.CarOwnerID, car.ProductName, car.FuelType, car.CarColor, car.Gaer, car.CommericalAlias));
@@ -262,6 +264,44 @@ namespace FinalProjectV1.Helpers
 
             return false;
 
+        }
+
+        public List<Advertisement> returnAdvertisments()
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT * FROM Advertisement"));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+            List<Advertisement> ad = new List<Advertisement>();
+
+            do
+            {
+                Advertisement ad1 = new Advertisement();
+                ad1.CarNumber= Int32.Parse(sqlDR["CarNumber"].ToString());
+                ad1.SellerName = sqlDR["SellerName"].ToString();
+                ad1.Tel = sqlDR["Telephone"].ToString();
+                ad1.Pic = sqlDR["Picture"].ToString();
+                ad1.Description = sqlDR["Describe"].ToString();
+                ad.Add(ad1);
+
+            } while (sqlDR.Read());
+
+            return ad;
+        }
+
+
+        public bool insertAdvertisment(Advertisement ad)
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Advertisement (CarNumber, SellerName, Telephone, Picture, Describe) VALUES ('{0}' , '{1}' , '{2}', '{3}', '{4}' ) ", ad.CarNumber, ad.SellerName, ad.Tel, ad.Pic, ad.));
+            cmd.Connection = sqlConnection;
+
+            if (cmd.ExecuteNonQuery() != -1)
+                return true;
+
+            return false;
         }
 
         ~DBHelper()

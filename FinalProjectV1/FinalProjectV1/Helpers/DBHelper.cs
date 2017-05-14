@@ -15,7 +15,13 @@ namespace FinalProjectV1.Helpers
         public DBHelper()
         {
             sqlConnection = new SqlConnection(connectionString);
-            sqlConnection.Open();
+            Open();
+        }
+
+        public void Open()
+        {
+            if (sqlConnection.State != ConnectionState.Open)
+                sqlConnection.Open();
         }
 
         public Car getCarByNumber(string carNumber)
@@ -258,10 +264,15 @@ namespace FinalProjectV1.Helpers
 
         }
 
+        public void Close()
+        {
+            if (sqlConnection.State == ConnectionState.Open)
+                sqlConnection.Close();
+        }
+
         ~DBHelper()
         {
-            if(sqlConnection.State == ConnectionState.Open)
-                sqlConnection.Close();
+            Close();
         }
     }
 }

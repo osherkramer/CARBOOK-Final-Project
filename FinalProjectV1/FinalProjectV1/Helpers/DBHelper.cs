@@ -295,7 +295,7 @@ namespace FinalProjectV1.Helpers
 
         public bool insertAdvertisment(Advertisement ad)
         {
-            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Advertisement (CarNumber, SellerName, Telephone, Picture, Describe) VALUES ('{0}' , '{1}' , '{2}', '{3}', '{4}' ) ", ad.CarNumber, ad.SellerName, ad.Tel, ad.Pic, ad.));
+            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Advertisement (CarNumber, SellerName, Telephone, Picture, Describe) VALUES ('{0}' , '{1}' , '{2}', '{3}', '{4}' ) ", ad.CarNumber, ad.SellerName, ad.Tel, ad.Pic, ad.Description));
             cmd.Connection = sqlConnection;
 
             if (cmd.ExecuteNonQuery() != -1)

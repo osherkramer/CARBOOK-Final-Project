@@ -280,7 +280,7 @@ namespace FinalProjectV1.Helpers
             do
             {
                 Advertisement ad1 = new Advertisement();
-                ad1.CarNumber= Int32.Parse(sqlDR["CarNumber"].ToString());
+                ad1.CarNumber= sqlDR["CarNumber"].ToString();
                 ad1.SellerName = sqlDR["SellerName"].ToString();
                 ad1.Tel = sqlDR["Telephone"].ToString();
                 ad1.Pic = sqlDR["Picture"].ToString();

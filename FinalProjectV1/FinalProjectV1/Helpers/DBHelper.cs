@@ -56,6 +56,41 @@ namespace FinalProjectV1.Helpers
             return car;
         }
 
+        public Car getCar()
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Car"));
+            cmd.Connection = sqlConnection;
+
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+            Car car = new Car();
+
+            car.CarNumber = sqlDR["CarID"].ToString();
+            car.RoadDate = DateTime.Parse(sqlDR["RoadDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            car.Yad = sqlDR["Yad"].ToString();
+            car.Year = sqlDR["StartYear"].ToString();
+            car.CarVIN = sqlDR["ShildaNumber"].ToString();
+            car.EngineCapacity = sqlDR["EngineCapacity"].ToString();
+            car.HorsePower = sqlDR["HorsePower"].ToString();
+            car.AirBags = sqlDR["AirBags"].ToString();
+            car.ABS = sqlDR["CarABS"].ToString();
+            car.PowerWindow = sqlDR["PowerWindow"].ToString();
+            car.Roof = sqlDR["Roof"].ToString();
+            car.MagnesiumWheels = sqlDR["MagnesiumWheels"].ToString();
+            car.CarOwnerID = Int32.Parse(sqlDR["OwnerID"].ToString());
+            car.ProductName = sqlDR["ProductName"].ToString();
+            car.FuelType = sqlDR["FuelType"].ToString();
+            car.CarColor = sqlDR["CarColor"].ToString();
+            car.Gaer = sqlDR["Gaer"].ToString();
+            car.CommericalAlias = sqlDR["CarModel"].ToString();
+
+            return car;
+
+        }
+
 
 
         public bool InsertCar(Car car)

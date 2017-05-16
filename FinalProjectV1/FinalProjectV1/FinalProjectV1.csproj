@@ -210,6 +210,7 @@
     <Compile Include="Models\Advertisement.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\CarBoard.cs" />
+    <Compile Include="Models\HistoryCar.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\HistoryItem.cs" />

@@ -9,17 +9,17 @@ namespace FinalProjectV1.Models
     {
         //Car
 
-        public  string year { get; set; }
-        public string shildaNmber { get; set; }
-        public string carColor { get; set; }
-        public DateTime roadDate { get; set; }
-        public string productName { get; set;}
+        public string Year { get; set; }
+        public DateTime RoadDate { get; set; }
+        public string ShildaNumber { get; set; }
+        public string CarColor { get; set; }
+        public string ProductName { get; set; }
 
 
         //History Item
 
         public int TreatmentID { get; set; }
-        public string CarNumber { get; set; }
+        public string CarNumber { get; set;}
         public string CareType { get; set; }
         public DateTime Date { get; set; }
         public string[] Treatment { get; set; }

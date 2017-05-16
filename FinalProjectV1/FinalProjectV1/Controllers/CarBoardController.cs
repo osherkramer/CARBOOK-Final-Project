@@ -40,7 +40,7 @@ namespace FinalProjectV1.Controllers
         }
 
         //set and return one advertisment for the car board
-        public CarBoard setAndGetCarBoardAd(Advertisement ad, Car car)
+        private CarBoard setAndGetCarBoardAd(Advertisement ad, Car car)
         {
           
             if(ad==null && car==null)

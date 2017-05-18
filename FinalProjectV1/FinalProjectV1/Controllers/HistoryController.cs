@@ -36,7 +36,7 @@ namespace FinalProjectV1.Controllers
             return View(historyCar);
         }
 
-
+        //check all every var show the car
         private HistoryCar getHistoryCar(Car car, HistoryItem item)
         {
             HistoryCar hc = new HistoryCar();

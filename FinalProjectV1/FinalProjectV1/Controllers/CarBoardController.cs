@@ -9,7 +9,6 @@ using FinalProjectV1.Helpers;
 namespace FinalProjectV1.Controllers
 {
 
-    
     public class CarBoardController : Controller
     {
 

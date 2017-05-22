@@ -15,7 +15,19 @@ namespace FinalProjectV1.Helpers
         public DBHelper()
         {
             sqlConnection = new SqlConnection(connectionString);
-            sqlConnection.Open();
+            Open();
+        }
+
+        public void Open()
+        {
+            if(sqlConnection.State != ConnectionState.Open)
+                sqlConnection.Open();
+        }
+
+        public void Close()
+        {
+            if (sqlConnection.State == ConnectionState.Open)
+                sqlConnection.Close();
         }
 
         public Car getCarByNumber(string carNumber)
@@ -109,10 +121,16 @@ namespace FinalProjectV1.Helpers
             SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Car (CarID, RoadDate, Yad, StartYear, ShildaNumber, EngineCapacity, HorsePower, AirBags, CarABS, PowerWindow, Roof, MagnesiumWheels, CarTreatment, OwnerID, ProductName, FuelType, CarColor, Gaer, CarModel) VALUES ('{0}' , '{1}' , '{2}' , '{3}' , '{4}' , '{5}' , '{6}' , '{7}' , '{8}' , '{9}' , '{10}' , '{11}' , '{12}' , '{13}' , '{14}' , '{15}' , '{16}' , '{17}' , '{18}')", car.CarNumber, car.RoadDate, car.Yad, car.Year, car.CarVIN, car.EngineCapacity, car.HorsePower, car.AirBags, car.ABS, car.PowerWindow, car.Roof, car.MagnesiumWheels, "", car.CarOwnerID, car.ProductName, car.FuelType, car.CarColor, car.Gaer, car.CommericalAlias));
             cmd.Connection = sqlConnection;
 
-            if (cmd.ExecuteNonQuery() != -1)
-                return true;
+            try {
+                if (cmd.ExecuteNonQuery() != -1)
+                    return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
 
-            return false;
+            return true;
         } 
 
         public Parts getPart(string PartName)
@@ -185,13 +203,35 @@ namespace FinalProjectV1.Helpers
 
         public bool InsertHistoryItem(HistoryItem HI)
         {
-            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Treatment (CarID, CareDate, TreatmentID, CareType, KM, GarageName) VALUES ('{0}' , '{1}' , '{2}' , '{3}' , '{4}' , '{5}')", HI.CarNumber, HI.Date, HI.TreatmentID, HI.CareType, HI.KM, HI.GarageName));
+            if (isExistHistoryItem(HI))
+                return true;
+
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT Max(TreatmentID) AS LastTreatment FROM Treatment"));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            sqlDR.Read();
+            int id = 0;
+            Int32.TryParse(sqlDR["LastTreatment"].ToString(), out id);
+            id++;
+
+            cmd = new SqlCommand(string.Format("INSERT INTO Treatment (CarID, CareDate, TreatmentID, CareType, KM, GarageName) VALUES ('{0}' , '{1}' , '{2}' , '{3}' , '{4}' , '{5}')", HI.CarNumber, HI.Date, id, HI.CareType, HI.KM, HI.GarageName));
             cmd.Connection = sqlConnection;
 
             if (cmd.ExecuteNonQuery() != -1)
                 return true;
 
             return false;
+        }
+
+        public bool isExistHistoryItem(HistoryItem HI)
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT TreatmentID FROM Treatment WHERE CarID = {0} AND CareDate = '{1}' AND CareType = '{2}' AND KM = {3} AND GarageName = '{4}'", HI.CarNumber, HI.Date, HI.CareType, HI.KM, HI.GarageName));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return false;
+
+            return true;
         }
 
         public bool InsertTreatmentToPart(int TreatmentID, int PartID)

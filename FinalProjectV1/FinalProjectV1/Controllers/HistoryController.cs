@@ -5,61 +5,109 @@ using System.Web;
 using System.Web.Mvc;
 using FinalProjectV1.Models;
 using FinalProjectV1.Helpers;
+using System.Net.Sockets;
+using System.Net;
+using System.Text;
+using System.IO;
 
 namespace FinalProjectV1.Controllers
 {
     public class HistoryController : Controller
     {
-
-
         // GET: History
-        public ActionResult Index()
+        public ActionResult Index(String carNumber)
         {
-            List<HistoryItem> historyI = new List<HistoryItem>();
+            UpdateCarHistory(carNumber);
+            //List<HistoryItem> historyI = new List<HistoryItem>();
             DBHelper DBhelp = new DBHelper();
-            Car car = new Car();
-            List<HistoryCar> historyCar = new List<HistoryCar>();
+            Car car = DBhelp.getCarByNumber(carNumber);
+            HistoryCar historyCar = getHistoryCar(car);
 
-            do
+            /*do
             {
                 car = DBhelp.getCar();
                 historyI = DBhelp.getHistoryByCarNumber(int.Parse(car.CarNumber));
-            } while (historyI == null);
+            } while (historyI == null);*/
 
-            foreach (var hi in historyI)
+            /*foreach (var hi in historyI)
             {
                 HistoryCar hc = new HistoryCar();
-                hc = getHistoryCar(car, hi);
+                hc = getHistoryCar(car);
                 historyCar.Add(hc);
 
-            }
+            }*/
+
             return View(historyCar);
         }
 
-        //check all every var show the car
-        private HistoryCar getHistoryCar(Car car, HistoryItem item)
+
+        private HistoryCar getHistoryCar(Car car)
         {
             HistoryCar hc = new HistoryCar();
 
-            if (car.CarNumber.Equals(item.CarNumber))
-            {
-                hc.CarNumber = car.CarNumber;
-                hc.CarColor = car.CarColor;
-                hc.ShildaNumber = car.ShildaNumber;
-                hc.RoadDate = car.RoadDate;
-                hc.ProductName = car.ProductName;
-                hc.Year = car.Year;
 
-                hc.CareType = item.CareType;
-                hc.Date = item.Date;
-                hc.GarageName = item.GarageName;
-                hc.KM = item.KM;
-                hc.Treatment = item.Treatment;
-                hc.TreatmentID = item.TreatmentID;
+            hc.CarNumber = car.CarNumber;
+            hc.CarColor = car.CarColor;
+            hc.ShildaNumber = car.ShildaNumber;
+            hc.RoadDate = car.RoadDate;
+            hc.ProductName = car.ProductName;
+            hc.Year = car.Year;
 
-            }
-         
+            DBHelper DBhelp = new DBHelper();
+            hc.historyItems = DBhelp.getHistoryByCarNumber(int.Parse(car.CarNumber));
             return hc;
+        }
+
+        private void UpdateCarHistory(string CarNumber)
+        {
+            /*
+            //Create connection to GarageServer
+            TcpClient tc = new TcpClient();
+            IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 4050);
+            tc.Connect(serverEndPoint);
+            NetworkStream clientStream = tc.GetStream();
+
+            //Send request for update cars
+            ASCIIEncoding encoder = new ASCIIEncoding();
+            byte[] buffer = new byte[4096];
+            String str = "update:" + CarNumber;
+            buffer = encoder.GetBytes(str);
+            clientStream.Write(buffer, 0, buffer.Length);
+            clientStream.Flush();
+
+            //Read Path of car
+            int byteRead;
+            byteRead = clientStream.Read(buffer, 0, buffer.Length);*/
+            DBHelper db = new DBHelper();
+            
+            string buf = "Send data for 1658490";
+            /*while ((buf = encoder.GetString(buffer, 0, byteRead)).Contains("Send data for"))
+            {*/
+                string carNumber = buf.ToString().Split(' ')[3];
+
+               /* byteRead = clientStream.Read(buffer, 0, 4096);
+                string folderPath = encoder.GetString(buffer, 0, byteRead);*/
+
+                string[] files = Directory.GetFiles(@"C:\Users\osher\Desktop\CarBook\Cars\1658491");
+
+                foreach (var file in files)
+                {
+                    if (file.Contains("Details"))
+                    {
+                        Car car = XMLHelper.ReadFromFile<Car>(file);
+                        db.Open();
+                        db.InsertCar(car);
+                        db.Close();
+                    }
+                    else if (file.Contains("CarHistory"))
+                    {
+                        HistoryItem hi = XMLHelper.ReadFromFile<HistoryItem>(file);
+                        db.Open();
+                        db.InsertHistoryItem(hi);
+                        db.Close();
+                    }
+                }
+            /*}*/
         }
     }
 }

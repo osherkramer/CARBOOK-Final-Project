@@ -1,75 +1,65 @@
-﻿using FinalProjectV1.Helpers;
-using FinalProjectV1.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using FinalProjectV1.Models;
+using FinalProjectV1.Helpers;
 
 namespace FinalProjectV1.Controllers
 {
     public class HistoryController : Controller
     {
+
+
         // GET: History
         public ActionResult Index()
         {
-            UpdateCarHistory("1658490");
-            return View();
+            List<HistoryItem> historyI = new List<HistoryItem>();
+            DBHelper DBhelp = new DBHelper();
+            Car car = new Car();
+            List<HistoryCar> historyCar = new List<HistoryCar>();
+
+            do
+            {
+                car = DBhelp.getCar();
+                historyI = DBhelp.getHistoryByCarNumber(int.Parse(car.CarNumber));
+            } while (historyI == null);
+
+            foreach (var hi in historyI)
+            {
+                HistoryCar hc = new HistoryCar();
+                hc = getHistoryCar(car, hi);
+                historyCar.Add(hc);
+
+            }
+            return View(historyCar);
         }
 
-        private void UpdateCarHistory(string CarNumber)
+        //check all every var show the car
+        private HistoryCar getHistoryCar(Car car, HistoryItem item)
         {
-            //Create connection to GarageServer
-            TcpClient tc = new TcpClient();
-            IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 4050);
-            tc.Connect(serverEndPoint);
-            NetworkStream clientStream = tc.GetStream();
+            HistoryCar hc = new HistoryCar();
 
-            //Send request for update cars
-            ASCIIEncoding encoder = new ASCIIEncoding();
-            byte[] buffer = new byte[4096];
-            String str = "update:" + CarNumber;
-            buffer = encoder.GetBytes(str);
-            clientStream.Write(buffer, 0, buffer.Length);
-            clientStream.Flush();
-
-            //Read Path of car
-            int byteRead;
-            byteRead = clientStream.Read(buffer, 0, buffer.Length);
-            DBHelper db = new DBHelper();
-
-            string buf = "";
-            while ((buf = encoder.GetString(buffer, 0, byteRead)).Contains("Send data for"))
+            if (car.CarNumber.Equals(item.CarNumber))
             {
-                string carNumber = buf.ToString().Split(' ')[3];
+                hc.CarNumber = car.CarNumber;
+                hc.CarColor = car.CarColor;
+                hc.ShildaNumber = car.ShildaNumber;
+                hc.RoadDate = car.RoadDate;
+                hc.ProductName = car.ProductName;
+                hc.Year = car.Year;
 
-                byteRead = clientStream.Read(buffer, 0, 4096);
-                string folderPath = encoder.GetString(buffer, 0, byteRead);
+                hc.CareType = item.CareType;
+                hc.Date = item.Date;
+                hc.GarageName = item.GarageName;
+                hc.KM = item.KM;
+                hc.Treatment = item.Treatment;
+                hc.TreatmentID = item.TreatmentID;
 
-                string[] files = Directory.GetFiles(folderPath);
-
-                foreach(var file in files)
-                {
-                    if(str.Contains("Details"))
-                    {
-                        Car car = XMLHelper.ReadFromFile<Car>(file);
-                        db.Open();
-                        db.InsertCar(car);
-                        db.Close();
-                    }
-                    else if(str.Contains("CarHistory"))
-                    {
-                        HistoryItem hi = XMLHelper.ReadFromFile<HistoryItem>(file);
-                        db.Open();
-                        db.InsertHistoryItem(hi);
-                        db.Close();
-                    }
-                }
             }
+         
+            return hc;
         }
     }
 }

@@ -14,10 +14,5 @@ namespace FinalProjectV1.Models
         public string Pic { get; set; }
         public string Description { get; set; }
 
-
-
-      
-    
-    
     }
 }

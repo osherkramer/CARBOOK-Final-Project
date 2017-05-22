@@ -15,13 +15,7 @@ namespace FinalProjectV1.Helpers
         public DBHelper()
         {
             sqlConnection = new SqlConnection(connectionString);
-            Open();
-        }
-
-        public void Open()
-        {
-            if (sqlConnection.State != ConnectionState.Open)
-                sqlConnection.Open();
+            sqlConnection.Open();
         }
 
         public Car getCarByNumber(string carNumber)
@@ -61,6 +55,43 @@ namespace FinalProjectV1.Helpers
 
             return car;
         }
+
+        public Car getCar()
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Car"));
+            cmd.Connection = sqlConnection;
+
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+            Car car = new Car();
+
+            car.CarNumber = sqlDR["CarID"].ToString();
+            car.RoadDate = DateTime.Parse(sqlDR["RoadDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            car.Yad = sqlDR["Yad"].ToString();
+            car.Year = sqlDR["StartYear"].ToString();
+            car.CarVIN = sqlDR["ShildaNumber"].ToString();
+            car.EngineCapacity = sqlDR["EngineCapacity"].ToString();
+            car.HorsePower = sqlDR["HorsePower"].ToString();
+            car.AirBags = sqlDR["AirBags"].ToString();
+            car.ABS = sqlDR["CarABS"].ToString();
+            car.PowerWindow = sqlDR["PowerWindow"].ToString();
+            car.Roof = sqlDR["Roof"].ToString();
+            car.MagnesiumWheels = sqlDR["MagnesiumWheels"].ToString();
+            car.CarOwnerID = Int32.Parse(sqlDR["OwnerID"].ToString());
+            car.ProductName = sqlDR["ProductName"].ToString();
+            car.FuelType = sqlDR["FuelType"].ToString();
+            car.CarColor = sqlDR["CarColor"].ToString();
+            car.Gaer = sqlDR["Gaer"].ToString();
+            car.CommericalAlias = sqlDR["CarModel"].ToString();
+
+            return car;
+
+        }
+
+
 
         public bool InsertCar(Car car)
         {
@@ -270,15 +301,48 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public void Close()
+        public List<Advertisement> returnAdvertisments()
         {
-            if (sqlConnection.State == ConnectionState.Open)
-                sqlConnection.Close();
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT * FROM Advertisement"));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+            List<Advertisement> ad = new List<Advertisement>();
+
+            do
+            {
+                Advertisement ad1 = new Advertisement();
+                ad1.CarNumber= sqlDR["CarNumber"].ToString();
+                ad1.SellerName = sqlDR["SellerName"].ToString();
+                ad1.Tel = sqlDR["Telephone"].ToString();
+                ad1.Pic = sqlDR["Picture"].ToString();
+                ad1.Description = sqlDR["Describe"].ToString();
+                ad.Add(ad1);
+
+            } while (sqlDR.Read());
+
+            return ad;
+        }
+
+
+        public bool insertAdvertisment(Advertisement ad)
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Advertisement (CarNumber, SellerName, Telephone, Picture, Describe) VALUES ('{0}' , '{1}' , '{2}', '{3}', '{4}' ) ", ad.CarNumber, ad.SellerName, ad.Tel, ad.Pic, ad.Description));
+            cmd.Connection = sqlConnection;
+
+            if (cmd.ExecuteNonQuery() != -1)
+                return true;
+
+            return false;
         }
 
         ~DBHelper()
         {
-            Close();
+            if(sqlConnection.State == ConnectionState.Open)
+                sqlConnection.Close();
         }
     }
 }

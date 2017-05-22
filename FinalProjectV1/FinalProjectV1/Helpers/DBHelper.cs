@@ -9,7 +9,7 @@ namespace FinalProjectV1.Helpers
 {
     public class DBHelper
     {
-        private string connectionString = @"Server=db.cs.colman.ac.il;Database=CarBook;User Id=carbook;password=Car@Book";
+        private string connectionString = @"Server=db.cs.colman.ac.il;Database=CarBook;User Id=carbook;password=Car@Book;MultipleActiveResultSets=true";
         private SqlConnection sqlConnection { get; set; }
 
         public DBHelper()
@@ -27,15 +27,20 @@ namespace FinalProjectV1.Helpers
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Car WHERE CarID = {0}", carNum));
             cmd.Connection = sqlConnection;
 
-            SqlDataReader sqlDR = cmd.ExecuteReader();
+            SqlDataReader sqlDR;
 
-            if (!sqlDR.Read())
-                return null;
+            try {
+                sqlDR = cmd.ExecuteReader();
+                if (!sqlDR.Read())
+                    return null;
+            
+
+            
 
             Car car = new Car();
 
             car.CarNumber = sqlDR["CarID"].ToString();
-            car.RoadDate = DateTime.Parse(sqlDR["RoadDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            //car.RoadDate = DateTime.Parse(sqlDR["RoadDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
             car.Yad = sqlDR["Yad"].ToString();
             car.Year = sqlDR["StartYear"].ToString();
             car.CarVIN = sqlDR["ShildaNumber"].ToString();
@@ -54,6 +59,12 @@ namespace FinalProjectV1.Helpers
             car.CommericalAlias = sqlDR["CarModel"].ToString();
 
             return car;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return new Car();
         }
 
         public Car getCar()

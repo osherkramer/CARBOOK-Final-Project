@@ -19,11 +19,6 @@ namespace FinalProjectV1.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        //To do generate password
-        public AccountController()
-        {
-            string tempPassword = Membership.GeneratePassword(4, 1);
-        }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {

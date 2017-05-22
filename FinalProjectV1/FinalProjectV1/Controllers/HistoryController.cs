@@ -13,52 +13,45 @@ namespace FinalProjectV1.Controllers
 
 
         // GET: History
-        public ActionResult Index()
+        public ActionResult Index(String carNumber)
         {
-            List<HistoryItem> historyI = new List<HistoryItem>();
+            //List<HistoryItem> historyI = new List<HistoryItem>();
             DBHelper DBhelp = new DBHelper();
-            Car car = new Car();
-            List<HistoryCar> historyCar = new List<HistoryCar>();
+            Car car =DBhelp.getCarByNumber(carNumber);
+            HistoryCar historyCar = getHistoryCar(car);
 
-            do
+            /*do
             {
                 car = DBhelp.getCar();
                 historyI = DBhelp.getHistoryByCarNumber(int.Parse(car.CarNumber));
-            } while (historyI == null);
+            } while (historyI == null);*/
 
-            foreach (var hi in historyI)
+            /*foreach (var hi in historyI)
             {
                 HistoryCar hc = new HistoryCar();
-                hc = getHistoryCar(car, hi);
+                hc = getHistoryCar(car);
                 historyCar.Add(hc);
 
-            }
+            }*/
+
             return View(historyCar);
         }
 
-        //check all every var show the car
-        private HistoryCar getHistoryCar(Car car, HistoryItem item)
+       
+        private HistoryCar getHistoryCar(Car car)
         {
             HistoryCar hc = new HistoryCar();
 
-            if (car.CarNumber.Equals(item.CarNumber))
-            {
-                hc.CarNumber = car.CarNumber;
-                hc.CarColor = car.CarColor;
-                hc.ShildaNumber = car.ShildaNumber;
-                hc.RoadDate = car.RoadDate;
-                hc.ProductName = car.ProductName;
-                hc.Year = car.Year;
 
-                hc.CareType = item.CareType;
-                hc.Date = item.Date;
-                hc.GarageName = item.GarageName;
-                hc.KM = item.KM;
-                hc.Treatment = item.Treatment;
-                hc.TreatmentID = item.TreatmentID;
+            hc.CarNumber = car.CarNumber;
+            hc.CarColor = car.CarColor;
+            hc.ShildaNumber = car.ShildaNumber;
+            hc.RoadDate = car.RoadDate;
+            hc.ProductName = car.ProductName;
+            hc.Year = car.Year;
 
-            }
-         
+            DBHelper DBhelp = new DBHelper();
+            hc.historyItems = DBhelp.getHistoryByCarNumber(int.Parse(car.CarNumber));
             return hc;
         }
     }

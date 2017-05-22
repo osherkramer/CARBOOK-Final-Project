@@ -23,12 +23,10 @@ namespace FinalProjectV1.Controllers
 
             foreach (var ad in ads)
             {
-                Car car = new Car();
-                car = DBhelp.getCarByNumber(ad.CarNumber);
-                if(car.CarNumber.Equals(ad.CarNumber))
+                Car car = DBhelp.getCarByNumber(ad.CarNumber);
+                if (car != null)
                 {
-                    CarBoard cb = new CarBoard();
-                    cb = setAndGetCarBoardAd(ad, car);
+                    CarBoard cb = setAndGetCarBoardAd(ad, car);
                     carB.Add(cb);
 
                 }

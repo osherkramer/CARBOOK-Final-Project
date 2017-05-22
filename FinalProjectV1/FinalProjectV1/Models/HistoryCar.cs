@@ -9,6 +9,7 @@ namespace FinalProjectV1.Models
     {
         //Car
 
+        public string CarNumber { get; set; }
         public string Year { get; set; }
         public DateTime RoadDate { get; set; }
         public string ShildaNumber { get; set; }
@@ -18,13 +19,15 @@ namespace FinalProjectV1.Models
 
         //History Item
 
-        public int TreatmentID { get; set; }
+        /*public int TreatmentID { get; set; }
         public string CarNumber { get; set;}
         public string CareType { get; set; }
         public DateTime Date { get; set; }
         public string[] Treatment { get; set; }
         public int KM { get; set; }
-        public string GarageName { get; set; }
+        public string GarageName { get; set; }*/
+
+        public List<HistoryItem> historyItems { get; set; }
 
 
 

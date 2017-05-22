@@ -114,7 +114,7 @@ namespace FinalProjectV1.Helpers
             return HI;
         }
 
-        public HistoryItem getHistoryByCarNumber(int CarNumber)
+        public List<HistoryItem> getHistoryByCarNumber(int CarNumber)
         {
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Treatment WHERE CarID = {0}", CarNumber));
             cmd.Connection = sqlConnection;
@@ -124,15 +124,21 @@ namespace FinalProjectV1.Helpers
             if (!sqlDR.Read())
                 return null;
 
-            HistoryItem HI = new HistoryItem();
-            HI.CarNumber = sqlDR["CarID"].ToString();
-            HI.Date = DateTime.Parse(sqlDR["CareDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
-            HI.TreatmentID = Int32.Parse(sqlDR["TreatmentID"].ToString());
-            HI.CareType = sqlDR["CareType"].ToString();
-            HI.KM = Int32.Parse(sqlDR["KM"].ToString());
-            HI.GarageName = sqlDR["GarageName"].ToString();
-
-            return HI;
+            
+            List<HistoryItem> HIList = new List<HistoryItem>();
+            do
+            {
+                HistoryItem HI = new HistoryItem();
+                HI.CarNumber = sqlDR["CarID"].ToString();
+                HI.Date = DateTime.Parse(sqlDR["CareDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                HI.TreatmentID = Int32.Parse(sqlDR["TreatmentID"].ToString());
+                HI.CareType = sqlDR["CareType"].ToString();
+                HI.KM = Int32.Parse(sqlDR["KM"].ToString());
+                HI.GarageName = sqlDR["GarageName"].ToString();
+                HIList.Add(HI);
+            } while (sqlDR.Read());
+           
+            return HIList;
         }
 
         public bool InsertHistoryItem(HistoryItem HI)

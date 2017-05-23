@@ -326,7 +326,7 @@ namespace FinalProjectV1.Helpers
 
         public DateTime getTemproryUsersByCarID(int carID, string password)
         {
-            SqlCommand cmd = new SqlCommand(String.Format("SELECT ExpiryDate FROM TemproryUsers WHERE CarID = {0} AND Password = '{1}'", carID, password));
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT ExpiryDate FROM TemproryUsers WHERE CarID = '{0}' AND Password = '{1}'", carID, password));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
 
@@ -389,6 +389,50 @@ namespace FinalProjectV1.Helpers
 
             return false;
         }
+
+        public DateTime getMaxDateCarTreatment(String carNumber)
+        {
+            List<HistoryItem> historyItems = getHistoryByCarNumber(int.Parse(carNumber));
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT MAX (CareDate) AS 'Max' FROM Treatment where CarID='{0}'", carNumber));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            DateTime max= DateTime.Parse(sqlDR["Max"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            return max;
+        }
+
+        public bool updateDateCarTreatment(String carNumber, DateTime maxDate)
+        {
+
+            SqlCommand cmd = new SqlCommand(String.Format(" UPDATE Car SET CarTreatment = '{0}' WHERE CarID='{1}'", maxDate, carNumber));
+            cmd.Connection = sqlConnection;
+            if (cmd.ExecuteNonQuery() != -1)
+                return true;
+
+            return false;
+
+        }
+
+        public String getMaxKM(DateTime date, String carNumber)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format(" select MAX (KM) AS 'MAX' FROM Treatment where CareDate='{0}' AND CarID={1}", date, carNumber));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            String KM = sqlDR["MAX"].ToString();
+            return KM;
+        }
+
+        public bool updateKMCar(String carNumber, String KM)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format(" UPDATE Car SET KM = '{0}' WHERE CarID='{1}'", KM, carNumber));
+            cmd.Connection = sqlConnection;
+            if (cmd.ExecuteNonQuery() != -1)
+                return true;
+
+            return false;
+
+
+        }
+
 
         ~DBHelper()
         {

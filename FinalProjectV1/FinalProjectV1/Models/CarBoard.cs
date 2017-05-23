@@ -27,34 +27,6 @@ namespace FinalProjectV1.Models
         public string SellerName { get; set; }
         public string Tel { get; set; }
         public string Pic { get; set; }
-     
-        
-        
-         
-        
-      
-   
-   
-     
-        
-        
-   
-     
- 
-      
-   
-     
-     
-
-       
-       
-    
-       
-     
-       
-      
-     
-       
        
        
     }

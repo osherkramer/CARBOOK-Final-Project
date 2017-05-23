@@ -108,6 +108,13 @@ namespace FinalProjectV1.Controllers
                     }
                 }
             /*}*/
+
+
+            DateTime dateMax = db.getMaxDateCarTreatment(CarNumber);
+            bool flag = db.updateDateCarTreatment(CarNumber, dateMax);
+            String KM = db.getMaxKM(dateMax, CarNumber);
+            flag = db.updateKMCar(CarNumber, KM);
+
         }
     }
 }

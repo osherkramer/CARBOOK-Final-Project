@@ -371,6 +371,7 @@ namespace FinalProjectV1.Helpers
                 ad1.Tel = sqlDR["Telephone"].ToString();
                 ad1.Pic = sqlDR["Picture"].ToString();
                 ad1.Description = sqlDR["Describe"].ToString();
+                ad1.Location = sqlDR["Location"].ToString();
                 ad.Add(ad1);
 
             } while (sqlDR.Read());
@@ -381,7 +382,7 @@ namespace FinalProjectV1.Helpers
 
         public bool insertAdvertisment(Advertisement ad)
         {
-            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Advertisement (CarNumber, SellerName, Telephone, Picture, Describe) VALUES ('{0}' , '{1}' , '{2}', '{3}', '{4}' ) ", ad.CarNumber, ad.SellerName, ad.Tel, ad.Pic, ad.Description));
+            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Advertisement (CarNumber, SellerName, Telephone, Picture, Describe) VALUES ('{0}' , '{1}' , '{2}', '{3}', '{4}', '{5}' ) ", ad.CarNumber, ad.SellerName, ad.Tel, ad.Pic, ad.Description, ad.Location));
             cmd.Connection = sqlConnection;
 
             if (cmd.ExecuteNonQuery() != -1)
@@ -414,7 +415,7 @@ namespace FinalProjectV1.Helpers
 
         public String getMaxKM(DateTime date, String carNumber)
         {
-            SqlCommand cmd = new SqlCommand(String.Format(" select MAX (KM) AS 'MAX' FROM Treatment where CareDate='{0}' AND CarID={1}", date, carNumber));
+            SqlCommand cmd = new SqlCommand(String.Format(" SELECT MAX (KM) AS 'MAX' FROM Treatment where CareDate='{0}' AND CarID={1}", date, carNumber));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
             String KM = sqlDR["MAX"].ToString();
@@ -433,7 +434,7 @@ namespace FinalProjectV1.Helpers
 
         }
 
-
+    
         ~DBHelper()
         {
             if(sqlConnection.State == ConnectionState.Open)

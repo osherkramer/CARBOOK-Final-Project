@@ -13,6 +13,7 @@ namespace FinalProjectV1.Models
         public string Tel { get; set; }
         public string Pic { get; set; }
         public string Description { get; set; }
+        public string Location { get; set; }
 
     }
 }

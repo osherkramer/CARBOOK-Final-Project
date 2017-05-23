@@ -51,6 +51,7 @@ namespace FinalProjectV1.Controllers
                 cb.Tel = ad.Tel;
                 cb.Pic = ad.Pic;
                 cb.Description = ad.Description;
+                cb.Location = ad.Location;
 
                 cb.ABS = car.ABS;
                 cb.AC = car.AC;

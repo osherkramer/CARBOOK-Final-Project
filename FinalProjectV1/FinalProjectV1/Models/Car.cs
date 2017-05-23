@@ -67,5 +67,6 @@ namespace FinalProjectV1
         public string IdentifyingTrafficSigns { get; set; }
         public string Year { get; set; }
         public string AgraGroup { get; set; }
+        public string KM { get; set; }
     }
 }

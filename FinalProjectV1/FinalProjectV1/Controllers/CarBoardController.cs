@@ -52,6 +52,8 @@ namespace FinalProjectV1.Controllers
                 cb.Pic = ad.Pic;
                 cb.Description = ad.Description;
                 cb.Location = ad.Location;
+                cb.DatePublished = ad.DatePublished;
+                cb.Price = ad.Price;
 
                 cb.ABS = car.ABS;
                 cb.AC = car.AC;
@@ -60,7 +62,7 @@ namespace FinalProjectV1.Controllers
                 cb.EngineCapacity = car.EngineCapacity;
                 cb.FuelType = car.FuelType;
                 cb.Gaer = car.Gaer;
-                //cb.KM = car.KM; //add KM to car?
+                cb.KM = car.KM; 
 
                 //cb.Ownership=car.ownerShip //mabye the same like ownerCarId
                 cb.ProductName = car.ProductName;

@@ -372,6 +372,8 @@ namespace FinalProjectV1.Helpers
                 ad1.Pic = sqlDR["Picture"].ToString();
                 ad1.Description = sqlDR["Describe"].ToString();
                 ad1.Location = sqlDR["Location"].ToString();
+                ad1.Price = sqlDR["Price"].ToString();
+                ad1.DatePublished= DateTime.Parse(sqlDR["DatePublished"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
                 ad.Add(ad1);
 
             } while (sqlDR.Read());
@@ -434,6 +436,7 @@ namespace FinalProjectV1.Helpers
 
         }
 
+      
     
         ~DBHelper()
         {

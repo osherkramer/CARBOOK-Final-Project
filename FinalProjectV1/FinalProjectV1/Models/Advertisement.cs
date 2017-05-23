@@ -14,6 +14,7 @@ namespace FinalProjectV1.Models
         public string Pic { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
-
+        public string Price { get; set; }
+        public DateTime DatePublished { set; get; }
     }
 }

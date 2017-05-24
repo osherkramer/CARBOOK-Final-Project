@@ -23,12 +23,10 @@ namespace FinalProjectV1.Controllers
 
             foreach (var ad in ads)
             {
-                Car car = new Car();
-                car = DBhelp.getCarByNumber(ad.CarNumber);
-                if(car.CarNumber.Equals(ad.CarNumber))
+                Car car = DBhelp.getCarByNumber(ad.CarNumber);
+                if (car != null)
                 {
-                    CarBoard cb = new CarBoard();
-                    cb = setAndGetCarBoardAd(ad, car);
+                    CarBoard cb = setAndGetCarBoardAd(ad, car);
                     carB.Add(cb);
 
                 }
@@ -53,6 +51,9 @@ namespace FinalProjectV1.Controllers
                 cb.Tel = ad.Tel;
                 cb.Pic = ad.Pic;
                 cb.Description = ad.Description;
+                cb.Location = ad.Location;
+                cb.DatePublished = ad.DatePublished;
+                cb.Price = ad.Price;
 
                 cb.ABS = car.ABS;
                 cb.AC = car.AC;
@@ -61,7 +62,7 @@ namespace FinalProjectV1.Controllers
                 cb.EngineCapacity = car.EngineCapacity;
                 cb.FuelType = car.FuelType;
                 cb.Gaer = car.Gaer;
-                //cb.KM = car.KM; //add KM to car?
+                cb.KM = car.KM; 
 
                 //cb.Ownership=car.ownerShip //mabye the same like ownerCarId
                 cb.ProductName = car.ProductName;

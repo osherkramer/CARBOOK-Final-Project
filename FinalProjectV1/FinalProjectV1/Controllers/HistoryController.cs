@@ -52,6 +52,8 @@ namespace FinalProjectV1.Controllers
             hc.RoadDate = car.RoadDate;
             hc.ProductName = car.ProductName;
             hc.Year = car.Year;
+            hc.Gaer = car.Gaer;
+            hc.Yad = car.Yad;
 
             DBHelper DBhelp = new DBHelper();
             hc.historyItems = DBhelp.getHistoryByCarNumber(int.Parse(car.CarNumber));
@@ -108,6 +110,13 @@ namespace FinalProjectV1.Controllers
                     }
                 }
             /*}*/
+
+
+            DateTime dateMax = db.getMaxDateCarTreatment(CarNumber);
+            bool flag = db.updateDateCarTreatment(CarNumber, dateMax);
+            String KM = db.getMaxKM(dateMax, CarNumber);
+            flag = db.updateKMCar(CarNumber, KM);
+
         }
     }
 }

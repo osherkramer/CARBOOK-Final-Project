@@ -15,6 +15,8 @@ namespace FinalProjectV1.Models
         public string ShildaNumber { get; set; }
         public string CarColor { get; set; }
         public string ProductName { get; set; }
+        public string Yad { get; set; }
+        public string Gaer { get; set; }
 
 
         //History Item

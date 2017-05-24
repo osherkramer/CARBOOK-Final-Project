@@ -39,15 +39,20 @@ namespace FinalProjectV1.Helpers
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Car WHERE CarID = {0}", carNum));
             cmd.Connection = sqlConnection;
 
-            SqlDataReader sqlDR = cmd.ExecuteReader();
+            SqlDataReader sqlDR;
 
-            if (!sqlDR.Read())
-                return null;
+            try {
+                sqlDR = cmd.ExecuteReader();
+                if (!sqlDR.Read())
+                    return null;
+            
+
+            
 
             Car car = new Car();
 
             car.CarNumber = sqlDR["CarID"].ToString();
-            car.RoadDate = DateTime.Parse(sqlDR["RoadDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            //car.RoadDate = DateTime.Parse(sqlDR["RoadDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
             car.Yad = sqlDR["Yad"].ToString();
             car.Year = sqlDR["StartYear"].ToString();
             car.CarVIN = sqlDR["ShildaNumber"].ToString();
@@ -66,6 +71,12 @@ namespace FinalProjectV1.Helpers
             car.CommericalAlias = sqlDR["CarModel"].ToString();
 
             return car;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return new Car();
         }
 
         public Car getCar()
@@ -315,7 +326,7 @@ namespace FinalProjectV1.Helpers
 
         public DateTime getTemproryUsersByCarID(int carID, string password)
         {
-            SqlCommand cmd = new SqlCommand(String.Format("SELECT ExpiryDate FROM TemproryUsers WHERE CarID = {0} AND Password = '{1}'", carID, password));
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT ExpiryDate FROM TemproryUsers WHERE CarID = '{0}' AND Password = '{1}'", carID, password));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
 
@@ -360,6 +371,9 @@ namespace FinalProjectV1.Helpers
                 ad1.Tel = sqlDR["Telephone"].ToString();
                 ad1.Pic = sqlDR["Picture"].ToString();
                 ad1.Description = sqlDR["Describe"].ToString();
+                ad1.Location = sqlDR["Location"].ToString();
+                ad1.Price = sqlDR["Price"].ToString();
+                ad1.DatePublished= DateTime.Parse(sqlDR["DatePublished"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
                 ad.Add(ad1);
 
             } while (sqlDR.Read());
@@ -370,7 +384,7 @@ namespace FinalProjectV1.Helpers
 
         public bool insertAdvertisment(Advertisement ad)
         {
-            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Advertisement (CarNumber, SellerName, Telephone, Picture, Describe) VALUES ('{0}' , '{1}' , '{2}', '{3}', '{4}' ) ", ad.CarNumber, ad.SellerName, ad.Tel, ad.Pic, ad.Description));
+            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Advertisement (CarNumber, SellerName, Telephone, Picture, Describe) VALUES ('{0}' , '{1}' , '{2}', '{3}', '{4}', '{5}' ) ", ad.CarNumber, ad.SellerName, ad.Tel, ad.Pic, ad.Description, ad.Location));
             cmd.Connection = sqlConnection;
 
             if (cmd.ExecuteNonQuery() != -1)
@@ -379,6 +393,51 @@ namespace FinalProjectV1.Helpers
             return false;
         }
 
+        public DateTime getMaxDateCarTreatment(String carNumber)
+        {
+            List<HistoryItem> historyItems = getHistoryByCarNumber(int.Parse(carNumber));
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT MAX (CareDate) AS 'Max' FROM Treatment where CarID='{0}'", carNumber));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            DateTime max= DateTime.Parse(sqlDR["Max"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            return max;
+        }
+
+        public bool updateDateCarTreatment(String carNumber, DateTime maxDate)
+        {
+
+            SqlCommand cmd = new SqlCommand(String.Format(" UPDATE Car SET CarTreatment = '{0}' WHERE CarID='{1}'", maxDate, carNumber));
+            cmd.Connection = sqlConnection;
+            if (cmd.ExecuteNonQuery() != -1)
+                return true;
+
+            return false;
+
+        }
+
+        public String getMaxKM(DateTime date, String carNumber)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format(" SELECT MAX (KM) AS 'MAX' FROM Treatment where CareDate='{0}' AND CarID={1}", date, carNumber));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            String KM = sqlDR["MAX"].ToString();
+            return KM;
+        }
+
+        public bool updateKMCar(String carNumber, String KM)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format(" UPDATE Car SET KM = '{0}' WHERE CarID='{1}'", KM, carNumber));
+            cmd.Connection = sqlConnection;
+            if (cmd.ExecuteNonQuery() != -1)
+                return true;
+
+            return false;
+
+
+        }
+
+      
+    
         ~DBHelper()
         {
             if(sqlConnection.State == ConnectionState.Open)

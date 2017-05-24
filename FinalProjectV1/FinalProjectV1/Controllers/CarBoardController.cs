@@ -15,10 +15,9 @@ namespace FinalProjectV1.Controllers
         // GET: CarBoards
         public ActionResult Index()
         {
-
+           
             List<Advertisement> ads = new List<Advertisement>();
             DBHelper DBhelp = new DBHelper();
-            DBhelp.search(null, null, null, null, null, null, null, null);
             ads = DBhelp.returnAdvertisments();
             List<CarBoard> carB = new List<CarBoard>();
 
@@ -40,8 +39,8 @@ namespace FinalProjectV1.Controllers
         //set and return one advertisment for the car board
         private CarBoard setAndGetCarBoardAd(Advertisement ad, Car car)
         {
-
-            if (ad == null && car == null)
+          
+            if(ad==null && car==null)
                 return null;
 
             if (ad.CarNumber.Equals(car.CarNumber))
@@ -65,9 +64,9 @@ namespace FinalProjectV1.Controllers
                 cb.Gaer = car.Gaer;
                 cb.KM = car.KM;
                 cb.CarColor = car.CarColor;
-                cb.PowerWindow = car.PowerWindow;
+                cb.PowerWindow = car.PowerWindow; 
 
-                cb.Ownership = car.ownerShip;
+                //cb.Ownership=car.ownerShip //mabye the same like ownerCarId
                 cb.ProductName = car.ProductName;
                 cb.Roof = car.Roof;
                 cb.Yad = car.Yad;
@@ -78,11 +77,13 @@ namespace FinalProjectV1.Controllers
             return null;
         }
 
-        private List<CarBoard> search(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
+        public List<CarBoard> Search(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
         {
-            DBHelper db = new DBHelper();
-            List<CarBoard> carsBoard = db.search(productName, model, startYear, endYear, gear, location, minPrice, maxPrice);
-            return carsBoard;
+            Console.Write("mor");
+            return null;
         }
+
+
+
     }
 }

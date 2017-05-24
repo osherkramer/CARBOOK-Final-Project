@@ -1,4 +1,5 @@
-﻿
+﻿@model FinalProjectV1.Models.HistoryCar
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,7 +10,8 @@
     <div class="messagesBoard" id="messagesBoardList">
         <div class="panelHeader row">
             <div class="col-xs-1"><img src="~/images/img3.png" /></div>
-            <div class="col-xs-2">יצרן-דגם</div>
+            <div class="col-xs-2">יצרן</div>
+            <div class="col-xs-2">דגם</div>
             <div class="col-xs-1">נפח</div>
             <div class="col-xs-1">שנה</div>
             <div class="col-xs-1">יד</div>
@@ -22,32 +24,31 @@
         <div class="panel row">
             <a href="javascript:void(0)" class="btnCollapse row collapsed">
                 <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">טויוטה</div>
-                <div class="col-xs-1">1600</div>
-                <div class="col-xs-1">2010</div>
-                <div class="col-xs-1">2</div>
-                <div class="col-xs-2">אוטומט</div>
-                <div class="col-xs-1">80000</div>
-                <div class="col-xs-1">מרכז</div>
+                <div class="col-xs-2">@Model.ProductName</div>
+                <div class="col-xs-2">@Model.CommericalAlias</div>
+                <div class="col-xs-1">@Model.EngineCapacity</div>
+                <div class="col-xs-1">@Model.Year</div>
+                <div class="col-xs-1">@Model.Yad</div>
+                <div class="col-xs-2">@Model.Gaer</div>
+                <div class="col-xs-1">8000</div>
+                <div class="col-xs-1">@Model.Location</div>
                 <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">10.10.17</div>
+                <div class="col-xs-1">@Model.DatePublished</div>
             </a>
         </div>
     </div>
     <div class="historyDetails row">
         <div class="col-sm-6">
             <ul class="carDeatilesList ">
-                <li class=""><strong>שנת יצור:</strong> 2010</li>
-                <li class=""><strong>ת.מסירה:</strong> 26.01.2010</li>
-                <li class=""><strong>דגם:</strong> קורולה</li>
-                <li class=""><strong>אחריות:</strong> אחריות יצרן</li>
+                <li class=""><strong>שנת יצור:</strong>@Model.Year</li>
+                <li class=""><strong>ת.מסירה:</strong>@Model.RoadDate</li>
+                <li class=""><strong>דגם:</strong>@Model.ProductName</li>
             </ul>
         </div>
         <div class="col-sm-6">
             <ul class="carDeatilesList ">
-                <li class=""><strong>קוד שילדה:</strong> KDHVV34N45LRF</li>
-                <li class=""><strong>צבע:</strong> כסוף</li>
-                <li class=""><strong>שם דגם:</strong> קורולה</li>
+                <li class=""><strong>קוד שילדה:</strong>@Model.ShildaNumber</li>
+                <li class=""><strong>צבע:</strong>@Model.CarColor</li>
             </ul>
         </div>
     </div>

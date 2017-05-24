@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace GarageServer
 {
@@ -13,7 +14,7 @@ namespace GarageServer
 
         public void ReadDataFromConfigFile()
         {
-            Config config = XMLHelper.ReadFromFile<Config>(@"C:\Users\osher\Desktop\CarBook\ConfigFileGarageServer.xml");
+            Config config = XMLHelper.ReadFromFile<Config>(Path.Combine(Directory.GetCurrentDirectory(), "ConfigFileGarageServer.xml"));
             this.SavedDataLocation = config.SavedDataLocation;
             this.TreatmentsLocation = config.TreatmentsLocation;
             this.CarsData = config.CarsData;

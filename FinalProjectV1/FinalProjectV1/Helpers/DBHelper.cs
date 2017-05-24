@@ -441,36 +441,36 @@ namespace FinalProjectV1.Helpers
             bool flag1 = false;
             String query1 = "SELECT * from Advertisement";
 
-            if (location != null)
+            if (!String.IsNullOrEmpty(location))
             {
 
-                String.Format(query1 + " WHERE Location = '{0}'", location);
+                query1 = String.Format(query1 + " WHERE Location = '{0}'", location);
                 flag1 = true;
             }
 
-            if (minPrice != null)
+            if (!String.IsNullOrEmpty(minPrice))
             {
                 if (!flag1)
                 {
-                    String.Format(query1 + " WHERE Price >= '{0}'", minPrice);
+                    query1 = String.Format(query1 + " WHERE Price >= '{0}'", minPrice);
                 }
                 else
                 {
-                    String.Format(query1 + " AND Price >= '{0}'", minPrice);
+                    query1 = String.Format(query1 + " AND Price >= '{0}'", minPrice);
                 }
 
                 flag1 = true;
             }
 
-            if (maxPrice != null)
+            if (!String.IsNullOrEmpty(maxPrice))
             {
                 if (!flag1)
                 {
-                    String.Format(query1 + " WHERE Price <= '{0}'", maxPrice);
+                    query1 = String.Format(query1 + " WHERE Price <= '{0}'", maxPrice);
                 }
                 else
                 {
-                    String.Format(query1 + " AND Price <= '{0}'", maxPrice);
+                    query1 = String.Format(query1 + " AND Price <= '{0}'", maxPrice);
                 }
 
                 flag1 = true;
@@ -517,38 +517,38 @@ namespace FinalProjectV1.Helpers
             }
 
             query = query.Substring(0, query.Length - 1) + ")";
-            if (productName != null)
+            if (!String.IsNullOrEmpty(productName))
             {
 
                 query = String.Format(query + " AND ProductName = '{0}'", productName);
 
             }
 
-            if (model != null)
+            if (!String.IsNullOrEmpty(model))
             {
 
-                String.Format(query + " AND CarModel = '{0}'", model);
+                query = String.Format(query + " AND CarModel = '{0}'", model);
 
             }
 
             if (startYear != null)
             {
 
-                String.Format(query + " AND StartYear >= '{0}'", startYear);
+                query = String.Format(query + " AND StartYear >= '{0}'", startYear);
 
             }
 
             if (endYear != null)
             {
 
-                String.Format(query + " AND StartYear <= '{0}'", endYear);
+                query = String.Format(query + " AND StartYear <= '{0}'", endYear);
 
             }
 
-            if (gear != null)
+            if (!String.IsNullOrEmpty(gear))
             {
 
-                String.Format(query + " AND Gaer = '{0}'", gear);
+                query = String.Format(query + " AND Gaer = '{0}'", gear);
 
             }
 

@@ -13,9 +13,9 @@ namespace FinalProjectV1.Controllers
     {
 
         // GET: CarBoards
-        public ActionResult Index()
+       /* public ActionResult Index()
         {
-           
+
             List<Advertisement> ads = new List<Advertisement>();
             DBHelper DBhelp = new DBHelper();
             ads = DBhelp.returnAdvertisments();
@@ -34,13 +34,13 @@ namespace FinalProjectV1.Controllers
 
 
             return View(carB);
-        }
+        }*/
 
         //set and return one advertisment for the car board
         private CarBoard setAndGetCarBoardAd(Advertisement ad, Car car)
         {
-          
-            if(ad==null && car==null)
+
+            if (ad == null && car == null)
                 return null;
 
             if (ad.CarNumber.Equals(car.CarNumber))
@@ -64,9 +64,9 @@ namespace FinalProjectV1.Controllers
                 cb.Gaer = car.Gaer;
                 cb.KM = car.KM;
                 cb.CarColor = car.CarColor;
-                cb.PowerWindow = car.PowerWindow; 
+                cb.PowerWindow = car.PowerWindow;
 
-                //cb.Ownership=car.ownerShip //mabye the same like ownerCarId
+                cb.Ownership = car.ownerShip;
                 cb.ProductName = car.ProductName;
                 cb.Roof = car.Roof;
                 cb.Yad = car.Yad;
@@ -77,13 +77,11 @@ namespace FinalProjectV1.Controllers
             return null;
         }
 
-        public List<CarBoard> Search(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
+        public ActionResult Index(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
         {
-            Console.Write("mor");
-            return null;
+            DBHelper db = new DBHelper();
+            List<CarBoard> carsBoard = db.search(productName, model, startYear, endYear, gear, location, minPrice, maxPrice);
+            return View(carsBoard);
         }
-
-
-
     }
 }

@@ -8,7 +8,7 @@ namespace FinalProjectV1.Models
     public class CarBoard
     {
         public string ProductName { get; set; }
-        public string CommericalAlias { get; set; } //Model
+        public string CommericalAlias { get; set; } //CarModel
         public string EngineCapacity { get; set; }
         public string Year { get; set; }
         public string Yad { get; set; }
@@ -22,6 +22,10 @@ namespace FinalProjectV1.Models
         public string CarNumber { get; set; }
         public string AirBags { get; set; }
         public string AC { get; set; }
+        public string CarColor { get; set; }
+        public string PowerWindow { get; set; }
+
+
 
         public string Description { get; set; }
         public string SellerName { get; set; }
@@ -30,7 +34,5 @@ namespace FinalProjectV1.Models
         public string Location { get; set; }
         public string Price { get; set; }
         public DateTime DatePublished { set; get; }
-
-
     }
 }

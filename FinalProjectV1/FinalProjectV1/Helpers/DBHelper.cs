@@ -32,8 +32,8 @@ namespace FinalProjectV1.Helpers
 
         public Car getCarByNumber(string carNumber)
         {
-            int carNum;
-            if(carNumber.Length != 7 || carNumber[0].Equals('0') || !Int32.TryParse(carNumber, out carNum))
+            int carNum = 0;
+            if(carNumber != null && (carNumber.Length != 7 || carNumber[0].Equals('0') || !Int32.TryParse(carNumber, out carNum)))
                 return null;
 
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Car WHERE CarID = {0}", carNum));
@@ -373,7 +373,7 @@ namespace FinalProjectV1.Helpers
                 ad1.Description = sqlDR["Describe"].ToString();
                 ad1.Location = sqlDR["Location"].ToString();
                 ad1.Price = sqlDR["Price"].ToString();
-                ad1.DatePublished= DateTime.Parse(sqlDR["DatePublished"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                //ad1.DatePublished= DateTime.Parse(sqlDR["DatePublished"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
                 ad.Add(ad1);
 
             } while (sqlDR.Read());
@@ -436,8 +436,201 @@ namespace FinalProjectV1.Helpers
 
         }
 
-      
-    
+        public List<CarBoard> search(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
+        {
+            bool flag1 = false;
+            String query1 = "SELECT * from Advertisement";
+
+            if (location != null)
+            {
+
+                String.Format(query1 + " WHERE Location = '{0}'", location);
+                flag1 = true;
+            }
+
+            if (minPrice != null)
+            {
+                if (!flag1)
+                {
+                    String.Format(query1 + " WHERE Price >= '{0}'", minPrice);
+                }
+                else
+                {
+                    String.Format(query1 + " AND Price >= '{0}'", minPrice);
+                }
+
+                flag1 = true;
+            }
+
+            if (maxPrice != null)
+            {
+                if (!flag1)
+                {
+                    String.Format(query1 + " WHERE Price <= '{0}'", maxPrice);
+                }
+                else
+                {
+                    String.Format(query1 + " AND Price <= '{0}'", maxPrice);
+                }
+
+                flag1 = true;
+            }
+
+            SqlCommand cmd = new SqlCommand(query1); //String.Format("select * from Car where ProductName='{0}' AND StartYear>='{1}' AND StartYear<='{4}' AND Gaer='{2}' AND CarModel='{3}'", productName, startYear, gear, model,endYear));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+            List<Advertisement> ads = new List<Advertisement>();
+            do
+            {
+                Advertisement ad1 = new Advertisement();
+                ad1.CarNumber = sqlDR["CarNumber"].ToString();
+                ad1.SellerName = sqlDR["SellerName"].ToString();
+                ad1.Tel = sqlDR["Telephone"].ToString();
+                ad1.Pic = sqlDR["Picture"].ToString();
+                ad1.Description = sqlDR["Describe"].ToString();
+                ad1.Location = sqlDR["Location"].ToString();
+                ad1.Price = sqlDR["Price"].ToString();
+                //ad1.DatePublished= DateTime.Parse(sqlDR["DatePublished"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                ads.Add(ad1);
+
+            } while (sqlDR.Read());
+
+            if (ads == null)
+                return null;
+
+            List<String> carsNum = new List<string>();
+            foreach (var ad in ads)
+            {
+                string str = ad.CarNumber;
+                carsNum.Add(str);
+            }
+
+            bool flag = false;
+            String query = "SELECT * from Car WHERE CarID IN (";
+            foreach (var carNum in carsNum)
+            {
+                query += carNum + ",";
+            }
+
+            query = query.Substring(0, query.Length - 1) + ")";
+            if (productName != null)
+            {
+
+                query = String.Format(query + " AND ProductName = '{0}'", productName);
+
+            }
+
+            if (model != null)
+            {
+
+                String.Format(query + " AND CarModel = '{0}'", model);
+
+            }
+
+            if (startYear != null)
+            {
+
+                String.Format(query + " AND StartYear >= '{0}'", startYear);
+
+            }
+
+            if (endYear != null)
+            {
+
+                String.Format(query + " AND StartYear <= '{0}'", endYear);
+
+            }
+
+            if (gear != null)
+            {
+
+                String.Format(query + " AND Gaer = '{0}'", gear);
+
+            }
+
+
+            cmd = new SqlCommand(query);
+            cmd.Connection = sqlConnection;
+            sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+            List<Car> cars = new List<Car>();
+            do
+            {
+                Car car = new Car();
+                car.CarNumber = sqlDR["CarID"].ToString();
+                car.RoadDate = DateTime.Parse(sqlDR["RoadDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                car.Yad = sqlDR["Yad"].ToString();
+                car.Year = sqlDR["StartYear"].ToString();
+                car.CarVIN = sqlDR["ShildaNumber"].ToString();
+                car.EngineCapacity = sqlDR["EngineCapacity"].ToString();
+                car.HorsePower = sqlDR["HorsePower"].ToString();
+                car.AirBags = sqlDR["AirBags"].ToString();
+                car.ABS = sqlDR["CarABS"].ToString();
+                car.PowerWindow = sqlDR["PowerWindow"].ToString();
+                car.Roof = sqlDR["Roof"].ToString();
+                car.MagnesiumWheels = sqlDR["MagnesiumWheels"].ToString();
+                car.CarOwnerID = Int32.Parse(sqlDR["OwnerID"].ToString());
+                car.ProductName = sqlDR["ProductName"].ToString();
+                car.FuelType = sqlDR["FuelType"].ToString();
+                car.CarColor = sqlDR["CarColor"].ToString();
+                car.Gaer = sqlDR["Gaer"].ToString();
+                car.CommericalAlias = sqlDR["CarModel"].ToString();
+                car.KM = sqlDR["KM"].ToString();
+                cars.Add(car);
+
+            } while (sqlDR.Read());
+
+
+            List<CarBoard> carB = new List<CarBoard>();
+            foreach (var car in cars)
+            {
+                CarBoard cb = new CarBoard();
+                cb.ABS = car.ABS;
+                cb.AC = car.AC;
+                cb.AirBags = car.AirBags;
+                cb.CarColor = car.CarColor;
+                cb.CarNumber = car.CarNumber;
+                cb.CommericalAlias = car.CommericalAlias;
+                cb.EngineCapacity = car.EngineCapacity;
+                cb.FuelType = car.FuelType;
+                cb.Gaer = car.Gaer;
+                cb.KM = car.KM;
+                cb.Ownership = car.ownerShip;
+                cb.PowerWindow = car.PowerWindow;
+                cb.ProductName = car.ProductName;
+                cb.Roof = car.Roof;
+                cb.Yad = car.Yad;
+                cb.Year = car.Year;
+
+                foreach (var ad in ads)
+                {
+                    if (ad.CarNumber.Equals(car.CarNumber))
+                    {
+                        cb.DatePublished = ad.DatePublished;
+                        cb.Description = ad.Description;
+                        cb.Location = ad.Location;
+                        cb.Pic = ad.Pic;
+                        cb.Price = ad.Price;
+
+                        ads.Remove(ad);
+                        break;
+                    }
+                }
+                carB.Add(cb);
+
+
+            }
+
+            return carB;
+        }
+
         ~DBHelper()
         {
             if(sqlConnection.State == ConnectionState.Open)

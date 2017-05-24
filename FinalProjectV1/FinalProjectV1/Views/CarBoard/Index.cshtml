@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<FinalProjectV1.Models.CarBoard>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -142,7 +143,9 @@
                     <input type="text" class="form-control" name="" placeholder="ממחיר">
                 </div>
                 <input type="text" class="form-control" name="" placeholder="עד מחיר">
-                <li>@Html.ActionLink("חפש", "Index", "Movie")</li>
+            </div>
+            <div>
+                <input type="submit" value="חפש" />
             </div>
         </center>
     </section>
@@ -161,953 +164,101 @@
             <div class="col-xs-1"><img src="~/images/img5.png" /></div>
             <div class="col-xs-1">תאריך</div>
         </li>
-        <li class="panel row">
-            <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#message_1" data-toggle="collapse" data-parent="#messagesBoardList">
-                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">טויוטה</div>
-                <div class="col-xs-1">1600</div>
-                <div class="col-xs-1">2013</div>
-                <div class="col-xs-1">2</div>
-                <div class="col-xs-2">אוטומט</div>
-                <div class="col-xs-1">80000</div>
-                <div class="col-xs-1">מרכז</div>
-                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">10.10.17</div>
-            </a>
-            <div class="messageDropdown row collapse" id="message_1">
-                <div class="col-sm-6 descMessage">
-                    <ul class="carDeatilesList list-group">
-                        <li class="title">פרטי הרכב</li>
-                        <li class="list-group-item"><strong>יצרן:</strong> טויוטה</li>
-                        <li class="list-group-item"><strong>דגם:</strong> קורולה</li>
-                        <li class="list-group-item"><strong>נפח:</strong> 1600</li>
-                        <li class="list-group-item"><strong>שנה:</strong> 2012</li>
-                        <li class="list-group-item"><strong>יד:</strong> 2</li>
-                        <li class="list-group-item"><strong>הילוכים:</strong> אוטומט</li>
-                        <li class="list-group-item"><strong>מנוע:</strong>1600</li>
-                        <li class="list-group-item"><strong>בעלות:</strong> פרטית</li>
-                        <li class="list-group-item"><strong>ק"מ:</strong> 80000</li>
-                        <li class="list-group-item">
-                            <div class="row ">
-                                <div class="col-xs-6 secondaryListContainer">
-                                    <ul class="secondaryList">
-                                        <li>ABS</li>
-                                        <li>גג שמש</li>
-                                        <li>כריות אויר</li>
-                                        <li>DVD לרכב</li>
-                                        <li>GPS</li>
-                                        <li>חלונות חשמליים</li>
-                                        <li>מזגן</li>
-                                    </ul>
-                                </div>
-                                <div class="col-xs-6 pika">
-                                    <ul>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                        <li>6</li>
-                                        <li>-</li>
-                                        <li>-</li>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                    </ul>
-                                </div>
-                            </div>
 
-                        </li>
-                    </ul>
+
+
+@foreach (var item in Model)
+{
+
+    <li class="panel row">
+        <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#message_1" data-toggle="collapse" data-parent="#messagesBoardList">
+            <div class="col-xs-1"><img src="~/images/img2.png" /></div>
+            <div class="col-xs-2">@item.ProductName</div>
+            <div class="col-xs-1">@item.EngineCapacity</div>
+            <div class="col-xs-1">@item.Year</div>
+            <div class="col-xs-1">@item.Yad</div>
+            <div class="col-xs-2">@item.Gaer</div>
+            <div class="col-xs-1">@item.KM</div>
+            <div class="col-xs-1">מרכז</div>
+            <div class="col-xs-1"><img src="~/images/img4.png" /></div>
+            <div class="col-xs-1">10.10.17</div>
+        </a>
+        <div class="messageDropdown row collapse" id="message_1">
+            <div class="col-sm-6 descMessage">
+                <ul class="carDeatilesList list-group">
+                    <li class="title">פרטי הרכב</li>
+                    <li class="list-group-item"><strong>יצרן:</strong>@item.ProductName</li>
+                    <li class="list-group-item"><strong>דגם:</strong>@item.CommericalAlias</li>
+                    <li class="list-group-item"><strong>נפח:</strong>@item.EngineCapacity</li>
+                    <li class="list-group-item"><strong>שנה:</strong>@item.Year</li>
+                    <li class="list-group-item"><strong>יד:</strong>@item.Yad</li>
+                    <li class="list-group-item"><strong>הילוכים:</strong>@item.Gaer</li>
+                    <li class="list-group-item"><strong>בעלות:</strong>@item.Ownership</li>
+                    <li class="list-group-item"><strong>ק"מ:</strong>@item.KM</li>
+                    <li class="list-group-item">
+                        <div class="row ">
+                            <div class="col-xs-6 secondaryListContainer">
+                                <ul class="secondaryList">
+                                    <li>ABS</li>
+                                    <li>גג שמש</li>
+                                    <li>כריות אוויר</li>
+                                    <li>DVD לרכב</li>
+                                    <li>GPS</li>
+                                    <li>חלונות חשמליים</li>
+                                    <li>מזגן</li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-6 pika">
+                                <ul>
+                                    <li>@item.ABS</li>
+                                    <li>@item.Roof</li>
+                                    <li>@item.AirBags</li>
+                                    <li>-</li>
+                                    <li>-</li>
+                                    <li>כן</li>
+                                    <li>@item.AC</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-6 descMessage">
+                <div class="carDeatiles">
+                    <div class="title">תמונה</div>
+                    <div class="pic">
+                        <img src="~/images/img7.png" />
+                    </div>
                 </div>
-                <div class="col-sm-6 descMessage">
-                    <div class="carDeatiles">
-                        <div class="title">תמונה</div>
-                        <div class="pic">
-                            <img src="~/images/img7.png" />
-                        </div>
+                <div class="carDeatiles">
+                    <div class="title">תיאור/תוספות</div>
+                    <div class="content">
+                        <p>
+                            @item.Description
+                        </p>
                     </div>
-                    <div class="carDeatiles">
-                        <div class="title">תיאור/תוספות</div>
-                        <div class="content">
-                            <p>
-                                עלתה לכביש בסוף 2012.רכב שמור מטופל בחברה כולל ספר טיפולים. עדיין באחריות, נקי מתאונות. לרציניים בלבד
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">יצירת קשר</div>
-                        <div class="content">
-                            <div><strong>שם המוכר:</strong> אבי כהן</div>
-                            <div><strong>טלפון:</strong> 054-7556781</div>
-                            <form>
-                                <div class="code">
-                                  
-                                      <li>@Html.ActionLink("שלח", "Index", "History")</li>
-                                    <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
-                                </div>
-                            </form>
-                        </div>
+                </div>
+                <div class="carDeatiles">
+                    <div class="title">יצירת קשר</div>
+                    <div class="content">
+                        <div><strong>שם המוכר:</strong>@item.SellerName</div>
+                        <div><strong>טלפון:</strong>@item.Tel</div>
+                        <form>
+                            <div class="code">
+                                <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
+                            </div>
+                            <div>
+                                <input type="submit" value="שלח" />
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </li>
-        <li class="panel row">
-            <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#message_2" data-toggle="collapse" data-parent="#messagesBoardList">
-                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">אופל</div>
-                <div class="col-xs-1">1800</div>
-                <div class="col-xs-1">2015</div>
-                <div class="col-xs-1">1</div>
-                <div class="col-xs-2">אוטומט</div>
-                <div class="col-xs-1">120000</div>
-                <div class="col-xs-1">צפון</div>
-                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">10.8.17</div>
-            </a>
-            <div class="messageDropdown row collapse" id="message_2">
-                <div class="col-sm-6 descMessage">
-                    <ul class="carDeatilesList list-group">
-                        <li class="title">פרטי הרכב</li>
-                        <li class="list-group-item"><strong>יצרן:</strong> אופל</li>
-                        <li class="list-group-item"><strong>דגם:</strong> קורסה</li>
-                        <li class="list-group-item"><strong>נפח:</strong> 1600</li>
-                        <li class="list-group-item"><strong>שנה:</strong> 2010</li>
-                        <li class="list-group-item"><strong>יד:</strong> 2</li>
-                        <li class="list-group-item"><strong>הילוכים:</strong> אוטומט</li>
-                        <li class="list-group-item"><strong>מנוע:</strong>1600</li>
-                        <li class="list-group-item"><strong>בעלות:</strong> פרטית</li>
-                        <li class="list-group-item"><strong>ק"מ:</strong> 80000</li>
-                        <li class="list-group-item">
-                            <div class="row ">
-                                <div class="col-xs-6 secondaryListContainer">
-                                    <ul class="secondaryList">
-                                        <li>ABS</li>
-                                        <li>גג שמש</li>
-                                        <li>כריות אויר</li>
-                                        <li>DVD לרכב</li>
-                                        <li>GPS</li>
-                                        <li>חלונות חשמליים</li>
-                                        <li>מזגן</li>
-                                    </ul>
-                                </div>
-                                <div class="col-xs-6 pika">
-                                    <ul>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                        <li>6</li>
-                                        <li>-</li>
-                                        <li>-</li>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                    </ul>
-                                </div>
-                            </div>
+        </div>
+    </li>
 
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 descMessage">
-                    <div class="carDeatiles">
-                        <div class="title">תמונה</div>
-                        <div class="pic">
-                            <img src="~/images/img7.png" />
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">תיאור/תוספות</div>
-                        <div class="content">
-                            <p>
-                                עלתה לכביש בסוף 2012.רכב שמור מטופל בחברה כולל ספר טיפולים. עדיין באחריות, נקי מתאונות. לרציניים בלבד
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">יצירת קשר</div>
-                        <div class="content">
-                            <div><strong>שם המוכר:</strong> אבי כהן</div>
-                            <div><strong>טלפון:</strong> 054-7556781</div>
-                            <form>
-                                <div class="code">
-                                    <button type="submit" class="btn btn-primary">שלח</button>
-                                    <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="panel row">
-            <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#message_2" data-toggle="collapse" data-parent="#messagesBoardList">
-                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">מרצדס</div>
-                <div class="col-xs-1">1600</div>
-                <div class="col-xs-1">2016</div>
-                <div class="col-xs-1">1</div>
-                <div class="col-xs-2">אוטומט</div>
-                <div class="col-xs-1">240000</div>
-                <div class="col-xs-1">צפון</div>
-                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">20.8.17</div>
-            </a>
-            <div class="messageDropdown row collapse" id="message_2">
-                <div class="col-sm-6 descMessage">
-                    <ul class="carDeatilesList list-group">
-                        <li class="title">פרטי הרכב</li>
-                        <li class="list-group-item"><strong>יצרן:</strong> מיצובישי</li>
-                        <li class="list-group-item"><strong>דגם:</strong> לנסר</li>
-                        <li class="list-group-item"><strong>נפח:</strong> 1600</li>
-                        <li class="list-group-item"><strong>שנה:</strong> 2010</li>
-                        <li class="list-group-item"><strong>יד:</strong> 2</li>
-                        <li class="list-group-item"><strong>הילוכים:</strong> אוטומט</li>
-                        <li class="list-group-item"><strong>מנוע:</strong>1600</li>
-                        <li class="list-group-item"><strong>בעלות:</strong> פרטית</li>
-                        <li class="list-group-item"><strong>ק"מ:</strong> 80000</li>
-                        <li class="list-group-item">
-                            <div class="row ">
-                                <div class="col-xs-6 secondaryListContainer">
-                                    <ul class="secondaryList">
-                                        <li>ABS</li>
-                                        <li>גג שמש</li>
-                                        <li>כריות אויר</li>
-                                        <li>DVD לרכב</li>
-                                        <li>GPS</li>
-                                        <li>חלונות חשמליים</li>
-                                        <li>מזגן</li>
-                                    </ul>
-                                </div>
-                                <div class="col-xs-6 pika">
-                                    <ul>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                        <li>6</li>
-                                        <li>-</li>
-                                        <li>-</li>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                    </ul>
-                                </div>
-                            </div>
 
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 descMessage">
-                    <div class="carDeatiles">
-                        <div class="title">תמונה</div>
-                        <div class="pic">
-                            <img src="~/images/img7.png" />
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">תיאור/תוספות</div>
-                        <div class="content">
-                            <p>
-                                עלתה לכביש בסוף 2012.רכב שמור מטופל בחברה כולל ספר טיפולים. עדיין באחריות, נקי מתאונות. לרציניים בלבד
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">יצירת קשר</div>
-                        <div class="content">
-                            <div><strong>שם המוכר:</strong> אבי כהן</div>
-                            <div><strong>טלפון:</strong> 054-7556781</div>
-                            <form>
-                                <div class="code">
-                                    <button type="submit" class="btn btn-primary">שלח</button>
-                                    <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="panel row">
-            <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#message_2" data-toggle="collapse" data-parent="#messagesBoardList">
-                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">אודי</div>
-                <div class="col-xs-1">2000</div>
-                <div class="col-xs-1">2014</div>
-                <div class="col-xs-1">1</div>
-                <div class="col-xs-2">אוטומט</div>
-                <div class="col-xs-1">170000</div>
-                <div class="col-xs-1">דרום</div>
-                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">11.8.17</div>
-            </a>
-            <div class="messageDropdown row collapse" id="message_2">
-                <div class="col-sm-6 descMessage">
-                    <ul class="carDeatilesList list-group">
-                        <li class="title">פרטי הרכב</li>
-                        <li class="list-group-item"><strong>יצרן:</strong> מיצובישי</li>
-                        <li class="list-group-item"><strong>דגם:</strong> לנסר</li>
-                        <li class="list-group-item"><strong>נפח:</strong> 1600</li>
-                        <li class="list-group-item"><strong>שנה:</strong> 2010</li>
-                        <li class="list-group-item"><strong>יד:</strong> 2</li>
-                        <li class="list-group-item"><strong>הילוכים:</strong> אוטומט</li>
-                        <li class="list-group-item"><strong>מנוע:</strong>1600</li>
-                        <li class="list-group-item"><strong>בעלות:</strong> פרטית</li>
-                        <li class="list-group-item"><strong>ק"מ:</strong> 80000</li>
-                        <li class="list-group-item">
-                            <div class="row ">
-                                <div class="col-xs-6 secondaryListContainer">
-                                    <ul class="secondaryList">
-                                        <li>ABS</li>
-                                        <li>גג שמש</li>
-                                        <li>כריות אויר</li>
-                                        <li>DVD לרכב</li>
-                                        <li>GPS</li>
-                                        <li>חלונות חשמליים</li>
-                                        <li>מזגן</li>
-                                    </ul>
-                                </div>
-                                <div class="col-xs-6 pika">
-                                    <ul>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                        <li>6</li>
-                                        <li>-</li>
-                                        <li>-</li>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 descMessage">
-                    <div class="carDeatiles">
-                        <div class="title">תמונה</div>
-                        <div class="pic">
-                            <img src="~/images/img7.png" />
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">תיאור/תוספות</div>
-                        <div class="content">
-                            <p>
-                                עלתה לכביש בסוף 2012.רכב שמור מטופל בחברה כולל ספר טיפולים. עדיין באחריות, נקי מתאונות. לרציניים בלבד
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">יצירת קשר</div>
-                        <div class="content">
-                            <div><strong>שם המוכר:</strong> אבי כהן</div>
-                            <div><strong>טלפון:</strong> 054-7556781</div>
-                            <form>
-                                <div class="code">
-                                    <button type="submit" class="btn btn-primary">שלח</button>
-                                    <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="panel row">
-            <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#message_2" data-toggle="collapse" data-parent="#messagesBoardList">
-                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">bmw</div>
-                <div class="col-xs-1">2200</div>
-                <div class="col-xs-1">2014</div>
-                <div class="col-xs-1">1</div>
-                <div class="col-xs-2">אוטומט</div>
-                <div class="col-xs-1">165000</div>
-                <div class="col-xs-1">צפון</div>
-                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">24.8.17</div>
-            </a>
-            <div class="messageDropdown row collapse" id="message_2">
-                <div class="col-sm-6 descMessage">
-                    <ul class="carDeatilesList list-group">
-                        <li class="title">פרטי הרכב</li>
-                        <li class="list-group-item"><strong>יצרן:</strong> מיצובישי</li>
-                        <li class="list-group-item"><strong>דגם:</strong> לנסר</li>
-                        <li class="list-group-item"><strong>נפח:</strong> 1600</li>
-                        <li class="list-group-item"><strong>שנה:</strong> 2010</li>
-                        <li class="list-group-item"><strong>יד:</strong> 2</li>
-                        <li class="list-group-item"><strong>הילוכים:</strong> אוטומט</li>
-                        <li class="list-group-item"><strong>מנוע:</strong>1600</li>
-                        <li class="list-group-item"><strong>בעלות:</strong> פרטית</li>
-                        <li class="list-group-item"><strong>ק"מ:</strong> 80000</li>
-                        <li class="list-group-item">
-                            <div class="row ">
-                                <div class="col-xs-6 secondaryListContainer">
-                                    <ul class="secondaryList">
-                                        <li>ABS</li>
-                                        <li>גג שמש</li>
-                                        <li>כריות אויר</li>
-                                        <li>DVD לרכב</li>
-                                        <li>GPS</li>
-                                        <li>חלונות חשמליים</li>
-                                        <li>מזגן</li>
-                                    </ul>
-                                </div>
-                                <div class="col-xs-6 pika">
-                                    <ul>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                        <li>6</li>
-                                        <li>-</li>
-                                        <li>-</li>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 descMessage">
-                    <div class="carDeatiles">
-                        <div class="title">תמונה</div>
-                        <div class="pic">
-                            <img src="~/images/img7.png" />
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">תיאור/תוספות</div>
-                        <div class="content">
-                            <p>
-                                עלתה לכביש בסוף 2012.רכב שמור מטופל בחברה כולל ספר טיפולים. עדיין באחריות, נקי מתאונות. לרציניים בלבד
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">יצירת קשר</div>
-                        <div class="content">
-                            <div><strong>שם המוכר:</strong> אבי כהן</div>
-                            <div><strong>טלפון:</strong> 054-7556781</div>
-                            <form>
-                                <div class="code">
-                                    <button type="submit" class="btn btn-primary">שלח</button>
-                                    <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="panel row">
-            <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#message_2" data-toggle="collapse" data-parent="#messagesBoardList">
-                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">מיצובישי</div>
-                <div class="col-xs-1">1600</div>
-                <div class="col-xs-1">2010</div>
-                <div class="col-xs-1">1</div>
-                <div class="col-xs-2">אוטומט</div>
-                <div class="col-xs-1">110000</div>
-                <div class="col-xs-1">צפון</div>
-                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">9.8.17</div>
-            </a>
-            <div class="messageDropdown row collapse" id="message_2">
-                <div class="col-sm-6 descMessage">
-                    <ul class="carDeatilesList list-group">
-                        <li class="title">פרטי הרכב</li>
-                        <li class="list-group-item"><strong>יצרן:</strong> מיצובישי</li>
-                        <li class="list-group-item"><strong>דגם:</strong> לנסר</li>
-                        <li class="list-group-item"><strong>נפח:</strong> 1600</li>
-                        <li class="list-group-item"><strong>שנה:</strong> 2010</li>
-                        <li class="list-group-item"><strong>יד:</strong> 2</li>
-                        <li class="list-group-item"><strong>הילוכים:</strong> אוטומט</li>
-                        <li class="list-group-item"><strong>מנוע:</strong>1600</li>
-                        <li class="list-group-item"><strong>בעלות:</strong> פרטית</li>
-                        <li class="list-group-item"><strong>ק"מ:</strong> 80000</li>
-                        <li class="list-group-item">
-                            <div class="row ">
-                                <div class="col-xs-6 secondaryListContainer">
-                                    <ul class="secondaryList">
-                                        <li>ABS</li>
-                                        <li>גג שמש</li>
-                                        <li>כריות אויר</li>
-                                        <li>DVD לרכב</li>
-                                        <li>GPS</li>
-                                        <li>חלונות חשמליים</li>
-                                        <li>מזגן</li>
-                                    </ul>
-                                </div>
-                                <div class="col-xs-6 pika">
-                                    <ul>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                        <li>6</li>
-                                        <li>-</li>
-                                        <li>-</li>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 descMessage">
-                    <div class="carDeatiles">
-                        <div class="title">תמונה</div>
-                        <div class="pic">
-                            <img src="~/images/img7.png" />
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">תיאור/תוספות</div>
-                        <div class="content">
-                            <p>
-                                עלתה לכביש בסוף 2012.רכב שמור מטופל בחברה כולל ספר טיפולים. עדיין באחריות, נקי מתאונות. לרציניים בלבד
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">יצירת קשר</div>
-                        <div class="content">
-                            <div><strong>שם המוכר:</strong> אבי כהן</div>
-                            <div><strong>טלפון:</strong> 054-7556781</div>
-                            <form>
-                                <div class="code">
-                                    <button type="submit" class="btn btn-primary">שלח</button>
-                                    <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="panel row">
-            <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#message_2" data-toggle="collapse" data-parent="#messagesBoardList">
-                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">טויוטה</div>
-                <div class="col-xs-1">1600</div>
-                <div class="col-xs-1">2010</div>
-                <div class="col-xs-1">1</div>
-                <div class="col-xs-2">אוטומט</div>
-                <div class="col-xs-1">80000</div>
-                <div class="col-xs-1">צפון</div>
-                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">10.8.17</div>
-            </a>
-            <div class="messageDropdown row collapse" id="message_2">
-                <div class="col-sm-6 descMessage">
-                    <ul class="carDeatilesList list-group">
-                        <li class="title">פרטי הרכב</li>
-                        <li class="list-group-item"><strong>יצרן:</strong> מיצובישי</li>
-                        <li class="list-group-item"><strong>דגם:</strong> לנסר</li>
-                        <li class="list-group-item"><strong>נפח:</strong> 1600</li>
-                        <li class="list-group-item"><strong>שנה:</strong> 2010</li>
-                        <li class="list-group-item"><strong>יד:</strong> 2</li>
-                        <li class="list-group-item"><strong>הילוכים:</strong> אוטומט</li>
-                        <li class="list-group-item"><strong>מנוע:</strong>1600</li>
-                        <li class="list-group-item"><strong>בעלות:</strong> פרטית</li>
-                        <li class="list-group-item"><strong>ק"מ:</strong> 80000</li>
-                        <li class="list-group-item">
-                            <div class="row ">
-                                <div class="col-xs-6 secondaryListContainer">
-                                    <ul class="secondaryList">
-                                        <li>ABS</li>
-                                        <li>גג שמש</li>
-                                        <li>כריות אויר</li>
-                                        <li>DVD לרכב</li>
-                                        <li>GPS</li>
-                                        <li>חלונות חשמליים</li>
-                                        <li>מזגן</li>
-                                    </ul>
-                                </div>
-                                <div class="col-xs-6 pika">
-                                    <ul>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                        <li>6</li>
-                                        <li>-</li>
-                                        <li>-</li>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 descMessage">
-                    <div class="carDeatiles">
-                        <div class="title">תמונה</div>
-                        <div class="pic">
-                            <img src="~/images/img7.png" />
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">תיאור/תוספות</div>
-                        <div class="content">
-                            <p>
-                                עלתה לכביש בסוף 2012.רכב שמור מטופל בחברה כולל ספר טיפולים. עדיין באחריות, נקי מתאונות. לרציניים בלבד
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">יצירת קשר</div>
-                        <div class="content">
-                            <div><strong>שם המוכר:</strong> אבי כהן</div>
-                            <div><strong>טלפון:</strong> 054-7556781</div>
-                            <form>
-                                <div class="code">
-                                    <button type="submit" class="btn btn-primary">שלח</button>
-                                    <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="panel row">
-            <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#message_2" data-toggle="collapse" data-parent="#messagesBoardList">
-                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">אלפא-רומאו</div>
-                <div class="col-xs-1">1800</div>
-                <div class="col-xs-1">2013</div>
-                <div class="col-xs-1">1</div>
-                <div class="col-xs-2">אוטומט</div>
-                <div class="col-xs-1">148000</div>
-                <div class="col-xs-1">צפון</div>
-                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">10.8.17</div>
-            </a>
-            <div class="messageDropdown row collapse" id="message_2">
-                <div class="col-sm-6 descMessage">
-                    <ul class="carDeatilesList list-group">
-                        <li class="title">פרטי הרכב</li>
-                        <li class="list-group-item"><strong>יצרן:</strong> מיצובישי</li>
-                        <li class="list-group-item"><strong>דגם:</strong> לנסר</li>
-                        <li class="list-group-item"><strong>נפח:</strong> 1600</li>
-                        <li class="list-group-item"><strong>שנה:</strong> 2010</li>
-                        <li class="list-group-item"><strong>יד:</strong> 2</li>
-                        <li class="list-group-item"><strong>הילוכים:</strong> אוטומט</li>
-                        <li class="list-group-item"><strong>מנוע:</strong>1600</li>
-                        <li class="list-group-item"><strong>בעלות:</strong> פרטית</li>
-                        <li class="list-group-item"><strong>ק"מ:</strong> 80000</li>
-                        <li class="list-group-item">
-                            <div class="row ">
-                                <div class="col-xs-6 secondaryListContainer">
-                                    <ul class="secondaryList">
-                                        <li>ABS</li>
-                                        <li>גג שמש</li>
-                                        <li>כריות אויר</li>
-                                        <li>DVD לרכב</li>
-                                        <li>GPS</li>
-                                        <li>חלונות חשמליים</li>
-                                        <li>מזגן</li>
-                                    </ul>
-                                </div>
-                                <div class="col-xs-6 pika">
-                                    <ul>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                        <li>6</li>
-                                        <li>-</li>
-                                        <li>-</li>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 descMessage">
-                    <div class="carDeatiles">
-                        <div class="title">תמונה</div>
-                        <div class="pic">
-                            <img src="~/images/img7.png" />
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">תיאור/תוספות</div>
-                        <div class="content">
-                            <p>
-                                עלתה לכביש בסוף 2012.רכב שמור מטופל בחברה כולל ספר טיפולים. עדיין באחריות, נקי מתאונות. לרציניים בלבד
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">יצירת קשר</div>
-                        <div class="content">
-                            <div><strong>שם המוכר:</strong> אבי כהן</div>
-                            <div><strong>טלפון:</strong> 054-7556781</div>
-                            <form>
-                                <div class="code">
-                                    <button type="submit" class="btn btn-primary">שלח</button>
-                                    <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="panel row">
-            <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#message_2" data-toggle="collapse" data-parent="#messagesBoardList">
-                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">טויוטה</div>
-                <div class="col-xs-1">1600</div>
-                <div class="col-xs-1">2017</div>
-                <div class="col-xs-1">1</div>
-                <div class="col-xs-2">אוטומט</div>
-                <div class="col-xs-1">190000</div>
-                <div class="col-xs-1">צפון</div>
-                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">10.8.17</div>
-            </a>
-            <div class="messageDropdown row collapse" id="message_2">
-                <div class="col-sm-6 descMessage">
-                    <ul class="carDeatilesList list-group">
-                        <li class="title">פרטי הרכב</li>
-                        <li class="list-group-item"><strong>יצרן:</strong> מיצובישי</li>
-                        <li class="list-group-item"><strong>דגם:</strong> לנסר</li>
-                        <li class="list-group-item"><strong>נפח:</strong> 1600</li>
-                        <li class="list-group-item"><strong>שנה:</strong> 2010</li>
-                        <li class="list-group-item"><strong>יד:</strong> 2</li>
-                        <li class="list-group-item"><strong>הילוכים:</strong> אוטומט</li>
-                        <li class="list-group-item"><strong>מנוע:</strong>1600</li>
-                        <li class="list-group-item"><strong>בעלות:</strong> פרטית</li>
-                        <li class="list-group-item"><strong>ק"מ:</strong> 80000</li>
-                        <li class="list-group-item">
-                            <div class="row ">
-                                <div class="col-xs-6 secondaryListContainer">
-                                    <ul class="secondaryList">
-                                        <li>ABS</li>
-                                        <li>גג שמש</li>
-                                        <li>כריות אויר</li>
-                                        <li>DVD לרכב</li>
-                                        <li>GPS</li>
-                                        <li>חלונות חשמליים</li>
-                                        <li>מזגן</li>
-                                    </ul>
-                                </div>
-                                <div class="col-xs-6 pika">
-                                    <ul>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                        <li>6</li>
-                                        <li>-</li>
-                                        <li>-</li>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 descMessage">
-                    <div class="carDeatiles">
-                        <div class="title">תמונה</div>
-                        <div class="pic">
-                            <img src="~/images/img7.png" />
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">תיאור/תוספות</div>
-                        <div class="content">
-                            <p>
-                                עלתה לכביש בסוף 2012.רכב שמור מטופל בחברה כולל ספר טיפולים. עדיין באחריות, נקי מתאונות. לרציניים בלבד
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">יצירת קשר</div>
-                        <div class="content">
-                            <div><strong>שם המוכר:</strong> אבי כהן</div>
-                            <div><strong>טלפון:</strong> 054-7556781</div>
-                            <form>
-                                <div class="code">
-                                    <button type="submit" class="btn btn-primary">שלח</button>
-                                    <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="panel row">
-            <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#message_2" data-toggle="collapse" data-parent="#messagesBoardList">
-                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">יונדאי</div>
-                <div class="col-xs-1">1600</div>
-                <div class="col-xs-1">2010</div>
-                <div class="col-xs-1">1</div>
-                <div class="col-xs-2">אוטומט</div>
-                <div class="col-xs-1">12000</div>
-                <div class="col-xs-1">צפון</div>
-                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">10.8.17</div>
-            </a>
-            <div class="messageDropdown row collapse" id="message_2">
-                <div class="col-sm-6 descMessage">
-                    <ul class="carDeatilesList list-group">
-                        <li class="title">פרטי הרכב</li>
-                        <li class="list-group-item"><strong>יצרן:</strong> מיצובישי</li>
-                        <li class="list-group-item"><strong>דגם:</strong> לנסר</li>
-                        <li class="list-group-item"><strong>נפח:</strong> 1600</li>
-                        <li class="list-group-item"><strong>שנה:</strong> 2010</li>
-                        <li class="list-group-item"><strong>יד:</strong> 2</li>
-                        <li class="list-group-item"><strong>הילוכים:</strong> אוטומט</li>
-                        <li class="list-group-item"><strong>מנוע:</strong>1600</li>
-                        <li class="list-group-item"><strong>בעלות:</strong> פרטית</li>
-                        <li class="list-group-item"><strong>ק"מ:</strong> 80000</li>
-                        <li class="list-group-item">
-                            <div class="row ">
-                                <div class="col-xs-6 secondaryListContainer">
-                                    <ul class="secondaryList">
-                                        <li>ABS</li>
-                                        <li>גג שמש</li>
-                                        <li>כריות אויר</li>
-                                        <li>DVD לרכב</li>
-                                        <li>GPS</li>
-                                        <li>חלונות חשמליים</li>
-                                        <li>מזגן</li>
-                                    </ul>
-                                </div>
-                                <div class="col-xs-6 pika">
-                                    <ul>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                        <li>6</li>
-                                        <li>-</li>
-                                        <li>-</li>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 descMessage">
-                    <div class="carDeatiles">
-                        <div class="title">תמונה</div>
-                        <div class="pic">
-                            <img src="~/images/img7.png" />
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">תיאור/תוספות</div>
-                        <div class="content">
-                            <p>
-                                עלתה לכביש בסוף 2012.רכב שמור מטופל בחברה כולל ספר טיפולים. עדיין באחריות, נקי מתאונות. לרציניים בלבד
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">יצירת קשר</div>
-                        <div class="content">
-                            <div><strong>שם המוכר:</strong> אבי כהן</div>
-                            <div><strong>טלפון:</strong> 054-7556781</div>
-                            <form>
-                                <div class="code">
-                                    <button type="submit" class="btn btn-primary">שלח</button>
-                                    <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-
-        <li class="panel row">
-            <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#message_3" data-toggle="collapse" data-parent="#messagesBoardList">
-                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">מיצובישי</div>
-                <div class="col-xs-1">2000</div>
-                <div class="col-xs-1">2012</div>
-                <div class="col-xs-1">2</div>
-                <div class="col-xs-2">הילוכים</div>
-                <div class="col-xs-1">60500</div>
-                <div class="col-xs-1">מרכז</div>
-                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">5.7.17</div>
-            </a>
-            <div class="messageDropdown row collapse" id="message_3">
-                <div class="col-sm-6 descMessage">
-                    <ul class="carDeatilesList list-group">
-                        <li class="title">פרטי הרכב</li>
-                        <li class="list-group-item"><strong>יצרן:</strong> מיצובישי</li>
-                        <li class="list-group-item"><strong>דגם:</strong> לנסר</li>
-                        <li class="list-group-item"><strong>נפח:</strong> 1600</li>
-                        <li class="list-group-item"><strong>שנה:</strong> 2010</li>
-                        <li class="list-group-item"><strong>יד:</strong> 2</li>
-                        <li class="list-group-item"><strong>הילוכים:</strong> אוטומט</li>
-                        <li class="list-group-item"><strong>מנוע:</strong>1600</li>
-                        <li class="list-group-item"><strong>בעלות:</strong> פרטית</li>
-                        <li class="list-group-item"><strong>ק"מ:</strong> 80000</li>
-                        <li class="list-group-item">
-                            <div class="row ">
-                                <div class="col-xs-6 secondaryListContainer">
-                                    <ul class="secondaryList">
-                                        <li>ABS</li>
-                                        <li>גג שמש</li>
-                                        <li>כריות אויר</li>
-                                        <li>DVD לרכב</li>
-                                        <li>GPS</li>
-                                        <li>חלונות חשמליים</li>
-                                        <li>מזגן</li>
-                                    </ul>
-                                </div>
-                                <div class="col-xs-6 pika">
-                                    <ul>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                        <li>6</li>
-                                        <li>-</li>
-                                        <li>-</li>
-                                        <li>כן</li>
-                                        <li>כן</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 descMessage">
-                    <div class="carDeatiles">
-                        <div class="title">תמונה</div>
-                        <div class="pic">
-                            <img src="~/images/img7.png" />
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">תיאור/תוספות</div>
-                        <div class="content">
-                            <p>
-                                עלתה לכביש בסוף 2012.רכב שמור מטופל בחברה כולל ספר טיפולים. עדיין באחריות, נקי מתאונות. לרציניים בלבד
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carDeatiles">
-                        <div class="title">יצירת קשר</div>
-                        <div class="content">
-                            <div><strong>שם המוכר:</strong> אבי כהן</div>
-                            <div><strong>טלפון:</strong> 054-7556781</div>
-                            <form>
-                                <div class="code">
-                                    <button type="submit" class="btn btn-primary">שלח</button>
-                                    <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
+}
     </ul>
 </div>

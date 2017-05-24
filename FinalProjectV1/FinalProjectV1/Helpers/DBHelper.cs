@@ -400,6 +400,7 @@ namespace FinalProjectV1.Helpers
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
 
+            sqlDR.Read();
             Advertisement ad = new Advertisement();
             ad.CarNumber= sqlDR["CarNumber"].ToString();
             ad.SellerName= sqlDR["SellerName"].ToString();

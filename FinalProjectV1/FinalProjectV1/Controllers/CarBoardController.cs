@@ -77,9 +77,9 @@ namespace FinalProjectV1.Controllers
             return null;
         }
 
-        public List<CarBoard> Index(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
+        public List<CarBoard> Search(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
         {
-            
+            Console.Write("mor");
             return null;
         }
 

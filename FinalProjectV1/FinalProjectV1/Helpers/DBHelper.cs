@@ -420,6 +420,9 @@ namespace FinalProjectV1.Helpers
             SqlCommand cmd = new SqlCommand(String.Format(" SELECT MAX (KM) AS 'MAX' FROM Treatment where CareDate='{0}' AND CarID={1}", date, carNumber));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+
             String KM = sqlDR["MAX"].ToString();
             return KM;
         }
@@ -629,6 +632,43 @@ namespace FinalProjectV1.Helpers
             }
 
             return carB;
+        }
+
+        public List<String> getProductNameCars()
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT ProductName FROM Car GROUP BY ProductName"));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+
+            List<String> productName = new List<string>();
+            do {
+                string str= sqlDR["ProductName"].ToString();
+                productName.Add(str);
+            } while (sqlDR.Read());
+
+            return productName;
+
+        }
+
+        public List<String> getModelCar(string ProductName)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT CarModel FROM Car Where ProductName = '{0}' Group BY CarModel", ProductName));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+
+            List<String> model = new List<string>();
+            do
+            {
+                string str = sqlDR["CarModel"].ToString();
+                model.Add(str);
+            } while (sqlDR.Read());
+
+            return model;
+
         }
 
         ~DBHelper()

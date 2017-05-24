@@ -176,7 +176,7 @@ namespace FinalProjectV1.Helpers
 
         public List<HistoryItem> getHistoryByCarNumber(int CarNumber)
         {
-            SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Treatment WHERE CarID = {0}", CarNumber));
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Treatment WHERE CarID = {0} ORDER BY CareDate ASC", CarNumber));
             cmd.Connection = sqlConnection;
 
             SqlDataReader sqlDR = cmd.ExecuteReader();

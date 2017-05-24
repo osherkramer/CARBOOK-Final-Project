@@ -61,5 +61,6 @@ namespace GarageServer
         public string IdentifyingTrafficSigns { get; set; }
         public string Year { get; set; }
         public string AgraGroup { get; set; }
+        public string ownerShip { get; set; }
     }
 }

@@ -9,6 +9,8 @@ namespace GarageServer
         public CarsItems CareType { get; set; }
         public DateTime Date { get; set; }
         public string[] Treatment { get; set; }
+        public int KM { get; set; }
+        public string GarageName { get; set; }
 
 
         public HistoryItem()

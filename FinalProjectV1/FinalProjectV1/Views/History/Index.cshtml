@@ -64,28 +64,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>15.8.2016</td>
-                    <td>מ. שירות שקד</td>
-                    <td>120,000</td>
-                    <td>מערכת היגוי</td>
-                    <td><a href="#" class="link">לפרטים</a></td>
-                </tr>
-                <tr>
-                    <td>22.2.2014</td>
-                    <td>מ. שירות שקד</td>
-                    <td>103,000</td>
-                    <td>ברקסים</td>
-                    <td><a href="#" class="link">לפרטים</a></td>
-                </tr>
-                <tr>
-                    <td>18.3.2012</td>
-                    <td>מ. שירות שקד</td>
-                    <td>50,103</td>
-                    <td>טיפול שנתי</td>
-                    <td><a href="#" class="link">לפרטים</a></td>
-                </tr>
+                @foreach (var item in Model.historyItems)
+                {
+                    <tr>
+                        <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                        <td>@item.GarageName</td>
+                        <td>@item.KM</td>
+                        <td>@item.CareType</td>
+                        <td><a href="#" class="link">לפרטים</a></td>
+                    </tr>
+                }
             </tbody>
         </table>
-    </div>
+</div>
 </div>

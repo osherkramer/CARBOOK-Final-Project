@@ -23,4 +23,20 @@
         EngineAndGear,
         TurningCarParts
     }
+    
+    public enum ownership
+    {
+        Private,
+        Rente,
+        Leasing
+    }
+
+    public enum Garage
+    {
+        Shilovim,
+        HilochShishi,
+        StarGarage,
+        RishonimGarage,
+        TopazGarage
+    }
 }

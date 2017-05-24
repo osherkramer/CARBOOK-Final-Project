@@ -256,7 +256,8 @@ namespace GarageServer
             string[] CarData = ((string)AllCars.GetValue(row)).Split(';');
 
             car.CarNumber = carNumber.ToString();
-            car.CarVIN = null;
+            car.CarVIN = getRandomVIN();
+            car.ownerShip = ((ownership)rnd.Next(0, 3)).ToString();
             car.Yad = rnd.Next(0, 9).ToString();
             car.CarColor = "Red";
 
@@ -312,7 +313,10 @@ namespace GarageServer
             car.Year = CarData.GetValue(47 + i * 2).ToString();
             car.AgraGroup = CarData.GetValue(47 + i * 2 + 1).ToString();
 
-            car.RoadDate = new DateTime(Int32.Parse(car.Year), rnd.Next(1, 13), 1);
+            do
+            {
+                car.RoadDate = new DateTime(Int32.Parse(car.Year), rnd.Next(1, 13), 1);
+            } while (car.RoadDate > DateTime.Today);
 
             string path = Path.Combine(conf.SavedDataLocation, carNumber.ToString());
             string file =  @"Details_" + carNumber + @".CBDF.xml";
@@ -341,6 +345,7 @@ namespace GarageServer
                 {
                     success = false;
                 }
+                Thread.Sleep(1000);
             }
 
             return success;
@@ -360,78 +365,23 @@ namespace GarageServer
             int TypeCare = rnd.Next(1, 5);
 
             Random gen = new Random();
-            int range = (DateTime.Today - GetLastCareTime(carNumber)).Days;          
+            int range;
+            do
+            {
+                range = (DateTime.Today - GetLastCareTime(carNumber)).Days;
+            } while (range < 0);
+                          
             DateTime randomDate = DateTime.Today.AddDays(-gen.Next(range));
             hi.Date = randomDate;
 
+            int lastKm = GetLastKM(carNumber) + 1000;
+            int KM = rnd.Next(lastKm, lastKm + 29000);
+            hi.KM = KM;
+
+            int random1 = rnd.Next(0, 5);
+            hi.GarageName = ((Garage)random1).ToString();
+
             switch (TypeCare)
-            /*{
-                case 1: //Tretment
-                    int random = rnd.Next(GetLastYearTretment(carNumber) + 1, 16);
-                    hi.CareType = ((CarsItems)random);
-                    string[] lines = System.IO.File.ReadAllLines(conf.TreatmentsLocation + @"\" + hi.CareType + ".txt", Encoding.GetEncoding("windows-1255")); //Read in hebrew
-                    hi.Treatment = lines;
-                    break;
-                case 2: //Body work and painting
-                    DataTable datatable = importExelFileToDataTable(4);
-                    hi.CareType = CarsItems.TurningCarParts;
-                    int random1 = rnd.Next(1, 11);
-                    List<string> lines1 = new List<string>();
-
-                    int i = 0;
-
-                    while(i < random1)
-                    {
-                        
-                        int column = rnd.Next(0, 5);
-                        int row = rnd.Next(0, 42);
-
-                        string tretment = datatable.Rows[row][column].ToString();
-
-                        if (tretment == "" || lines1.Contains(tretment))
-                            continue;
-
-                        lines1.Add(datatable.Columns[column].ToString() + " - " + tretment);                   
-                        
-                        i++;
-                    }
-
-                    hi.Treatment = lines1.ToArray();
-                    break;
-                case 3: //Mechanics and electricity
-                    DataTable datatable1 = importExelFileToDataTable(2);
-                    hi.CareType = CarsItems.ElectricalMechanics;
-                    int random2 = rnd.Next(1, 10);
-                    string[] lines2 = new string[random2];
-
-
-
-                    hi.Treatment = lines2;
-                    break;
-                case 4: //Engine and gear
-                    DataTable datatable2 = importExelFileToDataTable(3);
-                    hi.CareType = CarsItems.EngineAndGear;
-                    int random3 = rnd.Next(1, 10);
-                    string[] lines3 = new string[random3];
-
-
-
-                    hi.Treatment = lines3;
-                    break;
-                case 5: //Car accessories
-                    DataTable datatable3 = importExelFileToDataTable(1);
-                    hi.CareType = CarsItems.CarAccessories;
-                    int random4 = rnd.Next(1, 10);
-                    string[] lines4 = new string[random4];
-
-
-
-                    hi.Treatment = lines4;
-                    break;
-            }           
-
-            return hi;*/
-
             {
                 case 1: //Tretment
                     int random = rnd.Next(GetLastYearTretment(carNumber) + 1, 16);
@@ -442,35 +392,13 @@ namespace GarageServer
                 case 2: //Body work and painting
                     DataTable datatable = importExelFileToDataTable(4);
                     hi.CareType = CarsItems.TurningCarParts;
-                    //int random1 = rnd.Next(1, 11);
                     List<string> lines1 = new List<string>();
-
                     lines1 = getCareTreatment(datatable);
-
-                    /* int i = 0;
-
-                     while(i < random1)
-                     {
-
-                         int column = rnd.Next(0, 4);
-                         int row = rnd.Next(0, 40);
-
-                         string tretment = datatable.Rows[row][column].ToString();
-
-                         if (tretment == "" || lines1.Contains(tretment))
-                             continue;
-
-                         lines1.Add(datatable.Columns[column].ToString() + " - " + tretment);                   
-
-                         i++;
-                     }*/
-
                     hi.Treatment = lines1.ToArray();
                     break;
                 case 3: //Mechanics and electricity
                     DataTable datatable1 = importExelFileToDataTable(2);
                     hi.CareType = CarsItems.ElectricalMechanics;
-                    //int random2 = rnd.Next(1, 10);
                     List<string> lines2 = new List<string>();
                     lines2 = getCareTreatment(datatable1);
                     hi.Treatment = lines2.ToArray();
@@ -478,7 +406,6 @@ namespace GarageServer
                 case 4: //Engine and gear
                     DataTable datatable2 = importExelFileToDataTable(3);
                     hi.CareType = CarsItems.EngineAndGear;
-                    //int random3 = rnd.Next(1, 10);
                     List<string> lines3 = new List<string>();
                     lines3 = getCareTreatment(datatable2);
                     hi.Treatment = lines3.ToArray();
@@ -486,7 +413,6 @@ namespace GarageServer
                 case 5: //Car accessories
                     DataTable datatable3 = importExelFileToDataTable(1);
                     hi.CareType = CarsItems.CarAccessories;
-                    //int random4 = rnd.Next(1, 10);
                     List<string> lines4 = new List<string>();
                     lines4 = getCareTreatment(datatable3);
                     hi.Treatment = lines4.ToArray();
@@ -542,6 +468,23 @@ namespace GarageServer
                 return 6;
 
             return i;
+        }
+
+        private int GetLastKM(string carNumber)
+        {
+            int KM = 0;
+            string path = Path.Combine(conf.SavedDataLocation, carNumber);
+            string pattern = "CarHistory_*";
+            string[] carsCares = Directory.GetFiles(path, pattern);
+
+            foreach (var care in carsCares)
+            {
+                HistoryItem hi = XMLHelper.ReadFromFile<HistoryItem>(care);
+                if (hi.KM > KM)
+                    KM = hi.KM;
+            }
+
+            return KM;
         }
 
         public string getFilePath(string fileName)
@@ -645,6 +588,45 @@ namespace GarageServer
             }
             return lines;
 
+        }
+
+        private string getRandomVIN()
+        {
+            string[] vin = File.ReadAllLines(Path.Combine(conf.SavedDataLocation, "VIN.txt"));
+            List<string> vinList = new List<string>();
+
+            foreach(var v in vin)
+            {
+                vinList.Add(v);
+            }
+
+            string newVIN = "";
+
+            do
+            {
+                StringBuilder builder = new StringBuilder();
+                Random random = new Random((int)DateTime.Now.Ticks);
+                for(int i = 0; i < 5; i++)
+                    builder.Append(Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65))));
+
+                for (int i = 0; i < 3; i++)
+                    builder.Append(random.Next(1, 10));
+
+                for (int i = 0; i < 3; i++)
+                    builder.Append(Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65))));
+
+                for (int i = 0; i < 6; i++)
+                    builder.Append(random.Next(1, 10));
+
+                newVIN = builder.ToString();
+
+            } while (vinList.Contains(newVIN));
+
+            StreamWriter file = new StreamWriter(Path.Combine(Directory.GetCurrentDirectory(), "VIN.txt"), true);
+            file.WriteLine(newVIN);
+            file.Close();
+
+            return newVIN;
         }
 
         public void CloseServer()

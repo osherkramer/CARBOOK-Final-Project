@@ -54,9 +54,19 @@ namespace FinalProjectV1.Controllers
             hc.Year = car.Year;
             hc.Gaer = car.Gaer;
             hc.Yad = car.Yad;
-
+            hc.EngineCapacity = car.EngineCapacity;
+            hc.CommericalAlias = car.CommericalAlias;
             DBHelper DBhelp = new DBHelper();
             hc.historyItems = DBhelp.getHistoryByCarNumber(int.Parse(car.CarNumber));
+
+            Advertisement ad = DBhelp.getAdByCarNum(car.CarNumber);
+            hc.SellerName = ad.SellerName;
+            hc.Tel = ad.Tel;
+            hc.Pic = ad.Pic;
+            hc.Price = ad.Price;
+            hc.Location = ad.Location;
+            hc.Description = ad.Description;
+            hc.DatePublished = hc.DatePublished;
             return hc;
         }
 

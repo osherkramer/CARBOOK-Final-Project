@@ -62,7 +62,9 @@ namespace FinalProjectV1.Controllers
                 cb.EngineCapacity = car.EngineCapacity;
                 cb.FuelType = car.FuelType;
                 cb.Gaer = car.Gaer;
-                cb.KM = car.KM; 
+                cb.KM = car.KM;
+                cb.CarColor = car.CarColor;
+                cb.PowerWindow = car.PowerWindow; 
 
                 //cb.Ownership=car.ownerShip //mabye the same like ownerCarId
                 cb.ProductName = car.ProductName;
@@ -74,5 +76,14 @@ namespace FinalProjectV1.Controllers
 
             return null;
         }
+
+        public List<CarBoard> Index(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
+        {
+            
+            return null;
+        }
+
+
+
     }
 }

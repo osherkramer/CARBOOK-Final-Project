@@ -373,7 +373,7 @@ namespace FinalProjectV1.Helpers
                 ad1.Description = sqlDR["Describe"].ToString();
                 ad1.Location = sqlDR["Location"].ToString();
                 ad1.Price = sqlDR["Price"].ToString();
-                ad1.DatePublished= DateTime.Parse(sqlDR["DatePublished"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                //ad1.DatePublished= DateTime.Parse(sqlDR["DatePublished"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
                 ad.Add(ad1);
 
             } while (sqlDR.Read());
@@ -391,6 +391,26 @@ namespace FinalProjectV1.Helpers
                 return true;
 
             return false;
+        }
+
+        public Advertisement getAdByCarNum(string carNumber)
+        {
+
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Advertisement WHERE CarNumber = '{0}'", carNumber));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            Advertisement ad = new Advertisement();
+            ad.CarNumber= sqlDR["CarNumber"].ToString();
+            ad.SellerName= sqlDR["SellerName"].ToString();
+            ad.Tel= sqlDR["Telephone"].ToString();
+            ad.Pic= sqlDR["Picture"].ToString();
+            ad.Description= sqlDR["Describe"].ToString();
+            ad.Location= sqlDR["Location"].ToString();
+            //ad.DatePublished = DateTime.Parse(sqlDR["DatePublished"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            ad.Price= sqlDR["Price"].ToString();
+            return ad;
+
         }
 
         public DateTime getMaxDateCarTreatment(String carNumber)
@@ -436,7 +456,11 @@ namespace FinalProjectV1.Helpers
 
         }
 
-      
+        public List<Car> search(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
+        {
+
+            return null;
+        }
     
         ~DBHelper()
         {

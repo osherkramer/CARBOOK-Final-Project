@@ -17,8 +17,8 @@ namespace FinalProjectV1.Models
         public string ProductName { get; set; }
         public string Yad { get; set; }
         public string Gaer { get; set; }
-
-
+        public string EngineCapacity { get; set; }
+        public string CommericalAlias { get; set; }
         //History Item
 
         /*public int TreatmentID { get; set; }
@@ -31,7 +31,17 @@ namespace FinalProjectV1.Models
 
         public List<HistoryItem> historyItems { get; set; }
 
+        //Advertisment
 
+        public string SellerName { get; set; }
+        public string Tel { get; set; }
+        public string Pic { get; set; }
+        public string Description { get; set; }
+        public string Location { get; set; }
+        public string Price { get; set; }
+        public DateTime DatePublished { set; get; }
+
+     
 
     }
 }

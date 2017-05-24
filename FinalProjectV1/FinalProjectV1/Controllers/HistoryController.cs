@@ -17,7 +17,8 @@ namespace FinalProjectV1.Controllers
         // GET: History
         public ActionResult Index(String carNumber)
         {
-            UpdateCarHistory(carNumber);
+            carNumber = "1658490";
+            //UpdateCarHistory(carNumber);
             //List<HistoryItem> historyI = new List<HistoryItem>();
             DBHelper DBhelp = new DBHelper();
             Car car = DBhelp.getCarByNumber(carNumber);

@@ -41,36 +41,39 @@ namespace FinalProjectV1.Helpers
 
             SqlDataReader sqlDR;
 
-            try {
+            try
+            {
                 sqlDR = cmd.ExecuteReader();
                 if (!sqlDR.Read())
                     return null;
-            
 
-            
 
-            Car car = new Car();
 
-            car.CarNumber = sqlDR["CarID"].ToString();
-            //car.RoadDate = DateTime.Parse(sqlDR["RoadDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
-            car.Yad = sqlDR["Yad"].ToString();
-            car.Year = sqlDR["StartYear"].ToString();
-            car.CarVIN = sqlDR["ShildaNumber"].ToString();
-            car.EngineCapacity = sqlDR["EngineCapacity"].ToString();
-            car.HorsePower = sqlDR["HorsePower"].ToString();
-            car.AirBags = sqlDR["AirBags"].ToString();
-            car.ABS = sqlDR["CarABS"].ToString();
-            car.PowerWindow = sqlDR["PowerWindow"].ToString();
-            car.Roof = sqlDR["Roof"].ToString();
-            car.MagnesiumWheels = sqlDR["MagnesiumWheels"].ToString();
-            car.CarOwnerID = Int32.Parse(sqlDR["OwnerID"].ToString());
-            car.ProductName = sqlDR["ProductName"].ToString();
-            car.FuelType = sqlDR["FuelType"].ToString();
-            car.CarColor = sqlDR["CarColor"].ToString();
-            car.Gaer = sqlDR["Gaer"].ToString();
-            car.CommericalAlias = sqlDR["CarModel"].ToString();
 
-            return car;
+                Car car = new Car();
+
+                car.CarNumber = sqlDR["CarID"].ToString();
+                car.RoadDate = Convert.ToDateTime(sqlDR["RoadDate"].ToString());
+                car.Yad = sqlDR["Yad"].ToString();
+                car.Year = sqlDR["StartYear"].ToString();
+                car.CarVIN = sqlDR["ShildaNumber"].ToString();
+                car.EngineCapacity = sqlDR["EngineCapacity"].ToString();
+                car.HorsePower = sqlDR["HorsePower"].ToString();
+                car.AirBags = sqlDR["AirBags"].ToString();
+                car.ABS = sqlDR["CarABS"].ToString();
+                car.PowerWindow = sqlDR["PowerWindow"].ToString();
+                car.Roof = sqlDR["Roof"].ToString();
+                car.MagnesiumWheels = sqlDR["MagnesiumWheels"].ToString();
+                car.CarOwnerID = Int32.Parse(sqlDR["OwnerID"].ToString());
+                car.ProductName = sqlDR["ProductName"].ToString();
+                car.FuelType = sqlDR["FuelType"].ToString();
+                car.CarColor = sqlDR["CarColor"].ToString();
+                car.Gaer = sqlDR["Gaer"].ToString();
+                car.CommericalAlias = sqlDR["CarModel"].ToString();
+                car.ownerShip = sqlDR["Ownerships"].ToString();
+                car.AC = sqlDR["AC"].ToString();
+
+                return car;
             }
             catch (Exception e)
             {
@@ -92,7 +95,7 @@ namespace FinalProjectV1.Helpers
             Car car = new Car();
 
             car.CarNumber = sqlDR["CarID"].ToString();
-            car.RoadDate = DateTime.Parse(sqlDR["RoadDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            car.RoadDate = Convert.ToDateTime(sqlDR["RoadDate"].ToString());
             car.Yad = sqlDR["Yad"].ToString();
             car.Year = sqlDR["StartYear"].ToString();
             car.CarVIN = sqlDR["ShildaNumber"].ToString();
@@ -118,7 +121,17 @@ namespace FinalProjectV1.Helpers
 
         public bool InsertCar(Car car)
         {
-            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Car (CarID, RoadDate, Yad, StartYear, ShildaNumber, EngineCapacity, HorsePower, AirBags, CarABS, PowerWindow, Roof, MagnesiumWheels, CarTreatment, OwnerID, ProductName, FuelType, CarColor, Gaer, CarModel) VALUES ('{0}' , '{1}' , '{2}' , '{3}' , '{4}' , '{5}' , '{6}' , '{7}' , '{8}' , '{9}' , '{10}' , '{11}' , '{12}' , '{13}' , '{14}' , '{15}' , '{16}' , '{17}' , '{18}')", car.CarNumber, car.RoadDate, car.Yad, car.Year, car.CarVIN, car.EngineCapacity, car.HorsePower, car.AirBags, car.ABS, car.PowerWindow, car.Roof, car.MagnesiumWheels, "", car.CarOwnerID, car.ProductName, car.FuelType, car.CarColor, car.Gaer, car.CommericalAlias));
+            car.AirBags = car.AirBags.Equals("Yes") ? "כן" : "לא";
+            car.ABS = car.ABS.Equals("Yes") ? "כן" : "לא";
+            car.PowerWindow = car.PowerWindow.Equals("Yes") ? "כן" : "לא";
+            car.Roof = car.Roof.Equals("Yes") ? "כן" : "לא";
+            car.MagnesiumWheels = car.MagnesiumWheels.Equals("Yes") ? "כן" : "לא";
+            car.FuelType = car.FuelType.Equals("1") ? "בנזין" : "דיזל";
+            car.Gaer = car.Gaer.Equals("Automatic") ? "אוטומטי" : "ידני";
+            car.ownerShip = car.ownerShip.Equals("Rente") ? "השכרה" : car.ownerShip.Equals("Leasing") ? "ליסינג" : "פרטי";
+            car.AC = car.AC.Equals("Yes") ? "כן" : "לא";
+
+            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Car (CarID, RoadDate, Yad, StartYear, ShildaNumber, EngineCapacity, HorsePower, AirBags, CarABS, PowerWindow, Roof, MagnesiumWheels, CarTreatment, OwnerID, ProductName, FuelType, CarColor, Gaer, CarModel, Ownerships, AC) VALUES ('{0}' , '{1}' , '{2}' , '{3}' , '{4}' , '{5}' , '{6}' , '{7}' , '{8}' , '{9}' , '{10}' , '{11}' , '{12}' , '{13}' , '{14}' , '{15}' , '{16}' , '{17}' , '{18}', '{19}', '{20}')", car.CarNumber, car.RoadDate, car.Yad, car.Year, car.CarVIN, car.EngineCapacity, car.HorsePower, car.AirBags, car.ABS, car.PowerWindow, car.Roof, car.MagnesiumWheels, "", car.CarOwnerID, car.ProductName, car.FuelType, car.CarColor, car.Gaer, car.CommericalAlias, car.ownerShip, car.AC));
             cmd.Connection = sqlConnection;
 
             try {
@@ -165,7 +178,7 @@ namespace FinalProjectV1.Helpers
 
             HistoryItem HI = new HistoryItem();
             HI.CarNumber = sqlDR["CarID"].ToString();
-            HI.Date = DateTime.Parse(sqlDR["CareDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            HI.Date = Convert.ToDateTime(sqlDR["CareDate"].ToString());
             HI.TreatmentID = Int32.Parse(sqlDR["TreatmentID"].ToString());
             HI.CareType = sqlDR["CareType"].ToString();
             HI.KM = Int32.Parse(sqlDR["KM"].ToString());
@@ -178,7 +191,7 @@ namespace FinalProjectV1.Helpers
         {
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Treatment WHERE CarID = {0} ORDER BY CareDate ASC", CarNumber));
             cmd.Connection = sqlConnection;
-
+            
             SqlDataReader sqlDR = cmd.ExecuteReader();
 
             if (!sqlDR.Read())
@@ -190,7 +203,7 @@ namespace FinalProjectV1.Helpers
             {
                 HistoryItem HI = new HistoryItem();
                 HI.CarNumber = sqlDR["CarID"].ToString();
-                HI.Date = DateTime.Parse(sqlDR["CareDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                HI.Date = Convert.ToDateTime(sqlDR["CareDate"].ToString());
                 HI.TreatmentID = Int32.Parse(sqlDR["TreatmentID"].ToString());
                 HI.CareType = sqlDR["CareType"].ToString();
                 HI.KM = Int32.Parse(sqlDR["KM"].ToString());
@@ -214,17 +227,116 @@ namespace FinalProjectV1.Helpers
             Int32.TryParse(sqlDR["LastTreatment"].ToString(), out id);
             id++;
 
+            HI.CareType = updateCareTypeName(HI.CareType);
+
             cmd = new SqlCommand(string.Format("INSERT INTO Treatment (CarID, CareDate, TreatmentID, CareType, KM, GarageName) VALUES ('{0}' , '{1}' , '{2}' , '{3}' , '{4}' , '{5}')", HI.CarNumber, HI.Date, id, HI.CareType, HI.KM, HI.GarageName));
             cmd.Connection = sqlConnection;
 
-            if (cmd.ExecuteNonQuery() != -1)
-                return true;
+            if (cmd.ExecuteNonQuery() == -1)
+                return false;
 
-            return false;
+            bool success = true;
+
+            foreach (var part in HI.Treatment)
+            {
+                if (!InsertTreatmentToPart(id, getPartID(part)))
+                    success = false;
+            }
+
+            return success;
+        }
+
+        private string updateCareTypeName(string careType)
+        {
+            switch (careType)
+            {
+                case "EngineAndGear":
+                    careType = "מנוע וגיר";
+                    break;
+                case "TurningCarParts":
+                    careType = "חלקי פנים וחוץ";
+                    break;
+                case "ElectricalMechanics":
+                    careType = "רכיבים אלקטרוניים";
+                    break;
+                case "CarAccessories":
+                    careType = "אביזרי רכב";
+                    break;
+                case "Tretment_15000":
+                    careType = "טיפול 15 אלף";
+                    break;
+                case "Tretment_30000":
+                    careType = "טיפול 30 אלף";
+                    break;
+                case "Tretment_45000":
+                    careType = "טיפול 45 אלף";
+                    break;
+                case "Tretment_60000":
+                    careType = "טיפול 60 אלף";
+                    break;
+                case "Tretment_75000":
+                    careType = "טיפול 75 אלף";
+                    break;
+                case "Tretment_90000":
+                    careType = "טיפול 90 אלף";
+                    break;
+                case "Tretment_105000":
+                    careType = "טיפול 105 אלף";
+                    break;
+                case "Tretment_120000":
+                    careType = "טיפול 120 אלף";
+                    break;
+                case "Treatment_Test_Preparation":
+                    careType = "הכנה לטסט";
+                    break;
+                case "Tretment_Checking_Vehicles_Purchase":
+                    careType = "בדיקה לפני קנייה";
+                    break;
+                case "Tretment_Filling_Gas_AC":
+                    careType = "מילוי גז מזגן";
+                    break;
+                case "Tretment_Front_Adjustment":
+                    careType = "כיוון פרונט";
+                    break;
+                case "Tretment_Minor_Accident":
+                    careType = "תאונה קלה";
+                    break;
+                case "Tretment_Moderate_Accident":
+                    careType = "תאונה בינונית";
+                    break;
+                case "Tretment_Serious_Accident":
+                    careType = "תאונה קשה";
+                    break;
+                case "Tretment_Winter_Check":
+                    careType = "בדיקת חורף";
+                    break;
+                default:
+                    break;
+            }
+
+            return careType;
+        }
+
+        public int getPartID(string part)
+        {
+            if (part.Contains("מכונאות וחשמל - כללי - מצמד- קלאץ") ||
+                part.Contains("משאבות - משאבת מצמד - קלאץ'"))
+                part = part.Substring(0, part.Length - 1);
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT PartID FROM Parts WHERE PartName = '{0}'", part));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return -1;
+
+            int PartID;
+            Int32.TryParse(sqlDR["PartID"].ToString(), out PartID);
+
+            return PartID;
         }
 
         public bool isExistHistoryItem(HistoryItem HI)
         {
+            HI.CareType = updateCareTypeName(HI.CareType);
             SqlCommand cmd = new SqlCommand(string.Format("SELECT TreatmentID FROM Treatment WHERE CarID = {0} AND CareDate = '{1}' AND CareType = '{2}' AND KM = {3} AND GarageName = '{4}'", HI.CarNumber, HI.Date, HI.CareType, HI.KM, HI.GarageName));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -239,8 +351,15 @@ namespace FinalProjectV1.Helpers
             SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO TreatmentToParts (TreatmentID, PartID) VALUES ('{0}' , '{1}' )", TreatmentID, PartID));
             cmd.Connection = sqlConnection;
 
-            if (cmd.ExecuteNonQuery() != -1)
-                return true;
+            try {
+                if (cmd.ExecuteNonQuery() != -1)
+                    return true;
+            }
+            catch(Exception e)
+            {
+                if (e.HResult == -2146232060)
+                    return true;
+            }
 
             return false;
         }
@@ -305,8 +424,6 @@ namespace FinalProjectV1.Helpers
 
             int partValue = Int32.Parse(sqlDR["PartValue"].ToString());
             return partValue;
-
-
         }
 
         public int returnPartValueByPartName(string partName)
@@ -334,8 +451,8 @@ namespace FinalProjectV1.Helpers
             if (!sqlDR.Read())
                 return expiryDate;
 
-            
-            expiryDate = DateTime.Parse(sqlDR["ExpiryDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+
+            expiryDate = Convert.ToDateTime(sqlDR["ExpiryDate"].ToString());
             return expiryDate;
 
         }
@@ -373,7 +490,7 @@ namespace FinalProjectV1.Helpers
                 ad1.Description = sqlDR["Describe"].ToString();
                 ad1.Location = sqlDR["Location"].ToString();
                 ad1.Price = sqlDR["Price"].ToString();
-                //ad1.DatePublished= DateTime.Parse(sqlDR["DatePublished"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                ad1.DatePublished = Convert.ToDateTime(sqlDR["DatePublished"].ToString());
                 ad.Add(ad1);
 
             } while (sqlDR.Read());
@@ -396,10 +513,17 @@ namespace FinalProjectV1.Helpers
         public DateTime getMaxDateCarTreatment(String carNumber)
         {
             List<HistoryItem> historyItems = getHistoryByCarNumber(int.Parse(carNumber));
+            if(historyItems == null)
+            {
+                return new DateTime();
+            }
             SqlCommand cmd = new SqlCommand(String.Format("SELECT MAX (CareDate) AS 'Max' FROM Treatment where CarID='{0}'", carNumber));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
-            DateTime max= DateTime.Parse(sqlDR["Max"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+
+            if (!sqlDR.Read())
+                return new DateTime();
+            DateTime max = Convert.ToDateTime(sqlDR["Max"].ToString());
             return max;
         }
 
@@ -497,7 +621,7 @@ namespace FinalProjectV1.Helpers
                 ad1.Description = sqlDR["Describe"].ToString();
                 ad1.Location = sqlDR["Location"].ToString();
                 ad1.Price = sqlDR["Price"].ToString();
-                //ad1.DatePublished= DateTime.Parse(sqlDR["DatePublished"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                ad1.DatePublished = Convert.ToDateTime(sqlDR["DatePublished"].ToString());
                 ads.Add(ad1);
 
             } while (sqlDR.Read());
@@ -568,7 +692,7 @@ namespace FinalProjectV1.Helpers
             {
                 Car car = new Car();
                 car.CarNumber = sqlDR["CarID"].ToString();
-                car.RoadDate = DateTime.Parse(sqlDR["RoadDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                car.RoadDate = Convert.ToDateTime(sqlDR["RoadDate"].ToString());
                 car.Yad = sqlDR["Yad"].ToString();
                 car.Year = sqlDR["StartYear"].ToString();
                 car.CarVIN = sqlDR["ShildaNumber"].ToString();
@@ -586,6 +710,8 @@ namespace FinalProjectV1.Helpers
                 car.Gaer = sqlDR["Gaer"].ToString();
                 car.CommericalAlias = sqlDR["CarModel"].ToString();
                 car.KM = sqlDR["KM"].ToString();
+                car.ownerShip = sqlDR["Ownerships"].ToString();
+                car.AC = sqlDR["AC"].ToString();
                 cars.Add(car);
 
             } while (sqlDR.Read());
@@ -621,6 +747,8 @@ namespace FinalProjectV1.Helpers
                         cb.Location = ad.Location;
                         cb.Pic = ad.Pic;
                         cb.Price = ad.Price;
+                        cb.SellerName = ad.SellerName;
+                        cb.Tel = ad.Tel;
 
                         ads.Remove(ad);
                         break;
@@ -669,6 +797,60 @@ namespace FinalProjectV1.Helpers
 
             return model;
 
+        }
+
+        public List<int> getPartsIDs(int treatmentID)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT PartID FROM TreatmentToParts WHERE TreatmentID = '{0}'", treatmentID));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+
+            List<int> PartsIDs = new List<int>();
+            do
+            {
+                int id = Int32.Parse(sqlDR["PartID"].ToString());
+                PartsIDs.Add(id);
+            } while (sqlDR.Read());
+
+            return PartsIDs;
+        }
+
+        public List<int> getTreatmentIDs(int carID)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT TreatmentID FROM Treatment WHERE CarID = '{0}'", carID));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+
+            List<int> PartsIDs = new List<int>();
+            do
+            {
+                int id = Int32.Parse(sqlDR["TreatmentID"].ToString());
+                PartsIDs.Add(id);
+            } while (sqlDR.Read());
+
+            return PartsIDs;
+        }
+
+        public bool setGrade(string carNum, int grade)
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("UPDATE Car SET Grade = '{0}' WHERE CarID = '{1}'", grade, carNum));
+            cmd.Connection = sqlConnection;
+
+            try
+            {
+                if (cmd.ExecuteNonQuery() != -1)
+                    return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return false;
         }
 
         ~DBHelper()

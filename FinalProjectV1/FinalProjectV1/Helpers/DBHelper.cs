@@ -117,7 +117,47 @@ namespace FinalProjectV1.Helpers
 
         }
 
+        public List<string> getCarList()
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT ProductName FROM Car GROUP BY ProductName"));
+            cmd.Connection = sqlConnection;
 
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+            List<string> cars = new List<string>();
+
+            do
+            {
+                string car = sqlDR["ProductName"].ToString();
+                cars.Add(car);
+            } while (sqlDR.Read());
+
+            return cars;
+        }
+
+        public List<string> getCarModelList(string car)
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT CarModel FROM Car WHERE ProductName = '{0}' GROUP BY CarModel", car));
+            cmd.Connection = sqlConnection;
+
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+            List<string> cars = new List<string>();
+
+            do
+            {
+                string c = sqlDR["ProductName"].ToString();
+                cars.Add(c);
+            } while (sqlDR.Read());
+
+            return cars;
+        }
 
         public bool InsertCar(Car car)
         {

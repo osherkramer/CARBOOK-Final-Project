@@ -12,13 +12,31 @@ namespace FinalProjectV1.Controllers
     public class PersonalController : Controller
     {
         // GET: Personal
-        public ActionResult Index()
+        public ActionResult Index(string Email)
         {
-            
-            return View();
+            PersonalPage person = getPersonalDetails(Email);
+            return View(person);
         }
 
-        private bool genratePassword(string carNumber)
+        private PersonalPage getPersonalDetails(string Email)
+        {
+            DBHelper db = new DBHelper();
+            PersonalArea person = db.getPrivateDetails(Email);
+            PersonalPage details = new PersonalPage();
+            details.cars = db.getCarByID(person.ID);
+            details.Email = person.Email;
+            details.FirstName = person.FirstName;
+            details.ID = person.ID;
+            details.LastName = person.LastName;
+            details.OwnedCars = person.OwnedCars;
+            details.Residence = person.Residence;
+            details.Telephone = person.Telephone;
+
+            return details;
+
+        }
+
+        public bool genratePassword(string carNumber)
         {
             TemproryUsers tu = new TemproryUsers();
             int carID;
@@ -38,6 +56,32 @@ namespace FinalProjectV1.Controllers
             bool flag = DBHelp.insertTemproryUsers(tu);
             return flag;
             
+        }
+
+        public bool publishNewAdvertisement(string CarNumber, string SellerName, string Tel, string Pic, string Description, string Location, string Price, DateTime DatePublished)
+        {
+            Advertisement ad = new Advertisement();
+            ad.CarNumber = CarNumber;
+            ad.DatePublished = DatePublished;
+            ad.Description = Description;
+            ad.Location = Location;
+            ad.Pic = Pic;
+            ad.Price = Price;
+            ad.SellerName = SellerName;
+            ad.Tel = Tel;
+
+            DBHelper db = new DBHelper();
+            bool flag = db.insertAdvertisment(ad);
+            return flag;
+
+
+        }
+
+        public List<HistoryItem> getHistoryItemsCar(string carNumber)
+        {
+            DBHelper db = new DBHelper();
+            List<HistoryItem> historyItems = db.getHistoryByCarNumber(Int32.Parse(carNumber));
+            return historyItems;
         }
 
     }

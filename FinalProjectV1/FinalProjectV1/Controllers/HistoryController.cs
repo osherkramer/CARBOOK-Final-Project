@@ -15,12 +15,50 @@ namespace FinalProjectV1.Controllers
     public class HistoryController : Controller
     {
         // GET: History
-        public ActionResult Index(String carNumber)
+        public ActionResult Index(String carNumber, String password)
         {
-            carNumber = "1658490";
-            // UpdateCarHistory(carNumber);
+            
+            /*string[] cars = Directory.GetDirectories(@"C:\CarBook\Cars");
+            foreach (var c in cars)
+            {
+                carNumber = c.Split('\\')[3];
+                UpdateCarHistory(carNumber);
+                int grade = 50;
+                DBHelper db = new DBHelper();
+                List<int> treatmentID = db.getTreatmentIDs(Int32.Parse(carNumber));
+                if (treatmentID == null)
+                    continue;
+
+                foreach (var t in treatmentID)
+                {
+                    List<int> partID = db.getPartsIDs(t);
+                    if (partID == null)
+                        continue;
+
+                    foreach(var p in partID)
+                    {
+                        int value = db.returnPartValueBYID(p);
+                        if (value > 5 || value < -5)
+                            value = 0;
+                        grade += value;
+                    }
+                }
+                db.setGrade(carNumber, grade);
+            }*/
+            carNumber = "6719498";
+            password = "Aa123456";
             //List<HistoryItem> historyI = new List<HistoryItem>();
             DBHelper DBhelp = new DBHelper();
+            DateTime dt = DBhelp.getTemproryUsersByCarID(Int32.Parse(carNumber), password);
+            if(dt < DateTime.Now)
+            {
+                ModelState.AddModelError("UP", "Car number or password incurrect or expired");
+                HistoryCar hc = new HistoryCar();
+                hc.historyItems = new List<HistoryItem>();
+
+                return View(hc);
+            }
+
             Car car = DBhelp.getCarByNumber(carNumber);
             HistoryCar historyCar = getHistoryCar(car);
 
@@ -83,7 +121,7 @@ namespace FinalProjectV1.Controllers
             byteRead = clientStream.Read(buffer, 0, buffer.Length);*/
             DBHelper db = new DBHelper();
             
-            string buf = "Send data for 1658490";
+            string buf = "Send data for " + CarNumber;
             /*while ((buf = encoder.GetString(buffer, 0, byteRead)).Contains("Send data for"))
             {*/
                 string carNumber = buf.ToString().Split(' ')[3];
@@ -91,7 +129,7 @@ namespace FinalProjectV1.Controllers
                /* byteRead = clientStream.Read(buffer, 0, 4096);
                 string folderPath = encoder.GetString(buffer, 0, byteRead);*/
 
-                string[] files = Directory.GetFiles(@"C:\Users\osher\Desktop\CarBook\Cars\1658491");
+                string[] files = Directory.GetFiles(Path.Combine(@"C:\CarBook\Cars", carNumber));
 
                 foreach (var file in files)
                 {
@@ -112,11 +150,16 @@ namespace FinalProjectV1.Controllers
                 }
             /*}*/
 
-
+            db.Open();
             DateTime dateMax = db.getMaxDateCarTreatment(CarNumber);
+            if(dateMax.Equals(new DateTime()))
+            {
+                dateMax = db.getCarByNumber(CarNumber).RoadDate;
+            }
             bool flag = db.updateDateCarTreatment(CarNumber, dateMax);
             String KM = db.getMaxKM(dateMax, CarNumber);
             flag = db.updateKMCar(CarNumber, KM);
+            db.Close();
 
         }
     }

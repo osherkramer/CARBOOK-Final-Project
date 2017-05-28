@@ -84,6 +84,32 @@ namespace FinalProjectV1.Controllers
             return View(carsBoard);
         }
 
-      
+        public List<String> getListProduct()
+        {
+            DBHelper db = new DBHelper();
+            List<String> productName = db.getProductNameCars();
+            return productName;
+
+        }
+
+        public List<String> getModelOfCars(string productName)
+        {
+            DBHelper db = new DBHelper();
+            List<String> models = db.getModelCar(productName);
+            return models;
+
+        }
+
+        public List<string> getCars()
+        {
+            DBHelper db = new DBHelper();
+            return db.getCarList();
+        }
+
+        public List<string> getCarModel(string car)
+        {
+            DBHelper db = new DBHelper();
+            return db.getCarModelList(car);
+        }
     }
 }

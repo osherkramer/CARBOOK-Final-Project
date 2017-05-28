@@ -165,7 +165,7 @@ namespace FinalProjectV1.Helpers
 
             HistoryItem HI = new HistoryItem();
             HI.CarNumber = sqlDR["CarID"].ToString();
-            HI.Date = DateTime.Parse(sqlDR["CareDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            //HI.Date = DateTime.Parse(sqlDR["CareDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
             HI.TreatmentID = Int32.Parse(sqlDR["TreatmentID"].ToString());
             HI.CareType = sqlDR["CareType"].ToString();
             HI.KM = Int32.Parse(sqlDR["KM"].ToString());
@@ -190,7 +190,7 @@ namespace FinalProjectV1.Helpers
             {
                 HistoryItem HI = new HistoryItem();
                 HI.CarNumber = sqlDR["CarID"].ToString();
-                HI.Date = DateTime.Parse(sqlDR["CareDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                //HI.Date = DateTime.Parse(sqlDR["CareDate"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
                 HI.TreatmentID = Int32.Parse(sqlDR["TreatmentID"].ToString());
                 HI.CareType = sqlDR["CareType"].ToString();
                 HI.KM = Int32.Parse(sqlDR["KM"].ToString());
@@ -497,7 +497,7 @@ namespace FinalProjectV1.Helpers
                 ad1.Description = sqlDR["Describe"].ToString();
                 ad1.Location = sqlDR["Location"].ToString();
                 ad1.Price = sqlDR["Price"].ToString();
-                //ad1.DatePublished= DateTime.Parse(sqlDR["DatePublished"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                ad1.DatePublished = Convert.ToDateTime(sqlDR["DatePublished"].ToString());
                 ads.Add(ad1);
 
             } while (sqlDR.Read());
@@ -634,42 +634,6 @@ namespace FinalProjectV1.Helpers
             return carB;
         }
 
-        public List<String> getProductNameCars()
-        {
-            SqlCommand cmd = new SqlCommand(String.Format("SELECT ProductName FROM Car GROUP BY ProductName"));
-            cmd.Connection = sqlConnection;
-            SqlDataReader sqlDR = cmd.ExecuteReader();
-            if (!sqlDR.Read())
-                return null;
-
-            List<String> productName = new List<string>();
-            do {
-                string str= sqlDR["ProductName"].ToString();
-                productName.Add(str);
-            } while (sqlDR.Read());
-
-            return productName;
-
-        }
-
-        public List<String> getModelCar(string ProductName)
-        {
-            SqlCommand cmd = new SqlCommand(String.Format("SELECT CarModel FROM Car Where ProductName = '{0}' Group BY CarModel", ProductName));
-            cmd.Connection = sqlConnection;
-            SqlDataReader sqlDR = cmd.ExecuteReader();
-            if (!sqlDR.Read())
-                return null;
-
-            List<String> model = new List<string>();
-            do
-            {
-                string str = sqlDR["CarModel"].ToString();
-                model.Add(str);
-            } while (sqlDR.Read());
-
-            return model;
-
-        }
 
         ~DBHelper()
         {

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace FinalProjectV1.Models
 {
-    public class PersonaDetails
+    public class PersonalArea
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

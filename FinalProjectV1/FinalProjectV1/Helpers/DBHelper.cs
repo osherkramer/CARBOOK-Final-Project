@@ -82,6 +82,50 @@ namespace FinalProjectV1.Helpers
             return new Car();
         }
 
+        public List<Car> getCarByID(int ID)
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Car WHERE OwnerID = {0}", ID));
+            cmd.Connection = sqlConnection;
+
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+            List<Car> cars = new List<Car>();
+            do
+            {
+                Car car = new Car();
+
+                car.CarNumber = sqlDR["CarID"].ToString();
+                car.RoadDate = Convert.ToDateTime(sqlDR["RoadDate"].ToString());
+                car.Yad = sqlDR["Yad"].ToString();
+                car.Year = sqlDR["StartYear"].ToString();
+                car.CarVIN = sqlDR["ShildaNumber"].ToString();
+                car.EngineCapacity = sqlDR["EngineCapacity"].ToString();
+                car.HorsePower = sqlDR["HorsePower"].ToString();
+                car.AirBags = sqlDR["AirBags"].ToString();
+                car.ABS = sqlDR["CarABS"].ToString();
+                car.PowerWindow = sqlDR["PowerWindow"].ToString();
+                car.Roof = sqlDR["Roof"].ToString();
+                car.MagnesiumWheels = sqlDR["MagnesiumWheels"].ToString();
+                car.CarOwnerID = Int32.Parse(sqlDR["OwnerID"].ToString());
+                car.ProductName = sqlDR["ProductName"].ToString();
+                car.FuelType = sqlDR["FuelType"].ToString();
+                car.CarColor = sqlDR["CarColor"].ToString();
+                car.Gaer = sqlDR["Gaer"].ToString();
+                car.CommericalAlias = sqlDR["CarModel"].ToString();
+                car.ownerShip = sqlDR["Ownerships"].ToString();
+                car.AC = sqlDR["AC"].ToString();
+                cars.Add(car);
+                
+            } while (sqlDR.Read());
+
+
+
+            return cars;
+        }
+
         public Car getCar()
         {
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Car"));
@@ -158,6 +202,8 @@ namespace FinalProjectV1.Helpers
 
             return cars;
         }
+
+
 
         public bool InsertCar(Car car)
         {
@@ -892,6 +938,31 @@ namespace FinalProjectV1.Helpers
 
             return false;
         }
+
+        public PersonalArea getPrivateDetails(string Email)
+
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT * FROM PersonalArea WHERE Email = '{0}'", Email));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+
+            PersonalArea personal = new PersonalArea();
+
+            personal.Email = sqlDR["Email"].ToString();
+            personal.FirstName = sqlDR["FirstName"].ToString();
+            personal.ID = Int32.Parse(sqlDR["ID"].ToString());
+            personal.LastName = sqlDR["LastName"].ToString();
+            personal.OwnedCars = sqlDR["OwnedCars"].ToString();
+            personal.Residence = sqlDR["Residence"].ToString();
+            personal.Telephone= sqlDR["Telephone"].ToString();
+            
+            return personal;
+
+        }
+
+        
 
         ~DBHelper()
         {

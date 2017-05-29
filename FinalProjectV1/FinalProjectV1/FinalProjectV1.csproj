@@ -217,6 +217,7 @@
     <Compile Include="Models\HistoryItem.cs" />
     <Compile Include="Models\Parts.cs" />
     <Compile Include="Models\PersonalArea.cs" />
+    <Compile Include="Models\PersonalPage.cs" />
     <Compile Include="Models\TemproryUsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

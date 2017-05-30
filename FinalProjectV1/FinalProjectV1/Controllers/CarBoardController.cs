@@ -85,16 +85,45 @@ namespace FinalProjectV1.Controllers
         }
 
       
-        public List<string> getCars()
+        public JsonResult getCars()
         {
             DBHelper db = new DBHelper();
-            return db.getCarList();
+            return Json(db.getCarList());
         }
 
-        public List<string> getCarModel(string car)
+        public JsonResult getCarModel(string car)
         {
             DBHelper db = new DBHelper();
-            return db.getCarModelList(car);
+            return Json(db.getCarModelList(car));
+        }
+
+        public double calculateGradeOfCar(string carNumber)
+        {
+            DBHelper db = new DBHelper();
+            List<int> treatmentID = db.getTreatmentIDs(Int32.Parse(carNumber));
+
+            if (treatmentID==null) 
+                return -1;
+
+            List<int> partID = new List<int>();
+            List<int> tempID = new List<int>();
+            foreach(var id in treatmentID)
+            {
+                tempID=db.getPartsIDs(id);
+
+                foreach(var temp in tempID)
+                {
+                    partID.Add(temp);
+                }
+            }
+
+            int sum = 0;
+            foreach(var id in partID)
+            {
+                sum += db.returnPartValueBYID(id);
+            }
+
+            return sum;
         }
     }
 }

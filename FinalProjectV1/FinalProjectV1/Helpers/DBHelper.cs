@@ -973,7 +973,7 @@ namespace FinalProjectV1.Helpers
 
         public List<int> getPartValue(List<int> treatmentID, string carNumber)
         {
-            SqlCommand cmd = new SqlCommand(String.Format("select TreatmentID FROM Treatment where CarID= '{0}'", CarNumber));
+            SqlCommand cmd = new SqlCommand(String.Format("select TreatmentID FROM Treatment where CarID= '{0}'", carNumber));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
             if (!sqlDR.Read())

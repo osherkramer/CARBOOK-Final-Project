@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -20,18 +21,33 @@
                 </button>
                            </div>
             <div class="navbar-collapse collapse">
+@if (Request.IsAuthenticated)
+{
+                @Html.Partial("_LoginPartial")
                 <ul class="nav navbar-nav navbar-right">
             
-                    <li>@Html.ActionLink("ראשי", "Index", "Home")</li>
-                    <li>@Html.ActionLink("לוח רכב", "Index", "CarBoard")</li>
-                    <li>@Html.ActionLink("היסטוריית רכב", "Index", "History")</li>
                     <li>@Html.ActionLink("צור קשר", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("אזור אישי", "Index", "Personal")</li>
+                    <li>@Html.ActionLink("היסטוריית רכב", "Index", "History")</li>
+                    <li>@Html.ActionLink("לוח רכב", "Index", "CarBoard")</li>
+                    <li>@Html.ActionLink("ראשי", "Index", "Home")</li>
                 </ul>
                 <a class="nav navbar-nav">
                     <img id="navbar-brand" src="~/images/logo.jpg" />
                 </a>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("צור קשר", "Contact", "Home")</li>
+        <li>@Html.ActionLink("היסטוריית רכב", "Index", "History")</li>
+        <li>@Html.ActionLink("לוח רכב", "Index", "CarBoard")</li>
+        <li>@Html.ActionLink("ראשי", "Index", "Home")</li>
+    </ul>
+                <a class="nav navbar-nav">
+                    <img id="navbar-brand" src="~/images/logo.jpg" />
+                </a>
                 @Html.Partial("_LoginPartial")
+}
             </div>
         </div>
     </div>

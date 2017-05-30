@@ -9,72 +9,56 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace FinalProjectV1.Controllers
 {
     public class HistoryController : Controller
     {
-        // GET: History
-        public ActionResult Index(String carNumber, String password)
+        //
+        // GET: /History/Index
+        [AllowAnonymous]
+        public ActionResult Index()
         {
-            
-            /*string[] cars = Directory.GetDirectories(@"C:\CarBook\Cars");
-            foreach (var c in cars)
+            return View();
+        }
+
+        //
+        // POST: /History/Index
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Index(TemproryUsers model, string returnUrl)
+        {
+            return RedirectToAction("History", "History", new { carNumber = model.carID, password = model.password, isOwner = false });
+        }
+
+        // GET: History
+        public ActionResult History(String carNumber, String password, bool isOwner = false)
+        {
+            if(carNumber == null)
             {
-                carNumber = c.Split('\\')[3];
-                UpdateCarHistory(carNumber);
-                int grade = 50;
-                DBHelper db = new DBHelper();
-                List<int> treatmentID = db.getTreatmentIDs(Int32.Parse(carNumber));
-                if (treatmentID == null)
-                    continue;
+                carNumber = "0";
+            }
 
-                foreach (var t in treatmentID)
-                {
-                    List<int> partID = db.getPartsIDs(t);
-                    if (partID == null)
-                        continue;
-
-                    foreach(var p in partID)
-                    {
-                        int value = db.returnPartValueBYID(p);
-                        if (value > 5 || value < -5)
-                            value = 0;
-                        grade += value;
-                    }
-                }
-                db.setGrade(carNumber, grade);
-            }*/
-            carNumber = "6719498";
-            password = "Aa123456";
-            //List<HistoryItem> historyI = new List<HistoryItem>();
+            if(password == null)
+            {
+                password = "";
+            }
             DBHelper DBhelp = new DBHelper();
-            DateTime dt = DBhelp.getTemproryUsersByCarID(Int32.Parse(carNumber), password);
-            if(dt < DateTime.Now)
+            if (!isOwner)
             {
-                ModelState.AddModelError("UP", "Car number or password incurrect or expired");
-                HistoryCar hc = new HistoryCar();
-                hc.historyItems = new List<HistoryItem>();
-
-                return View(hc);
+                DateTime dt = DBhelp.getTemproryUsersByCarID(Int32.Parse(carNumber), password);
+                if (dt < DateTime.Now)
+                {
+                    ViewBag.Message = "Car number or password incurrect or expired";
+                    return View();
+                }
             }
 
             Car car = DBhelp.getCarByNumber(carNumber);
             HistoryCar historyCar = getHistoryCar(car);
-
-            /*do
-            {
-                car = DBhelp.getCar();
-                historyI = DBhelp.getHistoryByCarNumber(int.Parse(car.CarNumber));
-            } while (historyI == null);*/
-
-            /*foreach (var hi in historyI)
-            {
-                HistoryCar hc = new HistoryCar();
-                hc = getHistoryCar(car);
-                historyCar.Add(hc);
-
-            }*/
+            historyCar.isOwnerRequest = isOwner;
 
             return View(historyCar);
         }
@@ -83,16 +67,7 @@ namespace FinalProjectV1.Controllers
         private HistoryCar getHistoryCar(Car car)
         {
             HistoryCar hc = new HistoryCar();
-
-
-            hc.CarNumber = car.CarNumber;
-            hc.CarColor = car.CarColor;
-            hc.ShildaNumber = car.ShildaNumber;
-            hc.RoadDate = car.RoadDate;
-            hc.ProductName = car.ProductName;
-            hc.Year = car.Year;
-            hc.Gaer = car.Gaer;
-            hc.Yad = car.Yad;
+            hc.car = car;
 
             DBHelper DBhelp = new DBHelper();
             hc.historyItems = DBhelp.getHistoryByCarNumber(int.Parse(car.CarNumber));

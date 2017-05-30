@@ -7,6 +7,12 @@ namespace FinalProjectV1.Models
 {
     public class IndexViewModel
     {
+        public string UserName { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string IsraeliIdentify { get; set; }
+        public string Email { get; set; }
+        public Dictionary<string, string> Cars { get; set; }
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }

@@ -49,34 +49,55 @@ namespace FinalProjectV1.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "כתובת מייל")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "סיסמה")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "זכור אותי")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
         [Required]
+        [StringLength(100, ErrorMessage = "ה{0} צריך להיות באורך של לפחות {1} תווים", MinimumLength = 2)]
+        [Display(Name = "שם")]
+        public string Name { get; set; }
+
+        [Required]
+        [StringLength(9, ErrorMessage = "תעודת הזהות אינה חוקית", MinimumLength = 9)]
+        [Display(Name = "תעודת זהות")]
+        public string ID { get; set; }
+
+        [Required]
+        [StringLength(10, ErrorMessage = "מספר טלפון שגוי", MinimumLength = 9)]
+        [Phone]
+        [Display(Name = "מספר טלפון")]
+        public string Phone { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "ה{0} צריך להיות באורך של לפחות {1} תווים", MinimumLength = 5)]
+        [Display(Name = "כתובת מגורים")]
+        public string Address { get; set; }
+
+        [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "כתובת אימייל")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "סיסמה")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "אימות סיסמה")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }

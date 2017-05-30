@@ -737,7 +737,7 @@ namespace FinalProjectV1.Helpers
                 carsNum.Add(str);
             }
 
-            bool flag = false;
+            
             String query = "SELECT * from Car WHERE CarID IN (";
             foreach (var carNum in carsNum)
             {
@@ -952,6 +952,33 @@ namespace FinalProjectV1.Helpers
             }
 
             return false;
+        }
+
+        public List<int> getTreatmentIDByCarNum(string CarNumber)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("select TreatmentID FROM Treatment where CarID= '{0}'", CarNumber));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+            List<int> treatmentID = new List<int>();
+            do {
+                int id = Int32.Parse(sqlDR["TreatmentID"].ToString());
+                treatmentID.Add(id);
+
+            } while (sqlDR.Read());
+
+            return treatmentID;
+        }
+
+        public List<int> getPartValue(List<int> treatmentID, string carNumber)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("select TreatmentID FROM Treatment where CarID= '{0}'", CarNumber));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+            return null;
         }
 
         public PersonalArea getPrivateDetails(string Email)

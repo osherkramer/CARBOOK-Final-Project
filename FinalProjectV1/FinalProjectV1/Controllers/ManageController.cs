@@ -150,6 +150,38 @@ namespace FinalProjectV1.Controllers
             return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
         }
 
+        public ActionResult AddOwnCar()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/AddPhoneNumber
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddOwnCar(AddOwnCar model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            DBHelper db = new DBHelper();
+            db.updateCarOwn(model.Number, getValueFromUserTable(User.Identity.GetUserId(), "IsraeliIdentify"));
+            /*// Generate the token and send it
+            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
+            if (UserManager.SmsService != null)
+            {
+                var message = new IdentityMessage
+                {
+                    Destination = model.Number,
+                    Body = "Your security code is: " + code
+                };
+                await UserManager.SmsService.SendAsync(message);
+            }*/
+            return RedirectToAction("Index", "Manage");
+        }
+
         //
         // POST: /Manage/EnableTwoFactorAuthentication
         [HttpPost]

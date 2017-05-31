@@ -14,5 +14,7 @@ namespace FinalProjectV1.Models
         public List<HistoryItem> historyItems { get; set; }
 
         public bool isOwnerRequest { get; set; }
+
+        public bool isPublished { get; set; }
     }
 }

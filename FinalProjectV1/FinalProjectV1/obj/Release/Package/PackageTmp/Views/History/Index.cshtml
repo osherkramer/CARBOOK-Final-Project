@@ -1,80 +1,42 @@
-﻿@model FinalProjectV1.Models.HistoryCar
-
+﻿@using FinalProjectV1.Models
+@model TemproryUsers
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "התחברות זמנית לצפייה בהיסטוריית רכב";
 }
 
-<h2>היסטוריית רכב</h2>
-<div class="history">
-    <div class="messagesBoard" id="messagesBoardList">
-        <div class="panelHeader row">
-            <div class="col-xs-1"><img src="~/images/img3.png" /></div>
-            <div class="col-xs-2">יצרן</div>
-            <div class="col-xs-2">דגם</div>
-            <div class="col-xs-1">נפח</div>
-            <div class="col-xs-1">שנה</div>
-            <div class="col-xs-1">יד</div>
-            <div class="col-xs-2">הילוכים</div>
-            <div class="col-xs-1">מחיר</div>
-            <div class="col-xs-1">איזור</div>
-            <div class="col-xs-1"><img src="~/images/img5.png" /></div>
-            <div class="col-xs-1">תאריך</div>
-        </div>
-        <div class="panel row">
-            <a href="javascript:void(0)" class="btnCollapse row collapsed">
-                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                <div class="col-xs-2">@Model.ProductName</div>
-                <div class="col-xs-2">@Model.CommericalAlias</div>
-                <div class="col-xs-1">@Model.EngineCapacity</div>
-                <div class="col-xs-1">@Model.Year</div>
-                <div class="col-xs-1">@Model.Yad</div>
-                <div class="col-xs-2">@Model.Gaer</div>
-                <div class="col-xs-1">8000</div>
-                <div class="col-xs-1">@Model.Location</div>
-                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                <div class="col-xs-1">@Model.DatePublished.ToString("dd/MM/yyyy")</div>
-            </a>
-        </div>
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Index", "History", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.carID, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.carID, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.carID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="התחבר" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </section>
     </div>
-    <div class="historyDetails row">
-        <div class="col-sm-6">
-            <ul class="carDeatilesList ">
-                <li class=""><strong>שנת יצור:</strong>@Model.Year</li>
-                <li class=""><strong>ת.מסירה:</strong>@Model.RoadDate.ToString("dd/MM/yyyy")</li>
-                <li class=""><strong>דגם:</strong>@Model.ProductName</li>
-            </ul>
-        </div>
-        <div class="col-sm-6">
-            <ul class="carDeatilesList ">
-                <li class=""><strong>קוד שילדה:</strong>@Model.ShildaNumber</li>
-                <li class=""><strong>צבע:</strong>@Model.CarColor</li>
-            </ul>
-        </div>
-    </div>
-    <div class="tableContainer">
-        <table class="table table-bordered table-striped historyTable">
-            <thead>
-                <tr>
-                    <th>תאריך כניסה</th>
-                    <th>מרכז שירות</th>
-                    <th>מד אוץ</th>
-                    <th>מהות</th>
-                    <th>פרטים נוספים</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.historyItems)
-                {
-                    <tr>
-                        <td>@item.Date.ToString("dd/MM/yyyy")</td>
-                        <td>@item.GarageName</td>
-                        <td>@item.KM</td>
-                        <td>@item.CareType</td>
-                        <td><a href="#" class="link">לפרטים</a></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
 </div>
-</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<ul class="carDeatilesList list-group">
+    <li class="title">אזור אישי</li>
+    <li class="list-group-item"><strong>שם פרטי:</strong> שי </li>
+    <li class="list-group-item"><strong>שם משפחה:</strong>  מלכה</li>
+    <li class="list-group-item"><strong>אזור:</strong>  ראשון לציון</li>
+    <li class="list-group-item"><strong>מייל:</strong> shaymalca21@gmail.com</li>
+    <li class="list-group-item"><strong>רכבים בבעלותי:</strong> 2</li>
+    <li class="list-group-item"><strong>טלפון:</strong> 0523426996</li>
+</ul>
+<ul class="Personlbutton">
+    <li> @Html.ActionLink("שינוי סיסמה", "ChangePassword", "Manage") </li>
+    <li> @Html.ActionLink("גנרוט סיסמה לקוח", "ChangePassword", "Manage") </li>
+    <li> @Html.ActionLink("פרסם מודעה חדשה", "ChangePassword", "Manage") </li>
+    <li> @Html.ActionLink("צפיה ברכבים שבבעלותי", "ChangePassword", "Manage") </li>
+
+</ul>

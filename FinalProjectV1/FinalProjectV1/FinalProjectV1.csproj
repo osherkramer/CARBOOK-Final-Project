@@ -211,8 +211,10 @@
     <Compile Include="Models\Advertisement.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\CarBoard.cs" />
+    <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\HistoryCar.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Locations.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\HistoryItem.cs" />
     <Compile Include="Models\Parts.cs" />
@@ -336,6 +338,9 @@
     <Content Include="Views\History\Index.cshtml" />
     <Content Include="Views\Movie\Index.cshtml" />
     <Content Include="Views\History\History.cshtml" />
+    <Content Include="Views\Manage\AddOwnCar.cshtml" />
+    <Content Include="Views\History\AddAD.cshtml" />
+    <Content Include="Views\History\GeneratePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

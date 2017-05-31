@@ -72,6 +72,8 @@ namespace FinalProjectV1.Helpers
                 car.CommericalAlias = sqlDR["CarModel"].ToString();
                 car.ownerShip = sqlDR["Ownerships"].ToString();
                 car.AC = sqlDR["AC"].ToString();
+                car.KM = sqlDR["KM"].ToString();
+                car.ShildaNumber = sqlDR["ShildaNumber"].ToString();
 
                 return car;
             }
@@ -80,6 +82,19 @@ namespace FinalProjectV1.Helpers
                 Console.WriteLine(e.Message);
             }
             return new Car();
+        }
+
+        public string getValueFromUserTable(string userId, string column)
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT {0} FROM AspNetUsers WHERE Id = '{1}'", column, userId));
+            cmd.Connection = sqlConnection;
+
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+            return sqlDR[column].ToString();
         }
 
         public List<Car> getCarByID(int ID)
@@ -942,7 +957,7 @@ namespace FinalProjectV1.Helpers
 
         public List<int> getPartValue(List<int> treatmentID, string carNumber)
         {
-            SqlCommand cmd = new SqlCommand(String.Format("select TreatmentID FROM Treatment where CarID= '{0}'", CarNumber));
+            SqlCommand cmd = new SqlCommand(String.Format("select TreatmentID FROM Treatment where CarID= '{0}'", carNumber));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
             if (!sqlDR.Read())
@@ -973,12 +988,38 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        
+        public Dictionary<string, string> getCarsByOwner(string ownerId)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT CarID, ProductName FROM Car WHERE OwnerID = '{0}'", ownerId));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+
+            Dictionary<string, string> tempDictonary = new Dictionary<string, string>();
+
+            do
+            {
+                string carNumber = sqlDR["CarID"].ToString();
+                string carProduct = sqlDR["ProductName"].ToString();
+                tempDictonary.Add(carNumber, carProduct);
+            } while (sqlDR.Read());
+
+            return tempDictonary;
+        }
+
+
 
         ~DBHelper()
         {
-            if(sqlConnection.State == ConnectionState.Open)
-                sqlConnection.Close();
+            if (sqlConnection.State == ConnectionState.Open)
+                try {
+                    sqlConnection.Close();
+                }
+                catch(Exception e)
+                {
+                    
+                }
         }
     }
 }

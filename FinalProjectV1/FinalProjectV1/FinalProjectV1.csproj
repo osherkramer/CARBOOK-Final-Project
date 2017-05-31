@@ -335,6 +335,7 @@
     <Content Include="Views\CarBoard\Index.cshtml" />
     <Content Include="Views\History\Index.cshtml" />
     <Content Include="Views\Movie\Index.cshtml" />
+    <Content Include="Views\History\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

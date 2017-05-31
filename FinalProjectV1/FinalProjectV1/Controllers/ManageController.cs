@@ -7,6 +7,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FinalProjectV1.Models;
+using FinalProjectV1.Helpers;
+using System.Collections.Generic;
 
 namespace FinalProjectV1.Controllers
 {
@@ -66,6 +68,12 @@ namespace FinalProjectV1.Controllers
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
+                UserName = getValueFromUserTable(userId, "UserName"),
+                Name = getValueFromUserTable(userId, "Name"),
+                Address = getValueFromUserTable(userId, "Address"),
+                IsraeliIdentify = getValueFromUserTable(userId, "IsraeliIdentify"),
+                Email = getValueFromUserTable(userId, "Email"),
+                Cars = getCarsByOwner(getValueFromUserTable(userId, "IsraeliIdentify")),
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
@@ -73,6 +81,18 @@ namespace FinalProjectV1.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
+        }
+
+        private string getValueFromUserTable(string userId, string column)
+        {
+            DBHelper db = new DBHelper();
+            return db.getValueFromUserTable(userId, column);
+        }
+
+        private Dictionary<string, string> getCarsByOwner(string userId)
+        {
+            DBHelper db = new DBHelper();
+            return db.getCarsByOwner(userId);
         }
 
         //

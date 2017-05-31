@@ -1047,9 +1047,9 @@ namespace FinalProjectV1.Helpers
             return tempDictonary;
         }
 
-        public bool editAdress(string adress, string email)
+        public bool editAdress(string adress, string Id)
         {
-            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Address='{0}' WHERE Email='{1}'", adress,email));
+            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Address='{0}' WHERE Id='{1}'", adress,Id));
             cmd.Connection = sqlConnection;
             try
             {
@@ -1063,23 +1063,31 @@ namespace FinalProjectV1.Helpers
             return false;
         }
 
-        public bool editEmail(string oldEmail, string newEmail)
+        public bool editEmail(string Id, string newEmail)
         {
             SqlCommand cmd= new SqlCommand(String.Format("SELECT Email FROM AspNetUsers"));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return false;
 
             List<string> email = new List<string>();
-            do {
-                string str= sqlDR["Email"].ToString();
+            
+            while (sqlDR.Read())
+            {
+                string str = sqlDR["Email"].ToString();
                 email.Add(str);
-            } while (sqlDR.Read());
+            }
+                
 
             if (email.Contains(newEmail))
                 return false;
 
-            cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Email='{0}' , UserName='{1}' WHERE Email='{2}'", newEmail, newEmail, oldEmail));
-           
+            cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Email='{0}' , UserName='{1}' WHERE Id='{2}'", newEmail, newEmail, Id));
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return false;
+
             try
             {
                 if (cmd.ExecuteNonQuery() != -1)
@@ -1092,9 +1100,9 @@ namespace FinalProjectV1.Helpers
             return false;
         }
 
-        bool editName(string name, string email)
+        bool editName(string name, string Id)
         {
-            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Name='{0}' WHERE Email='{1}'", name, email));
+            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Name='{0}' WHERE Id='{1}'", name, Id));
             cmd.Connection = sqlConnection;
             try
             {

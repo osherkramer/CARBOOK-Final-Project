@@ -344,12 +344,37 @@ namespace FinalProjectV1.Controllers
 
         //
 
-        // GET: /Manage/Edit Adress
-        public ActionResult EditAdress()
+        // GET: /Manage/ChangeEmail
+        public ActionResult ChangeEmail()
         {
             return View();
         }
-            
+
+        //
+        // POST: /Manage/ChangeEmail
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeEmail(ChangeEmailViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            // Generate the token and send it
+            //var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
+            DBHelper db = new DBHelper();
+            bool flag = db.editEmail(model.Email, User.Identity.GetUserId());
+            /*if (UserManager.SmsService != null)
+            {
+                var message = new IdentityMessage
+                {
+                    Destination = model.Email,
+                    Body = "Your security code is: " + code
+                };
+                await UserManager.SmsService.SendAsync(message);
+            }*/
+            return RedirectToAction("Index", "Manage");
+        }
 
 
         protected override void Dispose(bool disposing)

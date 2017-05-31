@@ -72,6 +72,14 @@ namespace FinalProjectV1.Models
         public string Number { get; set; }
     }
 
+    public class ChangeEmailViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "כתובת מייל")]
+        public string Email { get; set; }
+    }
+
     public class AddOwnCar
     {
         [Required]

@@ -758,7 +758,6 @@ namespace FinalProjectV1.Helpers
                 carsNum.Add(str);
             }
 
-            
             String query = "SELECT * from Car WHERE CarID IN (";
             foreach (var carNum in carsNum)
             {
@@ -975,22 +974,7 @@ namespace FinalProjectV1.Helpers
             return false;
         }
 
-        public List<int> getTreatmentIDByCarNum(string CarNumber)
-        {
-            SqlCommand cmd = new SqlCommand(String.Format("select TreatmentID FROM Treatment where CarID= '{0}'", CarNumber));
-            cmd.Connection = sqlConnection;
-            SqlDataReader sqlDR = cmd.ExecuteReader();
-            if (!sqlDR.Read())
-                return null;
-            List<int> treatmentID = new List<int>();
-            do {
-                int id = Int32.Parse(sqlDR["TreatmentID"].ToString());
-                treatmentID.Add(id);
-
-            } while (sqlDR.Read());
-
-            return treatmentID;
-        }
+       
 
         public List<int> getPartValue(List<int> treatmentID, string carNumber)
         {
@@ -1063,6 +1047,67 @@ namespace FinalProjectV1.Helpers
             return tempDictonary;
         }
 
+        public bool editAdress(string adress, string email)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Address='{0}' WHERE Email='{1}'", adress,email));
+            cmd.Connection = sqlConnection;
+            try
+            {
+                if (cmd.ExecuteNonQuery() != -1)
+                    return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return false;
+        }
+
+        public bool editEmail(string oldEmail, string newEmail)
+        {
+            SqlCommand cmd= new SqlCommand(String.Format("SELECT Email FROM AspNetUsers"));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            List<string> email = new List<string>();
+            do {
+                string str= sqlDR["Email"].ToString();
+                email.Add(str);
+            } while (sqlDR.Read());
+
+            if (email.Contains(newEmail))
+                return false;
+
+            cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Email='{0}' , UserName='{1}' WHERE Email='{2}'", newEmail, newEmail, oldEmail));
+           
+            try
+            {
+                if (cmd.ExecuteNonQuery() != -1)
+                    return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return false;
+        }
+
+        bool editName(string name, string email)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Name='{0}' WHERE Email='{1}'", name, email));
+            cmd.Connection = sqlConnection;
+            try
+            {
+                if (cmd.ExecuteNonQuery() != -1)
+                    return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return false;
+
+        }
 
 
         ~DBHelper()

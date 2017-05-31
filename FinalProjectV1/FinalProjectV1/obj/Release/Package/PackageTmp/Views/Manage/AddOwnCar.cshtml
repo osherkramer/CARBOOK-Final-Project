@@ -1,14 +1,14 @@
-﻿@model FinalProjectV1.Models.AddPhoneNumberViewModel
+﻿@model FinalProjectV1.Models.AddOwnCar
 @{
-    ViewBag.Title = "שינוי מספר טלפון";
+    ViewBag.Title = "הוספת רכב שבבעלותי";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("AddPhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("AddOwnCar", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>הכנס מספר טלפון חדש</h4>
+    <h4>הכנס מספר רכב חדש</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
@@ -19,7 +19,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="עדכן מספר טלפון" />
+            <input type="submit" class="btn btn-default" value="עדכן רכבים שבבעלותי" />
         </div>
     </div>
 }

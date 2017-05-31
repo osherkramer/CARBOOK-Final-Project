@@ -27,8 +27,15 @@ if (Request.IsAuthenticated && Model.isOwnerRequest)
         <table class="table table-bordered table-striped historyTable">
             <tbody>
                 <tr>
-                    <td align="center">פרסום הרכב בלוח</td>
-                    <td align="center">יצירת סיסמה זמנית</td>
+                    @if (Model.isPublished)
+                    {
+                        <td align="center">@Html.ActionLink("הסרת הרכב מהלוח", "DeleteAD", "History", new { carNumber = @Model.car.CarNumber }, null)</td>
+                    }
+                    else
+                    {
+                        <td align="center">@Html.ActionLink("פרסום הרכב בלוח", "AddAD", "History", new { carNumber = @Model.car.CarNumber }, null)</td>
+                    }
+                    <td align="center">@Html.ActionLink("יצירת סיסמה זמנית", "GeneratePassword", "History", new { carNumber = @Model.car.CarNumber }, null)</td>
                 </tr>
             </tbody>
          </table>

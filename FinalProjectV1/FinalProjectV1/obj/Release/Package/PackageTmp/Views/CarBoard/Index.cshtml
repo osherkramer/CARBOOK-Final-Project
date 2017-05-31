@@ -243,10 +243,11 @@
                                 <div><strong>טלפון:</strong>@item.Tel</div>
                                 <form>
                                     <div class="code">
-                                        <input class="form-control" type="text" /><strong>:קוד אבטחה</strong>
+                                        <input class="form-control" type="text" id="Code_@item.CarNumber"/><strong>:קוד אבטחה</strong>
                                     </div>
                                     <div>
-                                        <input type="submit" value="שלח" />
+                                        <!--<input type="submit" value="שלח" />-->
+                                        @Html.ActionLink("שלח", "History", "History", new { carNumber = item.CarNumber, isOwner = false }, htmlAttributes: new { password = "Code_"+@item.CarNumber })
                                     </div>
                                 </form>
                             </div>

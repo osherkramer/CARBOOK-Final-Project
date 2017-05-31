@@ -26,7 +26,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/02/2015 09:32:26</publishTime>
     </File>
     <File Include="bin/FinalProjectV1.dll">
-      <publishTime>05/31/2017 01:21:59</publishTime>
+      <publishTime>05/31/2017 16:14:38</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>11/30/2016 16:07:42</publishTime>
@@ -311,7 +311,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/24/2017 15:42:13</publishTime>
     </File>
     <File Include="lib/jquery-validation/dist/jquery.validate.js">
-      <publishTime>05/24/2017 15:42:13</publishTime>
+      <publishTime>05/31/2017 10:53:57</publishTime>
     </File>
     <File Include="lib/jquery-validation/dist/jquery.validate.min.js">
       <publishTime>05/24/2017 15:42:13</publishTime>
@@ -416,10 +416,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/20/2017 18:43:28</publishTime>
     </File>
     <File Include="Views/CarBoard/Index.cshtml">
-      <publishTime>05/27/2017 19:53:01</publishTime>
+      <publishTime>05/31/2017 15:06:09</publishTime>
+    </File>
+    <File Include="Views/History/AddAD.cshtml">
+      <publishTime>05/31/2017 14:51:52</publishTime>
+    </File>
+    <File Include="Views/History/GeneratePassword.cshtml">
+      <publishTime>05/31/2017 15:38:38</publishTime>
     </File>
     <File Include="Views/History/History.cshtml">
-      <publishTime>05/31/2017 00:40:55</publishTime>
+      <publishTime>05/31/2017 15:33:29</publishTime>
     </File>
     <File Include="Views/History/Index.cshtml">
       <publishTime>05/30/2017 23:55:18</publishTime>
@@ -428,19 +434,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/20/2017 18:43:20</publishTime>
     </File>
     <File Include="Views/Home/Contact.cshtml">
-      <publishTime>05/24/2017 15:42:13</publishTime>
+      <publishTime>05/31/2017 10:33:59</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>05/05/2017 14:47:54</publishTime>
     </File>
+    <File Include="Views/Manage/AddOwnCar.cshtml">
+      <publishTime>05/31/2017 14:03:02</publishTime>
+    </File>
     <File Include="Views/Manage/AddPhoneNumber.cshtml">
-      <publishTime>04/20/2017 18:43:28</publishTime>
+      <publishTime>05/31/2017 10:48:24</publishTime>
     </File>
     <File Include="Views/Manage/ChangePassword.cshtml">
-      <publishTime>04/20/2017 18:43:28</publishTime>
+      <publishTime>05/31/2017 10:50:48</publishTime>
     </File>
     <File Include="Views/Manage/Index.cshtml">
-      <publishTime>05/31/2017 00:41:01</publishTime>
+      <publishTime>05/31/2017 14:07:29</publishTime>
     </File>
     <File Include="Views/Manage/ManageLogins.cshtml">
       <publishTime>04/20/2017 18:43:28</publishTime>

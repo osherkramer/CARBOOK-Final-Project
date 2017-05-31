@@ -1,0 +1,109 @@
+﻿@model FinalProjectV1.Models.HistoryCar
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if(@Model==null)
+{
+    <h2>לא קיים מידע עבור הרכב המבוקש או ששם המשתמש והסיסמה שגויים או אינם בתוקף</h2>
+}
+else if(@Model.car==null)
+{
+    <h2>לא קיים מידע עבור הרכב המבוקש או ששם המשתמש והסיסמה שגויים או אינם בתוקף</h2>
+}
+else if (@Model.historyItems==null)
+{
+    <h2>לא קיים מידע עבור הרכב המבוקש או ששם המשתמש והסיסמה שגויים או אינם בתוקף</h2>
+}
+else
+{
+if (Request.IsAuthenticated && Model.isOwnerRequest)
+{
+    <h2>ניהול ומידע רכב מספר @Model.car.CarNumber</h2>
+    <hr />
+    <div class="tableContainer">
+        <table class="table table-bordered table-striped historyTable">
+            <tbody>
+                <tr>
+                    @if (Model.isPublished)
+                    {
+                        <td align="center">@Html.ActionLink("הסרת הרכב מהלוח", "DeleteAD", "History", new { carNumber = @Model.car.CarNumber }, null)</td>
+                    }
+                    else
+                    {
+                        <td align="center">@Html.ActionLink("פרסום הרכב בלוח", "AddAD", "History", new { carNumber = @Model.car.CarNumber }, null)</td>
+                    }
+                    <td align="center">@Html.ActionLink("יצירת סיסמה זמנית", "GeneratePassword", "History", new { carNumber = @Model.car.CarNumber }, null)</td>
+                </tr>
+            </tbody>
+         </table>
+    </div>
+}
+else
+{ 
+    <h2>היסטוריית רכב מספר @Model.car.CarNumber</h2>
+    <hr />
+}
+<div class="history">
+    <h3>פרטי הרכב</h3>
+        <div class="historyDetails row">
+            <div class="col-sm-6">
+                <ul class="carDeatilesList ">
+                    <li class=""><strong>מספר רכב: </strong>@Model.car.CarNumber</li>
+                    <li class=""><strong>יצרן: </strong>@Model.car.ProductName</li>
+                    <li class=""><strong>דגם: </strong>@Model.car.CommericalAlias</li>
+                    <li class=""><strong>קוד שילדה: </strong>@Model.car.ShildaNumber</li>
+                    <li class=""><strong>נפח מנוע: </strong>@Model.car.EngineCapacity</li>
+                    <li class=""><strong>כוח סוס: </strong>@Model.car.HorsePower</li>
+                    <li class=""><strong>תיבת הילוכים: </strong>@Model.car.Gaer</li>
+                    <li class=""><strong>סוג מנוע: </strong>@Model.car.FuelType</li>
+                    <li class=""><strong>מד אוץ: </strong>@Model.car.KM</li>
+                    <li class=""><strong>מערכת ABS: </strong>@Model.car.ABS</li>
+                </ul>
+             </div>
+             <div class="col-sm-6">
+                <ul class="carDeatilesList ">
+                    <li class=""><strong>מזגן: </strong>@Model.car.AC</li>
+                    <li class=""><strong>חלונות חשמל: </strong>@Model.car.PowerWindow</li>
+                    <li class=""><strong>חלון בגג: </strong>@Model.car.Roof</li>
+                    <li class=""><strong>חישוקי מגנזיום: </strong>@Model.car.MagnesiumWheels</li>
+                    <li class=""><strong>כריות אוויר: </strong>@Model.car.AirBags</li>
+                    <li class=""><strong>שנת יצור: </strong>@Model.car.Year</li>
+                    <li class=""><strong>תאריך עליה לכביש: </strong>@Model.car.RoadDate.ToString("dd/MM/yyyy")</li>
+                    <li class=""><strong>מספר בעלים: </strong>@Model.car.Yad</li>
+                    <li class=""><strong>בעלות: </strong>@Model.car.ownerShip</li>
+                    <li class=""><strong>צבע: </strong>@Model.car.CarColor</li>
+                 </ul>
+              </div>
+          </div>
+       <hr />
+       <h3>היסטוריית הטיפולים</h3>
+          <div class="tableContainer">
+             <table class="table table-bordered table-striped historyTable">
+                <thead>
+                    <tr>
+                       <th>תאריך כניסה</th>
+                       <th>מרכז שירות</th>
+                       <th>מד אוץ</th>
+                       <th>מהות</th>
+                       <th>פרטים נוספים</th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                 @foreach (var item in Model.historyItems)
+                 {
+                    <tr>
+                       <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                       <td>@item.GarageName</td>
+                       <td>@item.KM</td>
+                       <td>@item.CareType</td>
+                       <td><a href="#" class="link">לפרטים</a></td>
+                       </tr>
+                  }
+                  </tbody>
+             </table>
+         </div>
+   </div>
+}

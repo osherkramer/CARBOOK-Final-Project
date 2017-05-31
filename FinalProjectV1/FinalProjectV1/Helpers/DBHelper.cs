@@ -560,7 +560,7 @@ namespace FinalProjectV1.Helpers
 
         public bool insertTemproryUsers(TemproryUsers user)
         {
-            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO TemproryUsers (CarID, ExpiryDate, Password) VALUES ('{0}' , '{1}' , '{2}' ) ", user.carID, user.expiryDate, user.password));
+            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO TemproryUsers (CarID, ExpiryDate, Password) VALUES ('{0}' , '{1}' , '{2}' ) ", user.carID, user.expiryDate.ToString(), user.password));
             cmd.Connection = sqlConnection;
 
             if (cmd.ExecuteNonQuery() != -1)
@@ -602,13 +602,34 @@ namespace FinalProjectV1.Helpers
 
         public bool insertAdvertisment(Advertisement ad)
         {
-            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Advertisement (CarNumber, SellerName, Telephone, Picture, Describe) VALUES ('{0}' , '{1}' , '{2}', '{3}', '{4}', '{5}' ) ", ad.CarNumber, ad.SellerName, ad.Tel, ad.Pic, ad.Description, ad.Location));
+            SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Advertisement (CarNumber, SellerName, Telephone, Picture, Describe, Location, Price, DatePublished) VALUES ('{0}' , '{1}' , '{2}', '{3}', '{4}', '{5}', '{6}', '{7}') ", ad.CarNumber, ad.SellerName, ad.Tel, ad.Pic, ad.Description, ad.Location, ad.Price, ad.DatePublished));
             cmd.Connection = sqlConnection;
 
             if (cmd.ExecuteNonQuery() != -1)
                 return true;
 
             return false;
+        }
+
+        public bool isPublish(string carNumber)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT carNumber FROM Advertisement WHERE carNumber = '{0}'", carNumber));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            DateTime expiryDate = new DateTime();
+            if (!sqlDR.Read())
+                return false;
+
+            return true;
+        }
+
+        public void deleteAd(string carNumber)
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("DELETE FROM Advertisement WHERE carNumber = '{0}'", carNumber));
+            cmd.Connection = sqlConnection;
+
+            cmd.ExecuteNonQuery();
         }
 
         public DateTime getMaxDateCarTreatment(String carNumber)
@@ -963,6 +984,24 @@ namespace FinalProjectV1.Helpers
             if (!sqlDR.Read())
                 return null;
             return null;
+        }
+        
+        public bool updateCarOwn(string carNum, string ID)
+        {
+            SqlCommand cmd = new SqlCommand(string.Format("UPDATE Car SET OwnerID = '{0}' WHERE CarID = '{1}'", ID, carNum));
+            cmd.Connection = sqlConnection;
+
+            try
+            {
+                if (cmd.ExecuteNonQuery() != -1)
+                    return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public PersonalArea getPrivateDetails(string Email)

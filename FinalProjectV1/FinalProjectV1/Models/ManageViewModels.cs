@@ -49,18 +49,18 @@ namespace FinalProjectV1.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "סיסמה נוכחית")]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} חייבת להיות לפחות בת {2} אותיות.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "סיסמה חדשה")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "אימות סיסמה חדשה")]
+        [Compare("NewPassword", ErrorMessage = "הסיסמה החדשה ואימות הסיסמה חייבים להיות זהים.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -68,7 +68,15 @@ namespace FinalProjectV1.Models
     {
         [Required]
         [Phone]
-        [Display(Name = "Phone Number")]
+        [Display(Name = "מספר טלפון")]
+        public string Number { get; set; }
+    }
+
+    public class AddOwnCar
+    {
+        [Required]
+        [Phone]
+        [Display(Name = "מספר רכב")]
         public string Number { get; set; }
     }
 

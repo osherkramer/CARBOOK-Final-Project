@@ -10,6 +10,11 @@ using System.Net;
 using System.Text;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System.Web.Security;
+using System.Text.RegularExpressions;
 
 namespace FinalProjectV1.Controllers
 {
@@ -31,6 +36,31 @@ namespace FinalProjectV1.Controllers
         public async Task<ActionResult> Index(TemproryUsers model, string returnUrl)
         {
             return RedirectToAction("History", "History", new { carNumber = model.carID, password = model.password, isOwner = false });
+        }
+
+        public ActionResult GeneratePassword(string carNumber)
+        {
+            TemproryUsers tu = new TemproryUsers();
+            int carID;
+            int.TryParse(carNumber, out carID);
+
+            if (carID == 0)
+                return View();
+
+            tu.carID = carID;
+            string tempPassword = Membership.GeneratePassword(20, 4);
+            tempPassword = Regex.Replace(tempPassword, @"[^a-zA-Z0-9]", m => "");
+            tu.password = tempPassword;
+            DateTime dateNow = DateTime.Now;
+            dateNow = dateNow.AddMinutes(20);
+            tu.expiryDate = dateNow;
+
+            DBHelper DBHelp = new DBHelper();
+            if (DBHelp.insertTemproryUsers(tu))
+                return View(tu);
+
+            return View();
+
         }
 
         // GET: History
@@ -59,8 +89,15 @@ namespace FinalProjectV1.Controllers
             Car car = DBhelp.getCarByNumber(carNumber);
             HistoryCar historyCar = getHistoryCar(car);
             historyCar.isOwnerRequest = isOwner;
+            historyCar.isPublished = isPublish(carNumber);
 
             return View(historyCar);
+        }
+
+        private bool isPublish(string carNumber)
+        {
+            DBHelper db = new DBHelper();
+            return db.isPublish(carNumber);
         }
 
 
@@ -136,6 +173,51 @@ namespace FinalProjectV1.Controllers
             flag = db.updateKMCar(CarNumber, KM);
             db.Close();
 
+        }
+
+        //
+        // GET: /History/AddAd
+        public ActionResult AddAD(string carNumber)
+        {
+            Advertisement AD = new Advertisement();
+            return View(AD);
+        }
+        private string getValueFromUserTable(string userId, string column)
+        {
+            DBHelper db = new DBHelper();
+            return db.getValueFromUserTable(userId, column);
+        }
+
+        //
+        // POST: /History/AddAd
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddAD(Advertisement model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = User.Identity.GetUserId();
+            string ID = getValueFromUserTable(userId, "IsraeliIdentify");
+            model.DatePublished = DateTime.Now;
+            model.Location = getValueFromUserTable(userId, "Address");
+            model.SellerName = getValueFromUserTable(userId, "Name");
+            model.Tel = getValueFromUserTable(userId, "PhoneNumber");
+
+            DBHelper db = new DBHelper();
+            db.insertAdvertisment(model);
+
+            return RedirectToAction("History", "History", new { carNumber = model.CarNumber, isOwner = true });
+        }
+
+        public async Task<ActionResult> DeleteAD(string carNumber)
+        {
+            DBHelper db = new DBHelper();
+            db.deleteAd(carNumber);
+
+            return RedirectToAction("History", "History", new { carNumber = carNumber, isOwner = true });
         }
     }
 }

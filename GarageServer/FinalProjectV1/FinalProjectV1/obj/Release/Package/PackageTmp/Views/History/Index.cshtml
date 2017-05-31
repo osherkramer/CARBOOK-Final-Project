@@ -1,0 +1,80 @@
+﻿@model FinalProjectV1.Models.HistoryCar
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>היסטוריית רכב</h2>
+<div class="history">
+    <div class="messagesBoard" id="messagesBoardList">
+        <div class="panelHeader row">
+            <div class="col-xs-1"><img src="~/images/img3.png" /></div>
+            <div class="col-xs-2">יצרן</div>
+            <div class="col-xs-2">דגם</div>
+            <div class="col-xs-1">נפח</div>
+            <div class="col-xs-1">שנה</div>
+            <div class="col-xs-1">יד</div>
+            <div class="col-xs-2">הילוכים</div>
+            <div class="col-xs-1">מחיר</div>
+            <div class="col-xs-1">איזור</div>
+            <div class="col-xs-1"><img src="~/images/img5.png" /></div>
+            <div class="col-xs-1">תאריך</div>
+        </div>
+        <div class="panel row">
+            <a href="javascript:void(0)" class="btnCollapse row collapsed">
+                <div class="col-xs-1"><img src="~/images/img2.png" /></div>
+                <div class="col-xs-2">@Model.ProductName</div>
+                <div class="col-xs-2">@Model.CommericalAlias</div>
+                <div class="col-xs-1">@Model.EngineCapacity</div>
+                <div class="col-xs-1">@Model.Year</div>
+                <div class="col-xs-1">@Model.Yad</div>
+                <div class="col-xs-2">@Model.Gaer</div>
+                <div class="col-xs-1">8000</div>
+                <div class="col-xs-1">@Model.Location</div>
+                <div class="col-xs-1"><img src="~/images/img4.png" /></div>
+                <div class="col-xs-1">@Model.DatePublished</div>
+            </a>
+        </div>
+    </div>
+    <div class="historyDetails row">
+        <div class="col-sm-6">
+            <ul class="carDeatilesList ">
+                <li class=""><strong>שנת יצור:</strong>@Model.Year</li>
+                <li class=""><strong>ת.מסירה:</strong>@Model.RoadDate</li>
+                <li class=""><strong>דגם:</strong>@Model.ProductName</li>
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <ul class="carDeatilesList ">
+                <li class=""><strong>קוד שילדה:</strong>@Model.ShildaNumber</li>
+                <li class=""><strong>צבע:</strong>@Model.CarColor</li>
+            </ul>
+        </div>
+    </div>
+    <div class="tableContainer">
+        <table class="table table-bordered table-striped historyTable">
+            <thead>
+                <tr>
+                    <th>תאריך כניסה</th>
+                    <th>מרכז שירות</th>
+                    <th>מד אוץ</th>
+                    <th>מהות</th>
+                    <th>פרטים נוספים</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.historyItems)
+                {
+                    <tr>
+                        <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                        <td>@item.GarageName</td>
+                        <td>@item.KM</td>
+                        <td>@item.CareType</td>
+                        <td><a href="#" class="link">לפרטים</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
+</div>

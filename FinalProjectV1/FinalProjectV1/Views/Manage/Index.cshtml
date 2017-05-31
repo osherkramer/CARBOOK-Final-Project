@@ -55,9 +55,6 @@
             </table>
         </div>
     <h4>@Model.Name, הרכבים שבבעלותך:</h4>
-    <hr />
-    @Html.ActionLink("הוסף רכב", "AddCar", "Manage");
-    <hr />
     @if (Model.Cars != null)
     {
         <div class="tableContainer">
@@ -78,4 +75,5 @@
             </table>
         </div>
     }
+    @Html.ActionLink("הוסף רכב", "AddOwnCar", "Manage")
 </div>

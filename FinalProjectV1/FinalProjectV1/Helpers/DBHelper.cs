@@ -1008,6 +1008,21 @@ namespace FinalProjectV1.Helpers
             return tempDictonary;
         }
 
+        public bool editAdress(string adress, string email)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Address='{0}' WHERE UserName='{1}'", adress,email));
+            cmd.Connection = sqlConnection;
+            try
+            {
+                if (cmd.ExecuteNonQuery() != -1)
+                    return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return false;
+        }
 
 
         ~DBHelper()

@@ -1049,7 +1049,7 @@ namespace FinalProjectV1.Helpers
 
         public bool editAdress(string adress, string email)
         {
-            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Address='{0}' WHERE UserName='{1}'", adress,email));
+            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Address='{0}' WHERE Email='{1}'", adress,email));
             cmd.Connection = sqlConnection;
             try
             {
@@ -1061,6 +1061,52 @@ namespace FinalProjectV1.Helpers
                 return false;
             }
             return false;
+        }
+
+        public bool editEmail(string oldEmail, string newEmail)
+        {
+            SqlCommand cmd= new SqlCommand(String.Format("SELECT Email FROM AspNetUsers"));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            List<string> email = new List<string>();
+            do {
+                string str= sqlDR["Email"].ToString();
+                email.Add(str);
+            } while (sqlDR.Read());
+
+            if (email.Contains(newEmail))
+                return false;
+
+            cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Email='{0}' , UserName='{1}' WHERE Email='{2}'", newEmail, newEmail, oldEmail));
+           
+            try
+            {
+                if (cmd.ExecuteNonQuery() != -1)
+                    return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return false;
+        }
+
+        bool editName(string name, string email)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Name='{0}' WHERE Email='{1}'", name, email));
+            cmd.Connection = sqlConnection;
+            try
+            {
+                if (cmd.ExecuteNonQuery() != -1)
+                    return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return false;
+
         }
 
 

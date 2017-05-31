@@ -1063,7 +1063,7 @@ namespace FinalProjectV1.Helpers
             return false;
         }
 
-        public bool editEmail(string Id, string newEmail)
+        public bool editEmail(string newEmail, string Id)
         {
             SqlCommand cmd= new SqlCommand(String.Format("SELECT Email FROM AspNetUsers"));
             cmd.Connection = sqlConnection;
@@ -1083,10 +1083,10 @@ namespace FinalProjectV1.Helpers
             if (email.Contains(newEmail))
                 return false;
 
-            cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Email='{0}' , UserName='{1}' WHERE Id='{2}'", newEmail, newEmail, Id));
-            SqlDataReader sqlDR = cmd.ExecuteReader();
-            if (!sqlDR.Read())
-                return false;
+            cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Email='{0}' , UserName='{2}' WHERE Id='{1}'", newEmail, Id, newEmail));
+            cmd.Connection = sqlConnection;
+            sqlDR = cmd.ExecuteReader();
+            
 
             try
             {

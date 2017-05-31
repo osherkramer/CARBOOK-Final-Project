@@ -41,7 +41,12 @@ namespace FinalProjectV1.Controllers
 
                 string message = "הודעה מאת: " + contact.Name + ". \nכתובת המייל: " + contact.Email + ". \nתוכן הפניה: " + contact.Message;
 
-                bool success = SendMail(subject, message);
+                bool success = SendMail(subject, message, "carbook.israel@gmail.com", true);
+
+                if(success)
+                {
+                    SendMail("CarBook - תודה על פנייתך", "זוהי הודעה לאישור קבלת הפניה, נציגנו יחזרו אליך בהקדם. תוכן פנייתך:\n" + message, contact.Email);
+                }
                 /*
                 if (success)
                 {
@@ -67,7 +72,7 @@ namespace FinalProjectV1.Controllers
             return Json(temp, JsonRequestBehavior.AllowGet);
         }
 
-        private bool SendMail(string subject, string message)
+        private bool SendMail(string subject, string message, string sendTo, bool isWebRequest = false)
         {
             try
             {
@@ -75,7 +80,7 @@ namespace FinalProjectV1.Controllers
                 SmtpClient smtpServer = new SmtpClient("smtp.gmail.com"); //Object of SmtpClient with the path of gmail smtp server
                 mail.From = new MailAddress("carbook.isreal@gmail.com"); //define the mail address that send the message
 
-                mail.To.Add("carbook.israel@gmail.com"); //add our mail address for the distributed list (mailing list)
+                mail.To.Add(sendTo); //add our mail address for the distributed list (mailing list)
                 
                 mail.Subject = subject; //add the subject of the mail
                 mail.Body = message; //add the message of the mail
@@ -88,12 +93,13 @@ namespace FinalProjectV1.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", "שליחה ההודעה נכשלה. נסה שנית");
+                if(isWebRequest)
+                    ModelState.AddModelError("", "שליחה ההודעה נכשלה. נסה שנית");
                 return false;
             }
 
-
-            ModelState.AddModelError("", "שליחת ההודעה בוצעה בהצלחה! תודה ונחזור אליך בהקדם");
+            if(isWebRequest)
+                ModelState.AddModelError("", "שליחת ההודעה בוצעה בהצלחה! תודה ונחזור אליך בהקדם");
             return true;
         }
     }

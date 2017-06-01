@@ -487,7 +487,6 @@ C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\FinalProjectV1\FinalPro
 C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\FinalProjectV1\FinalProjectV1\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\FinalProjectV1\FinalProjectV1\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\FinalProjectV1\FinalProjectV1\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\FinalProjectV1\FinalProjectV1\obj\Debug\FinalProjectV1.csprojResolveAssemblyReference.cache
 C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\FinalProjectV1\FinalProjectV1\obj\Debug\FinalProjectV1.dll
 C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\FinalProjectV1\FinalProjectV1\obj\Debug\FinalProjectV1.pdb
 C:\Users\moshi\Desktop\carbookProj\dev\FinalProjectV1\FinalProjectV1\bin\ApplicationInsights.config

@@ -309,6 +309,21 @@ namespace FinalProjectV1.Helpers
                 HI.CareType = sqlDR["CareType"].ToString();
                 HI.KM = Int32.Parse(sqlDR["KM"].ToString());
                 HI.GarageName = sqlDR["GarageName"].ToString();
+                List<Parts> parts = getPartsOfTreatment(HI.TreatmentID);
+
+                List<string> partsStr = new List<string>();
+                if (parts != null && parts.Count > 0)
+                {
+                    partsStr.Clear();
+                    foreach (var part in parts)
+                    {
+                        if (part == null)
+                            continue;
+                        partsStr.Add(part.partName);
+                    }
+                }
+
+                HI.Treatment = partsStr.ToArray();
                 HIList.Add(HI);
             } while (sqlDR.Read());
            
@@ -479,6 +494,8 @@ namespace FinalProjectV1.Helpers
 
             do
             {
+                if (Int32.Parse(sqlDR["PartID"].ToString()).Equals("-1"))
+                    continue;
                 Parts part = getPart(Int32.Parse(sqlDR["PartID"].ToString()));
                 parts.Add(part);
             } while (sqlDR.Read());

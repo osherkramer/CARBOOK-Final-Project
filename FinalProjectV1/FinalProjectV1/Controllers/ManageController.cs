@@ -137,17 +137,22 @@ namespace FinalProjectV1.Controllers
                 return View(model);
             }
             // Generate the token and send it
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
-            if (UserManager.SmsService != null)
-            {
-                var message = new IdentityMessage
-                {
-                    Destination = model.Number,
-                    Body = "Your security code is: " + code
-                };
-                await UserManager.SmsService.SendAsync(message);
-            }
-            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+            /* var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
+              if (UserManager.SmsService != null)
+              {
+                  var message = new IdentityMessage
+                  {
+                      Destination = model.Number,
+                      Body = "Your security code is: " + code
+                  };
+                  await UserManager.SmsService.SendAsync(message);
+              }
+              return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });*/
+
+            DBHelper db = new DBHelper();
+            bool flag = db.editPhoneNumber(model.Number, User.Identity.GetUserId());
+            return RedirectToAction("Index", "Manage");
+
         }
 
         //
@@ -344,12 +349,103 @@ namespace FinalProjectV1.Controllers
 
         //
 
-        // GET: /Manage/Edit Adress
-        public ActionResult EditAdress()
+        // GET: /Manage/ChangeEmail
+        public ActionResult ChangeEmail()
         {
             return View();
         }
-            
+
+        //
+        // POST: /Manage/ChangeEmail
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeEmail(ChangeEmailViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            // Generate the token and send it
+            //var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
+            DBHelper db = new DBHelper();
+            bool flag = db.editEmail(model.Email, User.Identity.GetUserId());
+            /*if (UserManager.SmsService != null)
+            {
+                var message = new IdentityMessage
+                {
+                    Destination = model.Email,
+                    Body = "Your security code is: " + code
+                };
+                await UserManager.SmsService.SendAsync(message);
+            }*/
+            return RedirectToAction("Index", "Manage");
+        }
+
+        // GET: /Manage/ChangeAdress
+        public ActionResult ChangeAdress()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/ChangeAdress
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeAdress(ChangeAdressViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            // Generate the token and send it
+            //var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
+            DBHelper db = new DBHelper();
+            bool flag = db.editAdress(model.Adress, User.Identity.GetUserId());
+            /*if (UserManager.SmsService != null)
+            {
+                var message = new IdentityMessage
+                {
+                    Destination = model.Email,
+                    Body = "Your security code is: " + code
+                };
+                await UserManager.SmsService.SendAsync(message);
+            }*/
+            return RedirectToAction("Index", "Manage");
+        }
+
+        // GET: /Manage/ChangeName
+        public ActionResult ChangeName()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/ChangeAdress
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeName(ChangeNameViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            // Generate the token and send it
+            //var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
+            DBHelper db = new DBHelper();
+            bool flag = db.editName(model.Name, User.Identity.GetUserId());
+            /*if (UserManager.SmsService != null)
+            {
+                var message = new IdentityMessage
+                {
+                    Destination = model.Email,
+                    Body = "Your security code is: " + code
+                };
+                await UserManager.SmsService.SendAsync(message);
+            }*/
+            return RedirectToAction("Index", "Manage");
+        }
+
+
 
 
         protected override void Dispose(bool disposing)

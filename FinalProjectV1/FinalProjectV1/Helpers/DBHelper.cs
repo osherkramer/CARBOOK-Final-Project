@@ -1100,9 +1100,9 @@ namespace FinalProjectV1.Helpers
             return false;
         }
 
-        bool editName(string name, string Id)
+         public bool editName(string name, string ID)
         {
-            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Name='{0}' WHERE Id='{1}'", name, Id));
+            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Name='{0}' WHERE Id='{1}'", name, ID));
             cmd.Connection = sqlConnection;
             try
             {
@@ -1117,6 +1117,21 @@ namespace FinalProjectV1.Helpers
 
         }
 
+        public bool editPhoneNumber(string phone, string ID)
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET PhoneNumber='{0}' WHERE Id='{1}'", phone, ID));
+            cmd.Connection = sqlConnection;
+            try
+            {
+                if (cmd.ExecuteNonQuery() != -1)
+                    return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return false;
+        }
 
         ~DBHelper()
         {

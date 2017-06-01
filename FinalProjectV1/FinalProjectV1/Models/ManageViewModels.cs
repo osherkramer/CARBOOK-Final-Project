@@ -80,6 +80,22 @@ namespace FinalProjectV1.Models
         public string Email { get; set; }
     }
 
+    public class ChangeAdressViewModel
+    {
+        [Required]
+        [StringLength(100)]
+        [Display( Name = "כתובת מגורים")]
+        public string Adress { get; set; }
+    }
+
+    public class ChangeNameViewModel
+    {
+        [Required]
+        [StringLength(100)]
+        [Display(Name = "שם")]
+        public string Name { get; set; }
+    }
+
     public class AddOwnCar
     {
         [Required]

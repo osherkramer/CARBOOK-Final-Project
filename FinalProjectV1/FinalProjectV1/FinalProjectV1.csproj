@@ -342,6 +342,8 @@
     <Content Include="Views\History\AddAD.cshtml" />
     <Content Include="Views\History\GeneratePassword.cshtml" />
     <Content Include="Views\Manage\ChangeEmail.cshtml" />
+    <Content Include="Views\Manage\ChangeAdress.cshtml" />
+    <Content Include="Views\Manage\ChangeName.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

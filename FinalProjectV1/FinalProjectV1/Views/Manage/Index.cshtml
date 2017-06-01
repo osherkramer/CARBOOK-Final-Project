@@ -14,11 +14,15 @@
                 <tbody>
                     <tr>
                         <td>שם:</td>
-                        <td>@Model.Name</td>
+                        <td>
+                            <text>@Html.ActionLink(@Model.Name, "ChangeName")</text>
+                        </td>
                     </tr>
                     <tr>
                         <td>כתובת מגורים:</td>
-                        <td>@Model.Address</td>
+                        <td>
+                            <text>@Html.ActionLink(@Model.Address, "ChangeAdress")</text>
+                        </td>
                     </tr>
                     <tr>
                         <td>כתובת מייל:</td>

@@ -1100,14 +1100,13 @@ namespace FinalProjectV1.Helpers
             if (email.Contains(newEmail))
                 return false;
 
-            cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Email='{0}' , UserName='{2}' WHERE Id='{1}'", newEmail, Id, newEmail));
-            cmd.Connection = sqlConnection;
-            sqlDR = cmd.ExecuteReader();
+            SqlCommand cmd1 = new SqlCommand(String.Format("UPDATE AspNetUsers SET Email='{0}' , UserName='{2}' WHERE Id='{1}'", newEmail, Id, newEmail));
+            cmd1.Connection = sqlConnection;
             
 
             try
             {
-                if (cmd.ExecuteNonQuery() != -1)
+                if (cmd1.ExecuteNonQuery() != -1)
                     return true;
             }
             catch (Exception e)

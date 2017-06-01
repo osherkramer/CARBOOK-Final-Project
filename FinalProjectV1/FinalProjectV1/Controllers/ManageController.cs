@@ -64,7 +64,7 @@ namespace FinalProjectV1.Controllers
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
-
+            
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
@@ -150,10 +150,33 @@ namespace FinalProjectV1.Controllers
               return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });*/
 
             DBHelper db = new DBHelper();
-            bool flag = db.editPhoneNumber(model.Number, User.Identity.GetUserId());
+            db.editPhoneNumber(model.Number, User.Identity.GetUserId());
             return RedirectToAction("Index", "Manage");
 
         }
+
+        public ActionResult AddOwnCar()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/AddPhoneNumber
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddOwnCar(AddOwnCar model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            
+            DBHelper db = new DBHelper();
+            bool flag = db.updateCarOwn(model.Number, getValueFromUserTable(User.Identity.GetUserId(), "IsraeliIdentify"));
+            return RedirectToAction("Index", "Manage");
+
+        }
+
 
         //
         // POST: /Manage/EnableTwoFactorAuthentication
@@ -369,6 +392,16 @@ namespace FinalProjectV1.Controllers
             //var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
             DBHelper db = new DBHelper();
             bool flag = db.editEmail(model.Email, User.Identity.GetUserId());
+            HttpCookie myCookie = new HttpCookie("myCookie");
+
+            //Add key-values in the cookie
+            myCookie.Values.Add("userid", objUser.id.ToString());
+
+            //set cookie expiry date-time. Made it to last for next 12 hours.
+            myCookie.Expires = DateTime.Now.AddHours(12);
+
+            //Most important, write the cookie to client.
+            Response.Cookies.Add(myCookie);
             /*if (UserManager.SmsService != null)
             {
                 var message = new IdentityMessage

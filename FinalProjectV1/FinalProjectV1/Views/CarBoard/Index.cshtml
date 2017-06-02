@@ -241,15 +241,20 @@
                             <div class="content">
                                 <div><strong>שם המוכר:</strong>@item.SellerName</div>
                                 <div><strong>טלפון:</strong>@item.Tel</div>
-                                <form>
-                                    <div class="code">
-                                        <input class="form-control" type="text" id="Code_@item.CarNumber"/><strong>:קוד אבטחה</strong>
-                                    </div>
-                                    <div>
-                                        <!--<input type="submit" value="שלח" />-->
-                                        @Html.ActionLink("שלח", "History", "History", new { carNumber = item.CarNumber, isOwner = false }, htmlAttributes: new { password = "Code_"+@item.CarNumber })
-                                    </div>
-                                </form>
+                                <form action="/History/Index" controller="History">
+                                    <section class="history" dir="rtl">
+                                        <div class="formContainer">
+                                            <input class="form-control" type="text" name="password" /><strong>:קוד אבטחה</strong>
+                                        </div>
+                                        <div class="formContainer">
+                                            <input class="form-control" type="text" name="carNumber" /><strong>:מספר רכב</strong>
+                                        </div>
+                                        <div>
+                                            <input type="submit" value="שלח" />
+
+                                        </div>
+                                    </section>
+                                </form>  
                             </div>
                         </div>
                     </div>

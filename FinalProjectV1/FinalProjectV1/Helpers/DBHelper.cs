@@ -702,7 +702,7 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public List<CarBoard> search(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
+        public List<CarAD> search(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
         {
             bool flag1 = false;
             String query1 = "SELECT * from Advertisement";
@@ -855,10 +855,10 @@ namespace FinalProjectV1.Helpers
             } while (sqlDR.Read());
 
 
-            List<CarBoard> carB = new List<CarBoard>();
+            List<CarAD> carB = new List<CarAD>();
             foreach (var car in cars)
             {
-                CarBoard cb = new CarBoard();
+                CarAD cb = new CarAD();
                 cb.ABS = car.ABS;
                 cb.AC = car.AC;
                 cb.AirBags = car.AirBags;
@@ -915,6 +915,25 @@ namespace FinalProjectV1.Helpers
             } while (sqlDR.Read());
 
             return productName;
+
+        }
+
+        public List<String> getAreas()
+        {
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT * FROM Areas ORDER BY AreaName ASC"));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+
+            List<String> areas = new List<string>();
+            do
+            {
+                string str = sqlDR["AreaName"].ToString();
+                areas.Add(str);
+            } while (sqlDR.Read());
+
+            return areas;
 
         }
 

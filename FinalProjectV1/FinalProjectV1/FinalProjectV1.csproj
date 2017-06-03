@@ -210,6 +210,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Advertisement.cs" />
     <Compile Include="Models\Car.cs" />
+    <Compile Include="Models\CarAD.cs" />
     <Compile Include="Models\CarBoard.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\HistoryCar.cs" />

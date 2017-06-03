@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FinalProjectV1.Models.CarBoard>
+﻿@model FinalProjectV1.Models.CarBoard
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,53 +11,18 @@
                 <div class="searchBar">
                     <div class="formContainer">
                         <div class="title">יצרן</div>
-                        <select class="selectpicker" name="productName">
-                            <option value=""></option>
-                            <option value="אאודי">אאודי</option>
-                            <option value="אברת">אברת'</option>
-                            <option value="אוטוביאנקי">אוטוביאנקי</option>
-                            <option value="אולדסמוביל">אולדסמוביל</option>
-                            <option value="אוסטין">אוסטין</option>
-                            <option value="אופל">אופל</option>
-                            <option value="טויוטה">טויוטה</option>
-                            <option value="יגואר">יגואר</option>
-                            <option value="יונדאי">יונדאי</option>
-                            <option value="לאדה">לאדה</option>
-                            <option value="לינקולן">לינקולן</option>
-                            <option value="לנציה">לנציה</option>
-                            <option value="לקסוס">לקסוס</option>
-                            <option value="מאזדה">מאזדה</option>
-                            <option value="מזראטי">מזראטי</option>
-                            <option value="מיני">מיני</option>
-                            <option value="מיצובישי">מיצובישי</option>
-                            <option value="מרצדס">מרצדס</option>
-                            <option value="ניסאן">ניסאן</option>
-                            <option value="סאאב">סאאב</option>
-                            <option value="סובארו">סובארו</option>
-                            <option value="סוזוקי">סוזוקי</option>
-                            <option value="סיאט">סיאט</option>
-                            <option value="סיטרואן">סיטרואן</option>
-                            <option value="סמארט">סמארט</option>
-                            <option value="סקודה">סקודה</option>
-                            <option value="פולקסווגן">פולקסווגן</option>
-                            <option value="פונטיאק">פונטיאק</option>
-                            <option value="פורד">פורד</option>
-                            <option value="פורשה">פורשה</option>
-                            <option value="פיאט">פיאט</option>
-                            <option value="פיג'ו">פיג'ו</option>
-                            <option value="פרארי">פרארי</option>
-                            <option value="קאדילק">קאדילק</option>
-                            <option value="קיה">קיה</option>
-                            <option value="קרייזלר">קרייזלר</option>
-                            <option value="רובר">רובר</option>
-                            <option value="רנו">רנו</option>
-                            <option value="שברולט">שברולט</option>
+                        <select class="selectpicker" name="productName" id="prod" onmousedown="if(this.options.length>8){this.size=8;}"  onchange='this.size=0;' onblur="this.size=0;">
+                            <option value="">בחר יצרן</option>
+                            @foreach (var product in Model.carsProduct)
+                            {
+                                <option value="@product">@product</option>
+                            }
                         </select>
                     </div>
                     <div class="formContainer">
                         <div class="title">דגם</div>
                         <select class="selectpicker" name="model">
-                            <option value=""></option>
+                            <option value="">בחר דגם</option>
                             <option value="2614">אוולון</option>
                             <option value="140">אוונסיס</option>
                             <option value="2548">אוונסיס ורסו</option>
@@ -76,70 +41,80 @@
                         </select>
                     </div>
                     <div class="formContainer">
-                        <div class="title">משנה</div>
-                        <select class="selectpicker" name="startYear">
-                            <option value=""></option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                            <option value="2014">2014</option>
-                            <option value="2013">2013</option>
-                            <option value="2012">2012</option>
-                            <option value="2011">2011</option>
-                            <option value="2010">2010</option>
-                            <option value="2009">2009</option>
-                            <option value="2008">2008</option>
-                            <option value="2007">2007</option>
-                            <option value="2006">2006</option>
-                            <option value="2005">2005</option>
-                            <option value="2004">2004</option>
-                            <option value="2003">2003</option>
-                            <option value="2002">2002</option>
-                            <option value="2001">2001</option>
-                            <option value="2000">2000</option>
-                        </select>
-                    </div>
-                    <div class="formContainer">
-                        <div class="title">עד שנה</div>
-                        <select class="selectpicker" name="endYear">
-                            <option value=""></option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                            <option value="2014">2014</option>
-                            <option value="2013">2013</option>
-                            <option value="2012">2012</option>
-                            <option value="2011">2011</option>
-                            <option value="2010">2010</option>
-                            <option value="2009">2009</option>
-                            <option value="2008">2008</option>
-                            <option value="2007">2007</option>
-                            <option value="2006">2006</option>
-                            <option value="2005">2005</option>
-                            <option value="2004">2004</option>
-                            <option value="2003">2003</option>
-                            <option value="2002">2002</option>
-                            <option value="2001">2001</option>
-                            <option value="2000">2000</option>
-                        </select>
-                    </div>
-                    <div class="formContainer">
                         <div class="title">הילוכים</div>
                         <select class="selectpicker" name="gear">
-                            <option value=""></option>
+                            <option value="">הילוכים</option>
                             <option value="Automatic">אוטומטי</option>
                             <option value="Manual">ידני</option>
-                            <!--><option value="טיפטוניק">טיפטוניק</option>-->
                         </select>
                     </div>
                     <div class="formContainer">
                         <div class="title">אזור</div>
                         <select class="selectpicker" name="location">
-                            <option value=""></option>
-                            <option value="מרכז">מרכז</option>
-                            <option value="צפון">צפון</option>
-                            <option value="דרום">דרום</option>
-                            <option value="שפלה">שפלה</option>
+                            <option value="">בחר אזור</option>
+                            @foreach (var area in Model.areas)
+                            {
+                                <option value="@area">@area</option>
+                            }
+                        </select>
+                    </div>
+                    </br>
+                    <div class="formContainer">
+                        <div class="title">משנה</div>
+                        <select class="selectpicker" name="startYear">
+                            <option value="">החל משנת</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                            <option value="2012">2012</option>
+                            <option value="2011">2011</option>
+                            <option value="2010">2010</option>
+                            <option value="2009">2009</option>
+                            <option value="2008">2008</option>
+                            <option value="2007">2007</option>
+                            <option value="2006">2006</option>
+                            <option value="2005">2005</option>
+                            <option value="2004">2004</option>
+                            <option value="2003">2003</option>
+                            <option value="2002">2002</option>
+                            <option value="2001">2001</option>
+                            <option value="2000">2000</option>
+                            <option value="1999">1999</option>
+                            <option value="1998">1998</option>
+                            <option value="1997">1997</option>
+                            <option value="1996">1996</option>
+                            <option value="1995">1995</option>
+                        </select>
+                    </div>
+                    <div class="formContainer">
+                        <div class="title">עד שנה</div>
+                        <select class="selectpicker" name="endYear">
+                            <option value="">עד שנת</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                            <option value="2012">2012</option>
+                            <option value="2011">2011</option>
+                            <option value="2010">2010</option>
+                            <option value="2009">2009</option>
+                            <option value="2008">2008</option>
+                            <option value="2007">2007</option>
+                            <option value="2006">2006</option>
+                            <option value="2005">2005</option>
+                            <option value="2004">2004</option>
+                            <option value="2003">2003</option>
+                            <option value="2002">2002</option>
+                            <option value="2001">2001</option>
+                            <option value="2000">2000</option>
+                            <option value="1999">1999</option>
+                            <option value="1998">1998</option>
+                            <option value="1997">1997</option>
+                            <option value="1996">1996</option>
+                            <option value="1995">1995</option>
                         </select>
                     </div>
                     <div class="formContainer">
@@ -154,32 +129,35 @@
         </section>
     </form>
 
+    </hr>
+
     <ul class="messagesBoard" id="messagesBoardList">
         <li class="panelHeader row">
             <div class="col-xs-1"><img src="~/images/img3.png" /></div>
-            <div class="col-xs-2">יצרן-דגם</div>
+            <div class="col-xs-3">יצרן-דגם</div>
             <div class="col-xs-1">נפח</div>
             <div class="col-xs-1">שנה</div>
             <div class="col-xs-1">יד</div>
-            <div class="col-xs-2">הילוכים</div>
+            <div class="col-xs-1">הילוכים</div>
             <div class="col-xs-1">מחיר</div>
             <div class="col-xs-1">איזור</div>
             <div class="col-xs-1"><img src="~/images/img5.png" /></div>
             <div class="col-xs-1">תאריך</div>
         </li>
 
-        @foreach (var item in Model)
-            {
+
+        @foreach (var item in Model.cars)
+        {
 
 
             <li class="panel row">
                 <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#@item.CarNumber" data-toggle="collapse" data-parent="#messagesBoardList">
                     <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                    <div class="col-xs-2">@item.ProductName</div>
+                    <div class="col-xs-3">@item.ProductName @item.CommericalAlias</div>
                     <div class="col-xs-1">@item.EngineCapacity</div>
                     <div class="col-xs-1">@item.Year</div>
                     <div class="col-xs-1">@item.Yad</div>
-                    <div class="col-xs-2">@item.Gaer</div>
+                    <div class="col-xs-1">@item.Gaer</div>
                     <div class="col-xs-1">@item.Price</div>
                     <div class="col-xs-1">@item.Location</div>
                     <div class="col-xs-1"><img src="~/images/img4.png" /></div>
@@ -241,13 +219,13 @@
                             <div class="content">
                                 <div><strong>שם המוכר:</strong>@item.SellerName</div>
                                 <div><strong>טלפון:</strong>@item.Tel</div>
-                                <form action="/History/Index" controller="History">
+                                <form action="/History/History" controller="History">
                                     <section class="history" dir="rtl">
                                         <div class="formContainer">
-                                            <input class="form-control" type="text" name="password" /><strong>:קוד אבטחה</strong>
+                                            <input class="form-control" type="text" name="password" /><strong>:סיסמה זמנית</strong>
                                         </div>
-                                        <div class="formContainer">
-                                            <input class="form-control" type="text" name="carNumber" /><strong>:מספר רכב</strong>
+                                        <div hidden class="formContainer">
+                                            <input hidden class="form-control" type="hidden" name="carNumber" value="@item.CarNumber"/>
                                         </div>
                                         <div>
                                             <input type="submit" value="שלח" />

@@ -121,8 +121,6 @@
                         <input type="text" class="form-control" name="minPrice" placeholder="ממחיר">
                     </div>
                     <input type="text" class="form-control" name="maxPrice" placeholder="עד מחיר">
-                </div>
-                <div>
                     <input type="submit" value="חפש" />
                 </div>
             </center>
@@ -222,7 +220,8 @@
                                 <form action="/History/History" controller="History">
                                     <section class="history" dir="rtl">
                                         <div class="formContainer">
-                                            <input class="form-control" type="text" name="password" /><strong>:סיסמה זמנית</strong>
+                                            <text>סיסמה זמנית: </text>
+                                            <input class="form-control" type="text" name="password" /><!--<strong>:סיסמה זמנית</strong>-->
                                         </div>
                                         <div hidden class="formContainer">
                                             <input hidden class="form-control" type="hidden" name="carNumber" value="@item.CarNumber"/>

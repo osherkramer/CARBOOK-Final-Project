@@ -143,8 +143,8 @@ namespace FinalProjectV1.Controllers
         {
             DBHelper db = new DBHelper();
 
-            List<string> dropdownOptions = db.getAreas();
-            ViewBag.DropdownListOptions = new SelectList(dropdownOptions);
+            List<string> AreaList = db.getAreas();
+            ViewBag.List = new SelectList(AreaList, "AreaName");
             return View();
         }
 

@@ -4,6 +4,7 @@ h1, h2, h3, h4, h5, h6, p {
     margin-bottom: 0;
 }
 
+
 ul, ol, li {
     padding: 0;
     margin: 0;
@@ -205,10 +206,12 @@ a[href^="mailTo:"] {
 
 body {
 direction:rtl;
+
 }
 
 .body-content {
 margin:50px auto;
+font-family:'Times New Roman';
 }
 
 .row {
@@ -228,18 +231,29 @@ margin:50px auto;
     float: inherit;
 }
 
+.text-center {
+margin:550px 0 50px 0; 
+}
+
 .carousel {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
     height: 400px;
     width: 100%;
     margin-top: 50px;
+    margin-right:0%;
+    margin-left:0%;
+
 }
 
 .carousel-inner {
-    height: 400px;
+    height: 600px;
 }
 
     .carousel-inner .item {
-        height: 400px;
+        height: 600px;
     }
 
 
@@ -249,11 +263,20 @@ margin:50px auto;
 }
 
 footer {
-    margin-top: 500px;
+text-align:center;
+    background-color:darkblue;
+    position:absolute;
+    bootom:0;
+    left:0;
+    right:0;
+    /*margin-top: 500px;*/
 }
-
+    footer .link {
+        display:inline-block;
+        margin:0 20px;
+    }
 body.home {
-    /*background-image: url('../images/back5.jpg');*/
+  
     background-size: 100%;
     background-repeat: no-repeat;
 }
@@ -427,7 +450,7 @@ body.home {
     /*history table*/
 
 .history {
-max-width:1160px;
+max-width:initial!important;
 margin:auto;
 }
 

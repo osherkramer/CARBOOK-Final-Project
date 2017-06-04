@@ -29,13 +29,13 @@ if (Request.IsAuthenticated && Model.isOwnerRequest)
                 <tr>
                     @if (Model.isPublished)
                     {
-                        <td align="center">@Html.ActionLink("הסרת הרכב מהלוח", "DeleteAD", "History", new { carNumber = @Model.car.CarNumber }, null)</td>
+                        <td align="center">@Html.ActionLink("הסרת הרכב מהלוח", "DeleteAD", "History", new { carNumber = @Model.car.CarNumber }, new { @style = "color:#000aaa;" })</td>
                     }
                     else
                     {
-                        <td align="center">@Html.ActionLink("פרסום הרכב בלוח", "AddAD", "History", new { carNumber = @Model.car.CarNumber }, null)</td>
+                        <td align="center">@Html.ActionLink("פרסום הרכב בלוח", "AddAD", "History", new { carNumber = @Model.car.CarNumber }, new { @style = "color:#000aaa;" })</td>
                     }
-                    <td align="center">@Html.ActionLink("יצירת סיסמה זמנית", "GeneratePassword", "History", new { carNumber = @Model.car.CarNumber }, null)</td>
+                    <td align="center">@Html.ActionLink("יצירת סיסמה זמנית", "GeneratePassword", "History", new { carNumber = @Model.car.CarNumber }, new { @style = "color:#000aaa;" })</td>
                 </tr>
             </tbody>
          </table>

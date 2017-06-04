@@ -392,16 +392,7 @@ namespace FinalProjectV1.Controllers
             //var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
             DBHelper db = new DBHelper();
             bool flag = db.editEmail(model.Email, User.Identity.GetUserId());
-            HttpCookie myCookie = new HttpCookie("myCookie");
-
-            //Add key-values in the cookie
-            myCookie.Values.Add("userid", objUser.id.ToString());
-
-            //set cookie expiry date-time. Made it to last for next 12 hours.
-            myCookie.Expires = DateTime.Now.AddHours(12);
-
-            //Most important, write the cookie to client.
-            Response.Cookies.Add(myCookie);
+            
             /*if (UserManager.SmsService != null)
             {
                 var message = new IdentityMessage

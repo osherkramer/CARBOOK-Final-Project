@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FinalProjectV1.Models;
+using System.Collections.Generic;
+using FinalProjectV1.Helpers;
 
 namespace FinalProjectV1.Controllers
 {
@@ -139,6 +141,10 @@ namespace FinalProjectV1.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            DBHelper db = new DBHelper();
+
+            List<string> AreaList = db.getAreas();
+            ViewBag.List = new SelectList(AreaList, "AreaName");
             return View();
         }
 

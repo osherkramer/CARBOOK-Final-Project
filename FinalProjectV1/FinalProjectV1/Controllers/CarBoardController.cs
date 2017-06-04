@@ -37,7 +37,7 @@ namespace FinalProjectV1.Controllers
         }*/
 
         //set and return one advertisment for the car board
-        private CarBoard setAndGetCarBoardAd(Advertisement ad, Car car)
+        private CarAD setAndGetCarBoardAd(Advertisement ad, Car car)
         {
 
             if (ad == null && car == null)
@@ -45,7 +45,7 @@ namespace FinalProjectV1.Controllers
 
             if (ad.CarNumber.Equals(car.CarNumber))
             {
-                CarBoard cb = new CarBoard();
+                CarAD cb = new CarAD();
                 cb.CarNumber = ad.CarNumber;
                 cb.SellerName = ad.SellerName;
                 cb.Tel = ad.Tel;
@@ -80,8 +80,15 @@ namespace FinalProjectV1.Controllers
         public ActionResult Index(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
         {
             DBHelper db = new DBHelper();
-            List<CarBoard> carsBoard = db.search(productName, model, startYear, endYear, gear, location, minPrice, maxPrice);
-            return View(carsBoard);
+            List<CarAD> carsBoard = db.search(productName, model, startYear, endYear, gear, location, minPrice, maxPrice);
+
+            CarBoard cb = new CarBoard();
+            cb.cars = carsBoard;
+            cb.carsProduct = db.getCarList();
+            cb.carsProduct.Sort();
+            cb.areas = db.getAreas();
+
+            return View(cb);
         }
 
       

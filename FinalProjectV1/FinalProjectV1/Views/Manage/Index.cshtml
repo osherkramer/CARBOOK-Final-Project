@@ -15,25 +15,25 @@
                     <tr>
                         <td>שם:</td>
                         <td>
-                            <text>@Html.ActionLink(@Model.Name, "ChangeName")</text>
+                            <text>@Html.ActionLink(@Model.Name, "ChangeName", null, new { @style = "color:#000aaa;" })</text>
                         </td>
                     </tr>
                     <tr>
                         <td>כתובת מגורים:</td>
                         <td>
-                            <text>@Html.ActionLink(@Model.Address, "ChangeAdress")</text>
+                            <text>@Html.ActionLink(@Model.Address, "ChangeAdress", null, new { @style = "color:#000aaa;" })</text>
                         </td>
                     </tr>
                     <tr>
                         <td>כתובת מייל:</td>
                         <td>
-                            <text>@Html.ActionLink(@Model.Email, "ChangeEmail")</text>
+                            <text>@Html.ActionLink(@Model.Email, "ChangeEmail", null, new { @style = "color:#000aaa;" })</text>
                         </td>
                     </tr>
                     <tr>
                         <td>מספר טלפון:</td>
                         <td>
-                            <text>@Html.ActionLink(@Model.PhoneNumber, "AddPhoneNumber")</text>
+                            <text>@Html.ActionLink(@Model.PhoneNumber, "AddPhoneNumber", null, new { @style = "color:#000aaa;" })</text>
                         </td>
                     </tr>
                     <tr>
@@ -45,7 +45,7 @@
                         <td>
                             @if (Model.HasPassword)
                             {
-                               @Html.ActionLink("שינוי סיסמה", "ChangePassword")
+                               @Html.ActionLink("שינוי סיסמה", "ChangePassword", null, new { @style = "color:#000aaa;" })
                             }
                         </td>
                     </tr>
@@ -75,11 +75,11 @@
                 {
                     <tr>
                         <td>@item.Value</td>
-                        <td>@Html.ActionLink(@item.Key, "History", "History", new { carNumber = @item.Key, isOwner = true }, null)</td>
+                        <td>@Html.ActionLink(@item.Key, "History", "History", new { carNumber = @item.Key, isOwner = true }, new { @style = "color:#000aaa;" })</td>
                     </tr>
                 }
             </table>
         </div>
     }
-    @Html.ActionLink("הוסף רכב", "AddOwnCar", "Manage")
+    @Html.ActionLink("הוסף רכב", "AddOwnCar", "Manage", new { @style = "color:#000aaa;" })
 </div>

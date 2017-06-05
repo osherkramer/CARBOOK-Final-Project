@@ -231,6 +231,8 @@ namespace FinalProjectV1.Helpers
             car.Gaer = car.Gaer.Equals("Automatic") ? "אוטומטי" : "ידני";
             car.ownerShip = car.ownerShip.Equals("Rente") ? "השכרה" : car.ownerShip.Equals("Leasing") ? "ליסינג" : "פרטי";
             car.AC = car.AC.Equals("Yes") ? "כן" : "לא";
+            car.ProductName = car.ProductName.Contains("'") ? car.ProductName.Replace("'", string.Empty) : car.ProductName;
+            car.CommericalAlias = car.CommericalAlias.Contains("'") ? car.CommericalAlias.Replace("'", string.Empty) : car.CommericalAlias;
 
             SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Car (CarID, RoadDate, Yad, StartYear, ShildaNumber, EngineCapacity, HorsePower, AirBags, CarABS, PowerWindow, Roof, MagnesiumWheels, CarTreatment, OwnerID, ProductName, FuelType, CarColor, Gaer, CarModel, Ownerships, AC) VALUES ('{0}' , '{1}' , '{2}' , '{3}' , '{4}' , '{5}' , '{6}' , '{7}' , '{8}' , '{9}' , '{10}' , '{11}' , '{12}' , '{13}' , '{14}' , '{15}' , '{16}' , '{17}' , '{18}', '{19}', '{20}')", car.CarNumber, car.RoadDate, car.Yad, car.Year, car.CarVIN, car.EngineCapacity, car.HorsePower, car.AirBags, car.ABS, car.PowerWindow, car.Roof, car.MagnesiumWheels, "", car.CarOwnerID, car.ProductName, car.FuelType, car.CarColor, car.Gaer, car.CommericalAlias, car.ownerShip, car.AC));
             cmd.Connection = sqlConnection;

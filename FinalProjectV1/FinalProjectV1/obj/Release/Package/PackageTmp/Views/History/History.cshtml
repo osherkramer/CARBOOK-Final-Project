@@ -29,13 +29,13 @@ if (Request.IsAuthenticated && Model.isOwnerRequest)
                 <tr>
                     @if (Model.isPublished)
                     {
-                        <td align="center">@Html.ActionLink("הסרת הרכב מהלוח", "DeleteAD", "History", new { carNumber = @Model.car.CarNumber }, null)</td>
+                        <td align="center">@Html.ActionLink("הסרת הרכב מהלוח", "DeleteAD", "History", new { carNumber = @Model.car.CarNumber }, new { @style = "color:#000aaa;" })</td>
                     }
                     else
                     {
-                        <td align="center">@Html.ActionLink("פרסום הרכב בלוח", "AddAD", "History", new { carNumber = @Model.car.CarNumber }, null)</td>
+                        <td align="center">@Html.ActionLink("פרסום הרכב בלוח", "AddAD", "History", new { carNumber = @Model.car.CarNumber }, new { @style = "color:#000aaa;" })</td>
                     }
-                    <td align="center">@Html.ActionLink("יצירת סיסמה זמנית", "GeneratePassword", "History", new { carNumber = @Model.car.CarNumber }, null)</td>
+                    <td align="center">@Html.ActionLink("יצירת סיסמה זמנית", "GeneratePassword", "History", new { carNumber = @Model.car.CarNumber }, new { @style = "color:#000aaa;" })</td>
                 </tr>
             </tbody>
          </table>
@@ -45,9 +45,9 @@ else
 { 
     <h2>היסטוריית רכב מספר @Model.car.CarNumber</h2>
     <hr />
-}
-<div class="history">
-    <h3>פרטי הרכב</h3>
+    }
+    <div class="history">
+        <h3>פרטי הרכב</h3>
         <div class="historyDetails row">
             <div class="col-sm-6">
                 <ul class="carDeatilesList ">
@@ -62,8 +62,8 @@ else
                     <li class=""><strong>מד אוץ: </strong>@Model.car.KM</li>
                     <li class=""><strong>מערכת ABS: </strong>@Model.car.ABS</li>
                 </ul>
-             </div>
-             <div class="col-sm-6">
+            </div>
+            <div class="col-sm-6">
                 <ul class="carDeatilesList ">
                     <li class=""><strong>מזגן: </strong>@Model.car.AC</li>
                     <li class=""><strong>חלונות חשמל: </strong>@Model.car.PowerWindow</li>
@@ -75,35 +75,52 @@ else
                     <li class=""><strong>מספר בעלים: </strong>@Model.car.Yad</li>
                     <li class=""><strong>בעלות: </strong>@Model.car.ownerShip</li>
                     <li class=""><strong>צבע: </strong>@Model.car.CarColor</li>
-                 </ul>
-              </div>
-          </div>
-       <hr />
-       <h3>היסטוריית הטיפולים</h3>
-          <div class="tableContainer">
-             <table class="table table-bordered table-striped historyTable">
-                <thead>
-                    <tr>
-                       <th>תאריך כניסה</th>
-                       <th>מרכז שירות</th>
-                       <th>מד אוץ</th>
-                       <th>מהות</th>
-                       <th>פרטים נוספים</th>
-                    </tr>
-                 </thead>
-                 <tbody>
-                 @foreach (var item in Model.historyItems)
-                 {
-                    <tr>
-                       <td>@item.Date.ToString("dd/MM/yyyy")</td>
-                       <td>@item.GarageName</td>
-                       <td>@item.KM</td>
-                       <td>@item.CareType</td>
-                       <td><a href="#" class="link">לפרטים</a></td>
-                       </tr>
-                  }
-                  </tbody>
-             </table>
-         </div>
-   </div>
+                </ul>
+            </div>
+        </div>
+        <hr />
+        <h3>היסטוריית הטיפולים</h3>
+
+        <ul class="messagesBoard" id="messagesBoardList1">
+            <li class="panelHeader row">
+                <div class="col-xs-3">תאריך כניסה</div>
+                <div class="col-xs-2">מרכז שירות</div>
+                <div class="col-xs-1">מד אוץ</div>
+                <div class="col-xs-3">מהות</div>
+                <div class="col-xs-2">פרטים נוספים</div>
+            </li>
+            @foreach (var item in Model.historyItems)
+            {
+
+
+                <li class="panel row">
+                    <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#@item.TreatmentID" data-toggle="collapse" data-parent="#messagesBoardList">
+                        <div class="col-xs-3">@item.Date.ToString("dd/MM/yyyy")</div>
+                        <div class="col-xs-2">@item.GarageName</div>
+                        <div class="col-xs-1">@item.KM</div>
+                        <div class="col-xs-3">@item.CareType</div>
+                        <div class="col-xs-2">לפרטים</div>
+                    </a>
+                    <div class="messageDropdown row collapse" id="@item.TreatmentID">
+                        <div class="col-sm-6 descMessage">
+                            <ul class="carDeatilesList list-group">
+                                @if (item.Treatment != null && item.Treatment.Length > 0)
+                                {
+                                    <li class="title">חלפים שהוחלפו:</li>
+                                
+                                    foreach (var part in item.Treatment)
+                                    {
+                                        <li class="list-group-item">@part.ToString()</li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li class="title">לצערנו, לא התקבל מידע מפורט מהמוסך אודות הטיפול</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            }
+    </div>
 }

@@ -25,6 +25,18 @@ namespace FinalProjectV1.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
+            //Remove this comment and running the website - enter to History page from the toolbar. Place the folders cars under C:\CarBook\Cars
+            /*
+            string[] files = Directory.GetDirectories(@"C:\CarBook\Cars");
+            List<string> carsNumbers = new List<string>();
+
+            foreach(var file in files)
+            {
+                string temp = file.Split('\\')[3];
+
+                UpdateCarHistory(temp);
+            }
+            */
             return View();
         }
 

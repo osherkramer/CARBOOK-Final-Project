@@ -13,7 +13,7 @@ else if(@Model.car==null)
 {
     <h2>לא קיים מידע עבור הרכב המבוקש או ששם המשתמש והסיסמה שגויים או אינם בתוקף</h2>
 }
-else if (@Model.historyItems==null)
+else if (@Model.historyItems==null && !(Request.IsAuthenticated && Model.isOwnerRequest))
 {
     <h2>לא קיים מידע עבור הרכב המבוקש או ששם המשתמש והסיסמה שגויים או אינם בתוקף</h2>
 }
@@ -79,6 +79,9 @@ else
             </div>
         </div>
         <hr />
+
+        @if (Model.historyItems != null)
+        {
         <h3>היסטוריית הטיפולים</h3>
 
         <ul class="messagesBoard" id="messagesBoardList1">
@@ -107,7 +110,7 @@ else
                                 @if (item.Treatment != null && item.Treatment.Length > 0)
                                 {
                                     <li class="title">חלפים שהוחלפו:</li>
-                                
+
                                     foreach (var part in item.Treatment)
                                     {
                                         <li class="list-group-item">@part.ToString()</li>
@@ -122,5 +125,11 @@ else
                     </div>
                 </li>
             }
+         </ul>
+        }
+        else
+        {
+            <h3>לא קיימים טיפולים לרכב זה</h3>
+        }
     </div>
 }

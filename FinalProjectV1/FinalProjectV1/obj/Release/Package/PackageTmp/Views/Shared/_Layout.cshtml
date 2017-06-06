@@ -1,16 +1,30 @@
-﻿@using Microsoft.AspNet.Identity
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/Site.css" rel="stylesheet" />
 
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/bootstrap.darkly.min.css")
+    @Styles.Render("~/Content/font-awesome.css")
+    @Styles.Render("~/Content/bootstrap-select.css")
+    @Styles.Render("~/bower_components/glyphicons-only-bootstrap/css/bootstrap.min.css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/jquery-3.1.1.js")
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
+
+
 <body>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -19,47 +33,46 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                           </div>
+            </div>
             <div class="navbar-collapse collapse">
-@if (Request.IsAuthenticated)
-{
-                @Html.Partial("_LoginPartial")
-                <ul class="nav navbar-nav navbar-right">
-            
-                    <li>@Html.ActionLink("צור קשר", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("היסטוריית רכב", "Index", "History")</li>
-                    <li>@Html.ActionLink("לוח רכב", "Index", "CarBoard")</li>
-                    <li>@Html.ActionLink("ראשי", "Index", "Home")</li>
-                </ul>
-                <a class="nav navbar-nav">
-                    <img id="navbar-brand" src="~/images/logo.jpg" />
-                </a>
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("צור קשר", "Contact", "Home")</li>
-        <li>@Html.ActionLink("היסטוריית רכב", "Index", "History")</li>
-        <li>@Html.ActionLink("לוח רכב", "Index", "CarBoard")</li>
-        <li>@Html.ActionLink("ראשי", "Index", "Home")</li>
-    </ul>
-                <a class="nav navbar-nav">
-                    <img id="navbar-brand" src="~/images/logo.jpg" />
-                </a>
-                @Html.Partial("_LoginPartial")
-}
+                @if (Request.IsAuthenticated)
+                {
+                    @Html.Partial("_LoginPartial")
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li>@Html.ActionLink("צור קשר", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("היסטוריית רכב", "Index", "History")</li>
+                        <li>@Html.ActionLink("לוח רכב", "Index", "CarBoard")</li>
+                        <li>@Html.ActionLink("ראשי", "Index", "Home")</li>
+                    </ul>
+                    <a class="nav navbar-nav">
+                        <img id="navbar-brand" src="~/images/logo.jpg" />
+                    </a>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("צור קשר", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("היסטוריית רכב", "Index", "History")</li>
+                        <li>@Html.ActionLink("לוח רכב", "Index", "CarBoard")</li>
+                        <li>@Html.ActionLink("ראשי", "Index", "Home")</li>
+                    </ul>
+                    <a class="nav navbar-nav">
+                        <img id="navbar-brand" src="~/images/logo.jpg" />
+                    </a>
+                    @Html.Partial("_LoginPartial")
+                }
             </div>
         </div>
     </div>
-    <div class="body-content">
-        @RenderBody()
-        <footer>
 
-        </footer>
+
+    <div class="container body-content">
+        @RenderBody()
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 </body>
-</html>

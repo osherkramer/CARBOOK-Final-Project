@@ -715,33 +715,48 @@ namespace FinalProjectV1.Helpers
                 query1 = String.Format(query1 + " WHERE Location = '{0}'", location);
                 flag1 = true;
             }
-
-            if (!String.IsNullOrEmpty(minPrice))
+            if (!String.IsNullOrEmpty(minPrice) && !String.IsNullOrEmpty(maxPrice) && minPrice == maxPrice)
             {
                 if (!flag1)
                 {
-                    query1 = String.Format(query1 + " WHERE Price >= '{0}'", minPrice);
+                    query1 = String.Format(query1 + " WHERE Price == '{0}'", minPrice);
                 }
                 else
                 {
-                    query1 = String.Format(query1 + " AND Price >= '{0}'", minPrice);
+                    query1 = String.Format(query1 + " AND Price == '{0}'", minPrice);
                 }
 
                 flag1 = true;
             }
-
-            if (!String.IsNullOrEmpty(maxPrice))
+            else
             {
-                if (!flag1)
+                if (!String.IsNullOrEmpty(minPrice))
                 {
-                    query1 = String.Format(query1 + " WHERE Price <= '{0}'", maxPrice);
-                }
-                else
-                {
-                    query1 = String.Format(query1 + " AND Price <= '{0}'", maxPrice);
+                    if (!flag1)
+                    {
+                        query1 = String.Format(query1 + " WHERE Price >= '{0}'", minPrice);
+                    }
+                    else
+                    {
+                        query1 = String.Format(query1 + " AND Price >= '{0}'", minPrice);
+                    }
+
+                    flag1 = true;
                 }
 
-                flag1 = true;
+                if (!String.IsNullOrEmpty(maxPrice))
+                {
+                    if (!flag1)
+                    {
+                        query1 = String.Format(query1 + " WHERE Price <= '{0}'", maxPrice);
+                    }
+                    else
+                    {
+                        query1 = String.Format(query1 + " AND Price <= '{0}'", maxPrice);
+                    }
+
+                    flag1 = true;
+                }
             }
 
             SqlCommand cmd = new SqlCommand(query1); //String.Format("select * from Car where ProductName='{0}' AND StartYear>='{1}' AND StartYear<='{4}' AND Gaer='{2}' AND CarModel='{3}'", productName, startYear, gear, model,endYear));

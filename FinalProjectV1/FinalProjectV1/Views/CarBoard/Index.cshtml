@@ -19,7 +19,7 @@
                             }
                         </select>
                     </div>
-                    <div class="formContainer">
+                    <!--<div class="formContainer">
                         <div class="title">דגם</div>
                         <select class="selectpicker" name="model">
                             <option value="">בחר דגם</option>
@@ -39,13 +39,13 @@
                             <option value="146">קאמרי</option>
                             <option value="1428">קורולה</option>
                         </select>
-                    </div>
+                    </div>-->
                     <div class="formContainer">
                         <div class="title">הילוכים</div>
                         <select class="selectpicker" name="gear">
                             <option value="">הילוכים</option>
-                            <option value="Automatic">אוטומטי</option>
-                            <option value="Manual">ידני</option>
+                            <option value="אוטומטי">אוטומטי</option>
+                            <option value="ידני">ידני</option>
                         </select>
                     </div>
                     <div class="formContainer">
@@ -121,7 +121,7 @@
                         <input type="text" class="form-control" name="minPrice" placeholder="ממחיר">
                     </div>
                     <input type="text" class="form-control" name="maxPrice" placeholder="עד מחיר">
-                    <input type="submit" value="חפש" />
+                    <input type="submit" value="חפש" class="btn btn-default"/>
                 </div>
             </center>
         </section>
@@ -143,8 +143,9 @@
             <div class="col-xs-1">תאריך</div>
         </li>
 
-
-        @foreach (var item in Model.cars)
+@if (Model.cars != null)
+{
+        foreach (var item in Model.cars)
         {
 
 
@@ -217,18 +218,20 @@
                             <div class="content">
                                 <div><strong>שם המוכר:</strong>@item.SellerName</div>
                                 <div><strong>טלפון:</strong>@item.Tel</div>
-                                <form action="/History/History" controller="History">
+                                <form aasp-controller="History" asp-action="History">
                                     <section class="history" dir="rtl">
+                                        <div hidden class="formContainer">
+                                            <input hidden class="form-control" type="hidden" name="carNumber" value="@item.CarNumber" />
+                                        </div>
                                         <div class="formContainer">
                                             <text>סיסמה זמנית: </text>
-                                            <input class="form-control" type="text" name="password" /><!--<strong>:סיסמה זמנית</strong>-->
+                                            <input class="form-control" type="password" name="password" /><!--<strong>:סיסמה זמנית</strong>-->
                                         </div>
                                         <div hidden class="formContainer">
-                                            <input hidden class="form-control" type="hidden" name="carNumber" value="@item.CarNumber"/>
+                                            <input hidden class="form-control" type="hidden" name="isOwner" value="False" />
                                         </div>
                                         <div>
-                                            <input type="submit" value="שלח" />
-
+                                            <input type="submit" value="שלח" class="btn btn-default"/>
                                         </div>
                                     </section>
                                 </form>  
@@ -240,5 +243,6 @@
 
 
         }
+}
     </ul>
 </div>

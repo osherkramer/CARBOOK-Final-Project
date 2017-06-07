@@ -132,15 +132,15 @@
     <ul class="messagesBoard" id="messagesBoardList">
         <li class="panelHeader row">
             <div class="col-xs-1"><img src="~/images/img3.png" /></div>
-            <div class="col-xs-3">יצרן-דגם</div>
+            <div class="col-xs-4">יצרן-דגם</div>
             <div class="col-xs-1">נפח</div>
             <div class="col-xs-1">שנה</div>
             <div class="col-xs-1">יד</div>
             <div class="col-xs-1">הילוכים</div>
             <div class="col-xs-1">מחיר</div>
-            <div class="col-xs-1">איזור</div>
-            <div class="col-xs-1"><img src="~/images/img5.png" /></div>
-            <div class="col-xs-1">תאריך</div>
+            <div class="col-xs-2">איזור</div>
+            <!--<div class="col-xs-1"><img src="~/images/img5.png" /></div>
+            <div class="col-xs-2">תאריך</div>-->
         </li>
 
 @if (Model.cars != null)
@@ -152,15 +152,15 @@
             <li class="panel row">
                 <a href="javascript:void(0)" class="btnCollapse row collapsed" data-target="#@item.CarNumber" data-toggle="collapse" data-parent="#messagesBoardList">
                     <div class="col-xs-1"><img src="~/images/img2.png" /></div>
-                    <div class="col-xs-3">@item.ProductName @item.CommericalAlias</div>
+                    <div class="col-xs-4">@item.ProductName @item.CommericalAlias</div>
                     <div class="col-xs-1">@item.EngineCapacity</div>
                     <div class="col-xs-1">@item.Year</div>
                     <div class="col-xs-1">@item.Yad</div>
                     <div class="col-xs-1">@item.Gaer</div>
                     <div class="col-xs-1">@item.Price</div>
-                    <div class="col-xs-1">@item.Location</div>
-                    <div class="col-xs-1"><img src="~/images/img4.png" /></div>
-                    <div class="col-xs-1">@item.DatePublished.ToShortDateString()</div>
+                    <div class="col-xs-2">@item.Location</div>
+                    <!--<div class="col-xs-1"><img src="~/images/img4.png" /></div>
+                    <div class="col-xs-2">@*@item.DatePublished.ToShortDateString()*@</div>-->
                 </a>
                 <div class="messageDropdown row collapse" id="@item.CarNumber">
                     <div class="col-sm-6 descMessage">

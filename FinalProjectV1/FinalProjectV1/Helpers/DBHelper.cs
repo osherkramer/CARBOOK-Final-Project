@@ -1123,7 +1123,7 @@ namespace FinalProjectV1.Helpers
         public static Dictionary<string, string> getCarsByOwner(string ownerId)
         {
             Open();
-            SqlCommand cmd = new SqlCommand(String.Format("SELECT CarID, ProductName FROM Car WHERE OwnerID = '{0}'", ownerId));
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT CarID, ProductName, CarModel FROM Car WHERE OwnerID = '{0}'", ownerId));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
             if (!sqlDR.Read())
@@ -1134,7 +1134,7 @@ namespace FinalProjectV1.Helpers
             do
             {
                 string carNumber = sqlDR["CarID"].ToString();
-                string carProduct = sqlDR["ProductName"].ToString();
+                string carProduct = sqlDR["ProductName"].ToString() + " " + sqlDR["CarModel"].ToString();
                 tempDictonary.Add(carNumber, carProduct);
             } while (sqlDR.Read());
 

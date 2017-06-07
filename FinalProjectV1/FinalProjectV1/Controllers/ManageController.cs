@@ -150,7 +150,7 @@ namespace FinalProjectV1.Controllers
               return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });*/
 
             //DBHelper db = new DBHelper();
-            DBHelper.editPhoneNumber(model.Number, User.Identity.GetUserId());
+            DBHelper.editPhoneNumber(model.Number, User.Identity.GetUserId(), getValueFromUserTable(User.Identity.GetUserId(), "IsraeliIdentify"));
             return RedirectToAction("Index", "Manage");
 
         }
@@ -456,7 +456,7 @@ namespace FinalProjectV1.Controllers
             // Generate the token and send it
             //var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
             //DBHelper db = new DBHelper();
-            bool flag = DBHelper.editName(model.Name, User.Identity.GetUserId());
+            bool flag = DBHelper.editName(model.Name, User.Identity.GetUserId(), getValueFromUserTable(User.Identity.GetUserId(), "IsraeliIdentify"));
             /*if (UserManager.SmsService != null)
             {
                 var message = new IdentityMessage

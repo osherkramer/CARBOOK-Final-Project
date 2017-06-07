@@ -1233,7 +1233,7 @@ namespace FinalProjectV1.Helpers
             return false;
         }
 
-         public static bool editName(string name, string ID)
+         public static bool editName(string name, string ID, string IsraeliID)
         {
             Open();
             SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Name='{0}' WHERE Id='{1}'", name, ID));
@@ -1241,17 +1241,56 @@ namespace FinalProjectV1.Helpers
             try
             {
                 if (cmd.ExecuteNonQuery() != -1)
-                    return true;
+                {
+                }
             }
             catch (Exception e)
             {
+                cmd.Connection.Close();
                 return false;
             }
-            return false;
+
+            SqlCommand cmd1 = new SqlCommand(String.Format("SELECT CarID FROM Car WHERE OwnerID = '{0}'", IsraeliID));
+            cmd1.Connection = sqlConnection;
+            SqlDataReader sqlDR1 = cmd1.ExecuteReader();
+            if (!sqlDR1.Read())
+                return false;
+
+            List<string> cars = new List<string>();
+
+            do
+            {
+                string car = sqlDR1["CarID"].ToString();
+                cars.Add(car);
+            } while (sqlDR1.Read());
+
+            sqlDR1.Close();
+
+            SqlCommand cmd2 = new SqlCommand();
+            cmd2.Connection = sqlConnection;
+            foreach (var carID in cars)
+            {
+                cmd2.CommandText = String.Format("UPDATE Advertisement SET SellerName = '{0}' WHERE CarNumber = '{1}'", name, carID);
+
+                try
+                {
+                    if (cmd2.ExecuteNonQuery() != -1)
+                    {
+                    }
+                }
+                catch (Exception e)
+                {
+                    cmd2.Connection.Close();
+                    return false;
+                }
+            }
+
+            cmd2.Connection.Close();
+            return true;
 
         }
 
-        public static bool editPhoneNumber(string phone, string ID)
+        public static bool editPhoneNumber(string phone, string ID, string IsraeliID)
         {
             Open();
             SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET PhoneNumber='{0}' WHERE Id='{1}'", phone, ID));
@@ -1259,13 +1298,52 @@ namespace FinalProjectV1.Helpers
             try
             {
                 if (cmd.ExecuteNonQuery() != -1)
-                    return true;
+                {
+                }
             }
             catch (Exception e)
             {
+                cmd.Connection.Close();
                 return false;
             }
-            return false;
+
+            SqlCommand cmd1 = new SqlCommand(String.Format("SELECT CarID FROM Car WHERE OwnerID = '{0}'", IsraeliID));
+            cmd1.Connection = sqlConnection;
+            SqlDataReader sqlDR1 = cmd1.ExecuteReader();
+            if (!sqlDR1.Read())
+                return false;
+
+            List<string> cars = new List<string>();
+
+            do
+            {
+                string car = sqlDR1["CarID"].ToString();
+                cars.Add(car);
+            } while (sqlDR1.Read());
+
+            sqlDR1.Close();
+
+            SqlCommand cmd2 = new SqlCommand();
+            cmd2.Connection = sqlConnection;
+            foreach (var carID in cars)
+            {
+                cmd2.CommandText = String.Format("UPDATE Advertisement SET Telephone = '{0}' WHERE CarNumber = '{1}'", phone, carID);
+
+                try
+                {
+                    if (cmd2.ExecuteNonQuery() != -1)
+                    {
+                    }
+                }
+                catch (Exception e)
+                {
+                    cmd2.Connection.Close();
+                    return false;
+                }
+            }
+
+            cmd2.Connection.Close();
+            return true;
         }
 
         /* ~DBHelper()

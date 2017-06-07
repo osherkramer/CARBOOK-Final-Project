@@ -1082,7 +1082,7 @@ namespace FinalProjectV1.Helpers
 
         public Dictionary<string, string> getCarsByOwner(string ownerId)
         {
-            SqlCommand cmd = new SqlCommand(String.Format("SELECT CarID, ProductName FROM Car WHERE OwnerID = '{0}'", ownerId));
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT CarID, ProductName, CarModel FROM Car WHERE OwnerID = '{0}'", ownerId));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
             if (!sqlDR.Read())
@@ -1093,27 +1093,66 @@ namespace FinalProjectV1.Helpers
             do
             {
                 string carNumber = sqlDR["CarID"].ToString();
-                string carProduct = sqlDR["ProductName"].ToString();
+                string carProduct = sqlDR["ProductName"].ToString() + " " + sqlDR["CarModel"];
                 tempDictonary.Add(carNumber, carProduct);
             } while (sqlDR.Read());
 
             return tempDictonary;
         }
 
-        public bool editAdress(string adress, string Id)
+        public bool editAdress(string adress, string Id, string IsraeliID)
         {
             SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Address='{0}' WHERE Id='{1}'", adress,Id));
             cmd.Connection = sqlConnection;
             try
             {
                 if (cmd.ExecuteNonQuery() != -1)
-                    return true;
+                {
+                }
             }
             catch (Exception e)
             {
+                cmd.Connection.Close();
                 return false;
             }
-            return false;
+
+            SqlCommand cmd1 = new SqlCommand(String.Format("SELECT CarID FROM Car WHERE OwnerID = '{0}'", IsraeliID));
+            cmd1.Connection = sqlConnection;
+            SqlDataReader sqlDR1 = cmd1.ExecuteReader();
+            if (!sqlDR1.Read())
+                return false;
+
+            List<string> cars = new List<string>();
+
+            do
+            {
+                string car = sqlDR1["CarID"].ToString();
+                cars.Add(car);
+            } while (sqlDR1.Read());
+
+            sqlDR1.Close();
+
+            SqlCommand cmd2 = new SqlCommand();
+            cmd2.Connection = sqlConnection;
+            foreach (var carID in cars)
+            {
+                cmd2.CommandText = String.Format("UPDATE Advertisement SET Location = '{0}' WHERE CarNumber = '{1}'", adress, carID);
+                
+                try
+                {
+                    if (cmd2.ExecuteNonQuery() != -1)
+                    {
+                    }
+                }
+                catch (Exception e)
+                {
+                    cmd2.Connection.Close();
+                    return false;
+                }
+            }
+
+            cmd2.Connection.Close();
+            return true;
         }
 
         public bool editEmail(string newEmail, string Id)
@@ -1149,6 +1188,7 @@ namespace FinalProjectV1.Helpers
             {
                 return false;
             }
+
             return false;
         }
 

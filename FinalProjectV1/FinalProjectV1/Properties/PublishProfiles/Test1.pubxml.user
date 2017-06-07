@@ -26,7 +26,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/02/2015 09:32:26</publishTime>
     </File>
     <File Include="bin/FinalProjectV1.dll">
-      <publishTime>06/04/2017 21:14:28</publishTime>
+      <publishTime>06/06/2017 21:34:14</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>11/30/2016 16:07:42</publishTime>
@@ -176,7 +176,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/03/2017 12:31:39</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>06/04/2017 21:12:13</publishTime>
+      <publishTime>06/06/2017 19:55:27</publishTime>
     </File>
     <File Include="Content/variables.less">
       <publishTime>06/04/2017 20:17:33</publishTime>
@@ -461,10 +461,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/27/2017 15:26:45</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
-      <publishTime>06/04/2017 21:06:40</publishTime>
+      <publishTime>06/06/2017 20:53:36</publishTime>
     </File>
     <File Include="Views/Account/Register.cshtml">
-      <publishTime>06/03/2017 14:49:05</publishTime>
+      <publishTime>06/06/2017 20:58:10</publishTime>
     </File>
     <File Include="Views/Account/ResetPassword.cshtml">
       <publishTime>05/27/2017 15:26:45</publishTime>
@@ -482,7 +482,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/20/2017 18:43:28</publishTime>
     </File>
     <File Include="Views/CarBoard/Index.cshtml">
-      <publishTime>06/03/2017 15:04:33</publishTime>
+      <publishTime>06/06/2017 20:56:15</publishTime>
     </File>
     <File Include="Views/History/AddAD.cshtml">
       <publishTime>06/04/2017 20:53:27</publishTime>
@@ -491,7 +491,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/31/2017 15:38:38</publishTime>
     </File>
     <File Include="Views/History/History.cshtml">
-      <publishTime>06/04/2017 21:06:40</publishTime>
+      <publishTime>06/04/2017 22:51:44</publishTime>
     </File>
     <File Include="Views/History/Index.cshtml">
       <publishTime>05/30/2017 23:55:18</publishTime>
@@ -503,7 +503,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/31/2017 10:33:59</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>06/04/2017 21:00:47</publishTime>
+      <publishTime>06/06/2017 19:57:56</publishTime>
     </File>
     <File Include="Views/Manage/AddOwnCar.cshtml">
       <publishTime>05/31/2017 14:03:02</publishTime>
@@ -548,7 +548,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/20/2017 18:43:28</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>06/04/2017 20:03:49</publishTime>
+      <publishTime>06/06/2017 19:57:42</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>05/30/2017 21:11:08</publishTime>
@@ -560,7 +560,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/20/2017 18:43:20</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/29/2017 13:54:40</publishTime>
+      <publishTime>06/06/2017 21:34:17</publishTime>
     </File>
   </ItemGroup>
 </Project>

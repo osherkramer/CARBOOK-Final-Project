@@ -424,7 +424,7 @@ namespace FinalProjectV1.Controllers
             // Generate the token and send it
             //var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
             DBHelper db = new DBHelper();
-            bool flag = db.editAdress(model.Adress, User.Identity.GetUserId());
+            bool flag = db.editAdress(model.Adress, User.Identity.GetUserId(), getValueFromUserTable(User.Identity.GetUserId(), "IsraeliIdentify"));
             /*if (UserManager.SmsService != null)
             {
                 var message = new IdentityMessage

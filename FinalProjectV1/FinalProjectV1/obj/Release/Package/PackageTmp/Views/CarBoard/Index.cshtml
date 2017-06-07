@@ -202,7 +202,7 @@
                         <div class="carDeatiles">
                             <div class="title">תמונה</div>
                             <div class="pic">
-                                <img src="~/images/img7.png" />
+                                <img src=@item.Pic />
                             </div>
                         </div>
                         <div class="carDeatiles">
@@ -218,7 +218,7 @@
                             <div class="content">
                                 <div><strong>שם המוכר:</strong>@item.SellerName</div>
                                 <div><strong>טלפון:</strong>@item.Tel</div>
-                                <form aasp-controller="History" asp-action="History">
+                                <form controller="History" action="History/History">
                                     <section class="history" dir="rtl">
                                         <div hidden class="formContainer">
                                             <input hidden class="form-control" type="hidden" name="carNumber" value="@item.CarNumber" />
@@ -231,7 +231,7 @@
                                             <input hidden class="form-control" type="hidden" name="isOwner" value="False" />
                                         </div>
                                         <div>
-                                            <input type="submit" value="שלח" class="btn btn-default"/>
+                                            <input type="submit" value="שלח" class="btn btn-default" />
                                         </div>
                                     </section>
                                 </form>  

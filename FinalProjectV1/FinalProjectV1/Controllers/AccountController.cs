@@ -141,9 +141,9 @@ namespace FinalProjectV1.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            DBHelper db = new DBHelper();
+            //DBHelper db = new DBHelper();
 
-            List<string> AreaList = db.getAreas();
+            List<string> AreaList = DBHelper.getAreas();
             ViewBag.List = new SelectList(AreaList, "AreaName");
             return View();
         }

@@ -7,31 +7,32 @@ using System.Data.SqlClient;
 
 namespace FinalProjectV1.Helpers
 {
-    public class DBHelper
+    public static class DBHelper
     {
-        private string connectionString = @"Server=db.cs.colman.ac.il;Database=CarBook;User Id=carbook;password=Car@Book;MultipleActiveResultSets=true";
-        private SqlConnection sqlConnection { get; set; }
+        private static string connectionString = @"Server=db.cs.colman.ac.il;Database=CarBook;User Id=carbook;password=Car@Book;MultipleActiveResultSets=true";
+        private static SqlConnection sqlConnection { get; set; }
 
-        public DBHelper()
+        static DBHelper()
         {
             sqlConnection = new SqlConnection(connectionString);
             Open();
         }
 
-        public void Open()
+        public static void Open()
         {
             if(sqlConnection.State != ConnectionState.Open)
                 sqlConnection.Open();
         }
 
-        public void Close()
+        public static void Close()
         {
             if (sqlConnection.State == ConnectionState.Open)
                 sqlConnection.Close();
         }
 
-        public Car getCarByNumber(string carNumber)
+        public static Car getCarByNumber(string carNumber)
         {
+            Open();
             int carNum = 0;
             if(carNumber != null && (carNumber.Length != 7 || carNumber[0].Equals('0') || !Int32.TryParse(carNumber, out carNum)))
                 return null;
@@ -84,21 +85,25 @@ namespace FinalProjectV1.Helpers
             return new Car();
         }
 
-        public string getValueFromUserTable(string userId, string column)
+        public static string getValueFromUserTable(string userId, string column)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("SELECT {0} FROM AspNetUsers WHERE Id = '{1}'", column, userId));
             cmd.Connection = sqlConnection;
 
-            SqlDataReader sqlDR = cmd.ExecuteReader();
+            Open();
 
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            
             if (!sqlDR.Read())
                 return null;
 
             return sqlDR[column].ToString();
         }
 
-        public List<Car> getCarByID(int ID)
+        public static List<Car> getCarByID(int ID)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Car WHERE OwnerID = {0}", ID));
             cmd.Connection = sqlConnection;
 
@@ -141,8 +146,9 @@ namespace FinalProjectV1.Helpers
             return cars;
         }
 
-        public Car getCar()
+        public static Car getCar()
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Car"));
             cmd.Connection = sqlConnection;
 
@@ -176,8 +182,9 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public List<string> getCarList()
+        public static List<string> getCarList()
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("SELECT ProductName FROM Car GROUP BY ProductName"));
             cmd.Connection = sqlConnection;
 
@@ -197,8 +204,9 @@ namespace FinalProjectV1.Helpers
             return cars;
         }
 
-        public List<string> getCarModelList(string car)
+        public static List<string> getCarModelList(string car)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("SELECT CarModel FROM Car WHERE ProductName = '{0}' GROUP BY CarModel", car));
             cmd.Connection = sqlConnection;
 
@@ -220,8 +228,9 @@ namespace FinalProjectV1.Helpers
 
 
 
-        public bool InsertCar(Car car)
+        public static bool InsertCar(Car car)
         {
+            Open();
             car.AirBags = car.AirBags.Equals("Yes") ? "כן" : "לא";
             car.ABS = car.ABS.Equals("Yes") ? "כן" : "לא";
             car.PowerWindow = car.PowerWindow.Equals("Yes") ? "כן" : "לא";
@@ -249,9 +258,9 @@ namespace FinalProjectV1.Helpers
             return true;
         } 
 
-        public Parts getPart(string PartName)
+        public static Parts getPart(string PartName)
         {
-           
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Parts WHERE PartName = '{0}'", PartName ));
             cmd.Connection = sqlConnection;
 
@@ -269,8 +278,9 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public HistoryItem getHistoryByID(int ID)
+        public static HistoryItem getHistoryByID(int ID)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Treatment WHERE TreatmentID = {0}", ID));
             cmd.Connection = sqlConnection;
 
@@ -290,8 +300,9 @@ namespace FinalProjectV1.Helpers
             return HI;
         }
 
-        public List<HistoryItem> getHistoryByCarNumber(int CarNumber)
+        public static List<HistoryItem> getHistoryByCarNumber(int CarNumber)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Treatment WHERE CarID = {0} ORDER BY CareDate ASC", CarNumber));
             cmd.Connection = sqlConnection;
             
@@ -332,8 +343,9 @@ namespace FinalProjectV1.Helpers
             return HIList;
         }
 
-        public bool InsertHistoryItem(HistoryItem HI)
+        public static bool InsertHistoryItem(HistoryItem HI)
         {
+            Open();
             if (isExistHistoryItem(HI))
                 return true;
 
@@ -364,7 +376,7 @@ namespace FinalProjectV1.Helpers
             return success;
         }
 
-        private string updateCareTypeName(string careType)
+        private static string updateCareTypeName(string careType)
         {
             switch (careType)
             {
@@ -435,8 +447,9 @@ namespace FinalProjectV1.Helpers
             return careType;
         }
 
-        public int getPartID(string part)
+        public static int getPartID(string part)
         {
+            Open();
             if (part.Contains("מכונאות וחשמל - כללי - מצמד- קלאץ") ||
                 part.Contains("משאבות - משאבת מצמד - קלאץ'"))
                 part = part.Substring(0, part.Length - 1);
@@ -452,8 +465,9 @@ namespace FinalProjectV1.Helpers
             return PartID;
         }
 
-        public bool isExistHistoryItem(HistoryItem HI)
+        public static bool isExistHistoryItem(HistoryItem HI)
         {
+            Open();
             HI.CareType = updateCareTypeName(HI.CareType);
             SqlCommand cmd = new SqlCommand(string.Format("SELECT TreatmentID FROM Treatment WHERE CarID = {0} AND CareDate = '{1}' AND CareType = '{2}' AND KM = {3} AND GarageName = '{4}'", HI.CarNumber, HI.Date, HI.CareType, HI.KM, HI.GarageName));
             cmd.Connection = sqlConnection;
@@ -464,8 +478,9 @@ namespace FinalProjectV1.Helpers
             return true;
         }
 
-        public bool InsertTreatmentToPart(int TreatmentID, int PartID)
+        public static bool InsertTreatmentToPart(int TreatmentID, int PartID)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO TreatmentToParts (TreatmentID, PartID) VALUES ('{0}' , '{1}' )", TreatmentID, PartID));
             cmd.Connection = sqlConnection;
 
@@ -482,8 +497,9 @@ namespace FinalProjectV1.Helpers
             return false;
         }
 
-        public List<Parts> getPartsOfTreatment(int TreatmentID)
+        public static List<Parts> getPartsOfTreatment(int TreatmentID)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM TreatmentToParts WHERE TreatmentID = {0}", TreatmentID));
             cmd.Connection = sqlConnection;
 
@@ -505,8 +521,9 @@ namespace FinalProjectV1.Helpers
             return parts;
         }
 
-        public Parts getPart(int PartID)
+        public static Parts getPart(int PartID)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("SELECT * FROM Parts WHERE PartID = {0}", PartID));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -522,8 +539,9 @@ namespace FinalProjectV1.Helpers
             return part; 
         }
 		
-		public bool insertPart(Parts part)
+		public static bool insertPart(Parts part)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("INSERT INTO Parts (PartID, PartValue, PartName) VALUES ('{0}' , '{1}' , '{2}' ) ", part.partID, part.partValue, part.partName));
             cmd.Connection = sqlConnection;
 
@@ -533,8 +551,9 @@ namespace FinalProjectV1.Helpers
             return false;
         }
 
-        public int returnPartValueBYID(int partID)
+        public static int returnPartValueBYID(int partID)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("SELECT PartValue FROM Parts WHERE PartID = {0}", partID));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -546,8 +565,9 @@ namespace FinalProjectV1.Helpers
             return partValue;
         }
 
-        public int returnPartValueByPartName(string partName)
+        public static int returnPartValueByPartName(string partName)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("SELECT PartValue FROM Parts WHERE PartName = '{0}'", partName));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -561,8 +581,9 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public DateTime getTemproryUsersByCarID(int carID, string password)
+        public static DateTime getTemproryUsersByCarID(int carID, string password)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("SELECT ExpiryDate FROM TemproryUsers WHERE CarID = '{0}' AND Password = '{1}'", carID, password));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -577,8 +598,9 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public bool insertTemproryUsers(TemproryUsers user)
+        public static bool insertTemproryUsers(TemproryUsers user)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO TemproryUsers (CarID, ExpiryDate, Password) VALUES ('{0}' , '{1}' , '{2}' ) ", user.carID, user.expiryDate.ToString(), user.password));
             cmd.Connection = sqlConnection;
 
@@ -589,8 +611,9 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public List<Advertisement> returnAdvertisments()
+        public static List<Advertisement> returnAdvertisments()
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("SELECT * FROM Advertisement"));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -619,8 +642,9 @@ namespace FinalProjectV1.Helpers
         }
 
 
-        public bool insertAdvertisment(Advertisement ad)
+        public static bool insertAdvertisment(Advertisement ad)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Advertisement (CarNumber, SellerName, Telephone, Picture, Describe, Location, Price, DatePublished) VALUES ('{0}' , '{1}' , '{2}', '{3}', '{4}', '{5}', '{6}', '{7}') ", ad.CarNumber, ad.SellerName, ad.Tel, ad.Pic, ad.Description, ad.Location, ad.Price, ad.DatePublished));
             cmd.Connection = sqlConnection;
 
@@ -630,29 +654,32 @@ namespace FinalProjectV1.Helpers
             return false;
         }
 
-        public bool isPublish(string carNumber)
+        public static bool isPublish(string carNumber)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("SELECT carNumber FROM Advertisement WHERE carNumber = '{0}'", carNumber));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
 
-            DateTime expiryDate = new DateTime();
+            //DateTime expiryDate = new DateTime();
             if (!sqlDR.Read())
                 return false;
 
             return true;
         }
 
-        public void deleteAd(string carNumber)
+        public static void deleteAd(string carNumber)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("DELETE FROM Advertisement WHERE carNumber = '{0}'", carNumber));
             cmd.Connection = sqlConnection;
 
             cmd.ExecuteNonQuery();
         }
 
-        public DateTime getMaxDateCarTreatment(String carNumber)
+        public static DateTime getMaxDateCarTreatment(String carNumber)
         {
+            Open();
             List<HistoryItem> historyItems = getHistoryByCarNumber(int.Parse(carNumber));
             if(historyItems == null)
             {
@@ -668,9 +695,9 @@ namespace FinalProjectV1.Helpers
             return max;
         }
 
-        public bool updateDateCarTreatment(String carNumber, DateTime maxDate)
+        public static bool updateDateCarTreatment(String carNumber, DateTime maxDate)
         {
-
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format(" UPDATE Car SET CarTreatment = '{0}' WHERE CarID='{1}'", maxDate, carNumber));
             cmd.Connection = sqlConnection;
             if (cmd.ExecuteNonQuery() != -1)
@@ -680,8 +707,9 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public String getMaxKM(DateTime date, String carNumber)
+        public static String getMaxKM(DateTime date, String carNumber)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format(" SELECT MAX (KM) AS 'MAX' FROM Treatment where CareDate='{0}' AND CarID={1}", date, carNumber));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -692,8 +720,9 @@ namespace FinalProjectV1.Helpers
             return KM;
         }
 
-        public bool updateKMCar(String carNumber, String KM)
+        public static bool updateKMCar(String carNumber, String KM)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format(" UPDATE Car SET KM = '{0}' WHERE CarID='{1}'", KM, carNumber));
             cmd.Connection = sqlConnection;
             if (cmd.ExecuteNonQuery() != -1)
@@ -704,8 +733,9 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public List<CarAD> search(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
+        public static List<CarAD> search(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
         {
+            Open();
             bool flag1 = false;
             String query1 = "SELECT * from Advertisement";
 
@@ -917,8 +947,9 @@ namespace FinalProjectV1.Helpers
             return carB;
         }
 
-        public List<String> getProductNameCars()
+        public static List<String> getProductNameCars()
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("SELECT ProductName FROM Car GROUP BY ProductName"));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -935,8 +966,9 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public List<String> getAreas()
+        public static List<String> getAreas()
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("SELECT * FROM Areas ORDER BY AreaName ASC"));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -954,8 +986,9 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public List<String> getModelCar(string ProductName)
+        public static List<String> getModelCar(string ProductName)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("SELECT CarModel FROM Car Where ProductName = '{0}' Group BY CarModel", ProductName));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -973,8 +1006,9 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public List<int> getPartsIDs(int treatmentID)
+        public static List<int> getPartsIDs(int treatmentID)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("SELECT PartID FROM TreatmentToParts WHERE TreatmentID = '{0}'", treatmentID));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -991,8 +1025,9 @@ namespace FinalProjectV1.Helpers
             return PartsIDs;
         }
 
-        public List<int> getTreatmentIDs(int carID)
+        public static List<int> getTreatmentIDs(int carID)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("SELECT TreatmentID FROM Treatment WHERE CarID = '{0}'", carID));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -1009,8 +1044,9 @@ namespace FinalProjectV1.Helpers
             return PartsIDs;
         }
 
-        public bool setGrade(string carNum, int grade)
+        public static bool setGrade(string carNum, int grade)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("UPDATE Car SET Grade = '{0}' WHERE CarID = '{1}'", grade, carNum));
             cmd.Connection = sqlConnection;
 
@@ -1029,8 +1065,9 @@ namespace FinalProjectV1.Helpers
 
        
 
-        public List<int> getPartValue(List<int> treatmentID, string carNumber)
+        public static List<int> getPartValue(List<int> treatmentID, string carNumber)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("select TreatmentID FROM Treatment where CarID= '{0}'", carNumber));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -1039,8 +1076,9 @@ namespace FinalProjectV1.Helpers
             return null;
         }
         
-        public bool updateCarOwn(string carNum, string ID)
+        public static bool updateCarOwn(string carNum, string ID)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(string.Format("UPDATE Car SET OwnerID = '{0}' WHERE CarID = '{1}'", ID, carNum));
             cmd.Connection = sqlConnection;
 
@@ -1057,9 +1095,10 @@ namespace FinalProjectV1.Helpers
             return true;
         }
 
-        public PersonalArea getPrivateDetails(string Email)
+        public static PersonalArea getPrivateDetails(string Email)
 
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("SELECT * FROM PersonalArea WHERE Email = '{0}'", Email));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -1080,8 +1119,9 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public Dictionary<string, string> getCarsByOwner(string ownerId)
+        public static Dictionary<string, string> getCarsByOwner(string ownerId)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("SELECT CarID, ProductName FROM Car WHERE OwnerID = '{0}'", ownerId));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -1100,24 +1140,65 @@ namespace FinalProjectV1.Helpers
             return tempDictonary;
         }
 
-        public bool editAdress(string adress, string Id)
+        public static bool editAdress(string adress, string Id, string IsraeliID)
         {
-            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Address='{0}' WHERE Id='{1}'", adress,Id));
+            Open();
+            SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Address='{0}' WHERE Id='{1}'", adress, Id));
             cmd.Connection = sqlConnection;
             try
             {
                 if (cmd.ExecuteNonQuery() != -1)
-                    return true;
+                {
+                }
             }
             catch (Exception e)
             {
+                cmd.Connection.Close();
                 return false;
             }
-            return false;
+
+            SqlCommand cmd1 = new SqlCommand(String.Format("SELECT CarID FROM Car WHERE OwnerID = '{0}'", IsraeliID));
+            cmd1.Connection = sqlConnection;
+            SqlDataReader sqlDR1 = cmd1.ExecuteReader();
+            if (!sqlDR1.Read())
+                return false;
+
+            List<string> cars = new List<string>();
+
+            do
+            {
+                string car = sqlDR1["CarID"].ToString();
+                cars.Add(car);
+            } while (sqlDR1.Read());
+
+            sqlDR1.Close();
+
+            SqlCommand cmd2 = new SqlCommand();
+            cmd2.Connection = sqlConnection;
+            foreach (var carID in cars)
+            {
+                cmd2.CommandText = String.Format("UPDATE Advertisement SET Location = '{0}' WHERE CarNumber = '{1}'", adress, carID);
+
+                try
+                {
+                    if (cmd2.ExecuteNonQuery() != -1)
+                    {
+                    }
+                }
+                catch (Exception e)
+                {
+                    cmd2.Connection.Close();
+                    return false;
+                }
+            }
+
+            cmd2.Connection.Close();
+            return true;
         }
 
-        public bool editEmail(string newEmail, string Id)
+        public static bool editEmail(string newEmail, string Id)
         {
+            Open();
             SqlCommand cmd= new SqlCommand(String.Format("SELECT Email FROM AspNetUsers"));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -1152,8 +1233,9 @@ namespace FinalProjectV1.Helpers
             return false;
         }
 
-         public bool editName(string name, string ID)
+         public static bool editName(string name, string ID)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET Name='{0}' WHERE Id='{1}'", name, ID));
             cmd.Connection = sqlConnection;
             try
@@ -1169,8 +1251,9 @@ namespace FinalProjectV1.Helpers
 
         }
 
-        public bool editPhoneNumber(string phone, string ID)
+        public static bool editPhoneNumber(string phone, string ID)
         {
+            Open();
             SqlCommand cmd = new SqlCommand(String.Format("UPDATE AspNetUsers SET PhoneNumber='{0}' WHERE Id='{1}'", phone, ID));
             cmd.Connection = sqlConnection;
             try
@@ -1185,7 +1268,7 @@ namespace FinalProjectV1.Helpers
             return false;
         }
 
-        ~DBHelper()
+        /* ~DBHelper()
         {
             if (sqlConnection.State == ConnectionState.Open)
                 try {
@@ -1195,6 +1278,6 @@ namespace FinalProjectV1.Helpers
                 {
                     
                 }
-        }
+        }*/
     }
 }

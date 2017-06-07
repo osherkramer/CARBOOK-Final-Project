@@ -20,10 +20,10 @@ namespace FinalProjectV1.Controllers
 
         private PersonalPage getPersonalDetails(string Email)
         {
-            DBHelper db = new DBHelper();
-            PersonalArea person = db.getPrivateDetails(Email);
+            //DBHelper db = new DBHelper();
+            PersonalArea person = DBHelper.getPrivateDetails(Email);
             PersonalPage details = new PersonalPage();
-            details.cars = db.getCarByID(person.ID);
+            details.cars = DBHelper.getCarByID(person.ID);
             details.Email = person.Email;
             details.FirstName = person.FirstName;
             details.ID = person.ID;
@@ -52,8 +52,8 @@ namespace FinalProjectV1.Controllers
             dateNow.AddMinutes(20);
             tu.expiryDate = dateNow;
 
-            DBHelper DBHelp = new DBHelper();
-            bool flag = DBHelp.insertTemproryUsers(tu);
+            //DBHelper DBHelp = new DBHelper();
+            bool flag = DBHelper.insertTemproryUsers(tu);
             return flag;
             
         }
@@ -70,8 +70,8 @@ namespace FinalProjectV1.Controllers
             ad.SellerName = SellerName;
             ad.Tel = Tel;
 
-            DBHelper db = new DBHelper();
-            bool flag = db.insertAdvertisment(ad);
+            //DBHelper db = new DBHelper();
+            bool flag = DBHelper.insertAdvertisment(ad);
             return flag;
 
 
@@ -79,8 +79,8 @@ namespace FinalProjectV1.Controllers
 
         public List<HistoryItem> getHistoryItemsCar(string carNumber)
         {
-            DBHelper db = new DBHelper();
-            List<HistoryItem> historyItems = db.getHistoryByCarNumber(Int32.Parse(carNumber));
+            //DBHelper db = new DBHelper();
+            List<HistoryItem> historyItems = DBHelper.getHistoryByCarNumber(Int32.Parse(carNumber));
             return historyItems;
         }
 

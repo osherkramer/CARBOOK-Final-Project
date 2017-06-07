@@ -79,14 +79,14 @@ namespace FinalProjectV1.Controllers
 
         public ActionResult Index(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
         {
-            DBHelper db = new DBHelper();
-            List<CarAD> carsBoard = db.search(productName, model, startYear, endYear, gear, location, minPrice, maxPrice);
+            //DBHelper db = new DBHelper();
+            List<CarAD> carsBoard = DBHelper.search(productName, model, startYear, endYear, gear, location, minPrice, maxPrice);
 
             CarBoard cb = new CarBoard();
             cb.cars = carsBoard;
-            cb.carsProduct = db.getCarList();
+            cb.carsProduct = DBHelper.getCarList();
             cb.carsProduct.Sort();
-            cb.areas = db.getAreas();
+            cb.areas = DBHelper.getAreas();
 
             return View(cb);
         }
@@ -94,20 +94,20 @@ namespace FinalProjectV1.Controllers
       
         public JsonResult getCars()
         {
-            DBHelper db = new DBHelper();
-            return Json(db.getCarList());
+            //DBHelper db = new DBHelper();
+            return Json(DBHelper.getCarList());
         }
 
         public JsonResult getCarModel(string car)
         {
-            DBHelper db = new DBHelper();
-            return Json(db.getCarModelList(car));
+            //DBHelper db = new DBHelper();
+            return Json(DBHelper.getCarModelList(car));
         }
 
         public double calculateGradeOfCar(string carNumber)
         {
-            DBHelper db = new DBHelper();
-            List<int> treatmentID = db.getTreatmentIDs(Int32.Parse(carNumber));
+            //DBHelper db = new DBHelper();
+            List<int> treatmentID = DBHelper.getTreatmentIDs(Int32.Parse(carNumber));
 
             if (treatmentID==null) 
                 return -1;
@@ -116,7 +116,7 @@ namespace FinalProjectV1.Controllers
             List<int> tempID = new List<int>();
             foreach(var id in treatmentID)
             {
-                tempID=db.getPartsIDs(id);
+                tempID = DBHelper.getPartsIDs(id);
 
                 foreach(var temp in tempID)
                 {
@@ -127,7 +127,7 @@ namespace FinalProjectV1.Controllers
             int sum = 0;
             foreach(var id in partID)
             {
-                sum += db.returnPartValueBYID(id);
+                sum += DBHelper.returnPartValueBYID(id);
             }
 
             return sum;

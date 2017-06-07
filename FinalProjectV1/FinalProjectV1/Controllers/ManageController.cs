@@ -85,14 +85,14 @@ namespace FinalProjectV1.Controllers
 
         private string getValueFromUserTable(string userId, string column)
         {
-            DBHelper db = new DBHelper();
-            return db.getValueFromUserTable(userId, column);
+            //DBHelper db = new DBHelper();
+            return DBHelper.getValueFromUserTable(userId, column);
         }
 
         private Dictionary<string, string> getCarsByOwner(string userId)
         {
-            DBHelper db = new DBHelper();
-            return db.getCarsByOwner(userId);
+            //DBHelper db = new DBHelper();
+            return DBHelper.getCarsByOwner(userId);
         }
 
         //
@@ -149,8 +149,8 @@ namespace FinalProjectV1.Controllers
               }
               return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });*/
 
-            DBHelper db = new DBHelper();
-            db.editPhoneNumber(model.Number, User.Identity.GetUserId());
+            //DBHelper db = new DBHelper();
+            DBHelper.editPhoneNumber(model.Number, User.Identity.GetUserId());
             return RedirectToAction("Index", "Manage");
 
         }
@@ -171,8 +171,8 @@ namespace FinalProjectV1.Controllers
                 return View(model);
             }
             
-            DBHelper db = new DBHelper();
-            bool flag = db.updateCarOwn(model.Number, getValueFromUserTable(User.Identity.GetUserId(), "IsraeliIdentify"));
+            //DBHelper db = new DBHelper();
+            bool flag = DBHelper.updateCarOwn(model.Number, getValueFromUserTable(User.Identity.GetUserId(), "IsraeliIdentify"));
             return RedirectToAction("Index", "Manage");
 
         }
@@ -390,8 +390,8 @@ namespace FinalProjectV1.Controllers
             }
             // Generate the token and send it
             //var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
-            DBHelper db = new DBHelper();
-            bool flag = db.editEmail(model.Email, User.Identity.GetUserId());
+            //DBHelper db = new DBHelper();
+            bool flag = DBHelper.editEmail(model.Email, User.Identity.GetUserId());
             
             /*if (UserManager.SmsService != null)
             {
@@ -423,8 +423,8 @@ namespace FinalProjectV1.Controllers
             }
             // Generate the token and send it
             //var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
-            DBHelper db = new DBHelper();
-            bool flag = db.editAdress(model.Adress, User.Identity.GetUserId());
+            //DBHelper db = new DBHelper();
+            bool flag = DBHelper.editAdress(model.Adress, User.Identity.GetUserId(), getValueFromUserTable(User.Identity.GetUserId(), "IsraeliIdentify"));
             /*if (UserManager.SmsService != null)
             {
                 var message = new IdentityMessage
@@ -455,8 +455,8 @@ namespace FinalProjectV1.Controllers
             }
             // Generate the token and send it
             //var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
-            DBHelper db = new DBHelper();
-            bool flag = db.editName(model.Name, User.Identity.GetUserId());
+            //DBHelper db = new DBHelper();
+            bool flag = DBHelper.editName(model.Name, User.Identity.GetUserId());
             /*if (UserManager.SmsService != null)
             {
                 var message = new IdentityMessage

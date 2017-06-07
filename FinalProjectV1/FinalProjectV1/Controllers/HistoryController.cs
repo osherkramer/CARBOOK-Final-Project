@@ -67,8 +67,8 @@ namespace FinalProjectV1.Controllers
             dateNow = dateNow.AddMinutes(20);
             tu.expiryDate = dateNow;
 
-            DBHelper DBHelp = new DBHelper();
-            if (DBHelp.insertTemproryUsers(tu))
+            //DBHelper DBHelp = new DBHelper();
+            if (DBHelper.insertTemproryUsers(tu))
                 return View(tu);
 
             return View();
@@ -87,10 +87,10 @@ namespace FinalProjectV1.Controllers
             {
                 password = "";
             }
-            DBHelper DBhelp = new DBHelper();
+            //DBHelper DBhelp = new DBHelper();
             if (!isOwner)
             {
-                DateTime dt = DBhelp.getTemproryUsersByCarID(Int32.Parse(carNumber), password);
+                DateTime dt = DBHelper.getTemproryUsersByCarID(Int32.Parse(carNumber), password);
                 if (dt < DateTime.Now)
                 {
                     ViewBag.Message = "Car number or password incurrect or expired";
@@ -98,7 +98,7 @@ namespace FinalProjectV1.Controllers
                 }
             }
 
-            Car car = DBhelp.getCarByNumber(carNumber);
+            Car car = DBHelper.getCarByNumber(carNumber);
             HistoryCar historyCar = getHistoryCar(car);
             historyCar.isOwnerRequest = isOwner;
             historyCar.isPublished = isPublish(carNumber);
@@ -108,8 +108,8 @@ namespace FinalProjectV1.Controllers
 
         private bool isPublish(string carNumber)
         {
-            DBHelper db = new DBHelper();
-            return db.isPublish(carNumber);
+            //DBHelper db = new DBHelper();
+            return DBHelper.isPublish(carNumber);
         }
 
 
@@ -118,8 +118,8 @@ namespace FinalProjectV1.Controllers
             HistoryCar hc = new HistoryCar();
             hc.car = car;
 
-            DBHelper DBhelp = new DBHelper();
-            hc.historyItems = DBhelp.getHistoryByCarNumber(int.Parse(car.CarNumber));
+            //DBHelper DBhelp = new DBHelper();
+            hc.historyItems = DBHelper.getHistoryByCarNumber(int.Parse(car.CarNumber));
             return hc;
         }
 
@@ -143,7 +143,7 @@ namespace FinalProjectV1.Controllers
             //Read Path of car
             int byteRead;
             byteRead = clientStream.Read(buffer, 0, buffer.Length);*/
-            DBHelper db = new DBHelper();
+            //DBHelper db = new DBHelper();
             
             string buf = "Send data for " + CarNumber;
             /*while ((buf = encoder.GetString(buffer, 0, byteRead)).Contains("Send data for"))
@@ -160,30 +160,30 @@ namespace FinalProjectV1.Controllers
                     if (file.Contains("Details"))
                     {
                         Car car = XMLHelper.ReadFromFile<Car>(file);
-                        db.Open();
-                        db.InsertCar(car);
-                        db.Close();
+                        DBHelper.Open();
+                        DBHelper.InsertCar(car);
+                        DBHelper.Close();
                     }
                     else if (file.Contains("CarHistory"))
                     {
                         HistoryItem hi = XMLHelper.ReadFromFile<HistoryItem>(file);
-                        db.Open();
-                        db.InsertHistoryItem(hi);
-                        db.Close();
+                        DBHelper.Open();
+                        DBHelper.InsertHistoryItem(hi);
+                        DBHelper.Close();
                     }
                 }
             /*}*/
 
-            db.Open();
-            DateTime dateMax = db.getMaxDateCarTreatment(CarNumber);
+            DBHelper.Open();
+            DateTime dateMax = DBHelper.getMaxDateCarTreatment(CarNumber);
             if(dateMax.Equals(new DateTime()))
             {
-                dateMax = db.getCarByNumber(CarNumber).RoadDate;
+                dateMax = DBHelper.getCarByNumber(CarNumber).RoadDate;
             }
-            bool flag = db.updateDateCarTreatment(CarNumber, dateMax);
-            String KM = db.getMaxKM(dateMax, CarNumber);
-            flag = db.updateKMCar(CarNumber, KM);
-            db.Close();
+            bool flag = DBHelper.updateDateCarTreatment(CarNumber, dateMax);
+            String KM = DBHelper.getMaxKM(dateMax, CarNumber);
+            flag = DBHelper.updateKMCar(CarNumber, KM);
+            DBHelper.Close();
 
         }
 
@@ -196,8 +196,8 @@ namespace FinalProjectV1.Controllers
         }
         private string getValueFromUserTable(string userId, string column)
         {
-            DBHelper db = new DBHelper();
-            return db.getValueFromUserTable(userId, column);
+            //DBHelper db = new DBHelper();
+            return DBHelper.getValueFromUserTable(userId, column);
         }
 
         //
@@ -218,16 +218,16 @@ namespace FinalProjectV1.Controllers
             model.SellerName = getValueFromUserTable(userId, "Name");
             model.Tel = getValueFromUserTable(userId, "PhoneNumber");
 
-            DBHelper db = new DBHelper();
-            db.insertAdvertisment(model);
+            //DBHelper db = new DBHelper();
+            DBHelper.insertAdvertisment(model);
 
             return RedirectToAction("History", "History", new { carNumber = model.CarNumber, isOwner = true });
         }
 
         public async Task<ActionResult> DeleteAD(string carNumber)
         {
-            DBHelper db = new DBHelper();
-            db.deleteAd(carNumber);
+            //DBHelper db = new DBHelper();
+            DBHelper.deleteAd(carNumber);
 
             return RedirectToAction("History", "History", new { carNumber = carNumber, isOwner = true });
         }

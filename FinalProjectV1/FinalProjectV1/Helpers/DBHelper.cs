@@ -645,6 +645,7 @@ namespace FinalProjectV1.Helpers
         public static bool insertAdvertisment(Advertisement ad)
         {
             Open();
+            ad.Price = ad.Price.Contains(",") ? ad.Price.Replace(",", "") : ad.Price;
             SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO Advertisement (CarNumber, SellerName, Telephone, Picture, Describe, Location, Price, DatePublished) VALUES ('{0}' , '{1}' , '{2}', '{3}', '{4}', '{5}', '{6}', '{7}') ", ad.CarNumber, ad.SellerName, ad.Tel, ad.Pic, ad.Description, ad.Location, ad.Price, ad.DatePublished));
             cmd.Connection = sqlConnection;
 
@@ -749,11 +750,11 @@ namespace FinalProjectV1.Helpers
             {
                 if (!flag1)
                 {
-                    query1 = String.Format(query1 + " WHERE Price == '{0}'", minPrice);
+                    query1 = String.Format(query1 + " WHERE Price = '{0}'", minPrice);
                 }
                 else
                 {
-                    query1 = String.Format(query1 + " AND Price == '{0}'", minPrice);
+                    query1 = String.Format(query1 + " AND Price = '{0}'", minPrice);
                 }
 
                 flag1 = true;
@@ -1122,7 +1123,7 @@ namespace FinalProjectV1.Helpers
         public static Dictionary<string, string> getCarsByOwner(string ownerId)
         {
             Open();
-            SqlCommand cmd = new SqlCommand(String.Format("SELECT CarID, ProductName FROM Car WHERE OwnerID = '{0}'", ownerId));
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT CarID, ProductName, CarModel FROM Car WHERE OwnerID = '{0}'", ownerId));
             cmd.Connection = sqlConnection;
             SqlDataReader sqlDR = cmd.ExecuteReader();
             if (!sqlDR.Read())
@@ -1133,7 +1134,7 @@ namespace FinalProjectV1.Helpers
             do
             {
                 string carNumber = sqlDR["CarID"].ToString();
-                string carProduct = sqlDR["ProductName"].ToString();
+                string carProduct = sqlDR["ProductName"].ToString() + " " + sqlDR["CarModel"].ToString();
                 tempDictonary.Add(carNumber, carProduct);
             } while (sqlDR.Read());
 

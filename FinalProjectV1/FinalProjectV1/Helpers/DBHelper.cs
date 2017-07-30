@@ -11,6 +11,9 @@ namespace FinalProjectV1.Helpers
     {
         private static string connectionString = @"Server=db.cs.colman.ac.il;Database=CarBook;User Id=carbook;password=Car@Book;MultipleActiveResultSets=true";
         private static SqlConnection sqlConnection { get; set; }
+		
+		// Parts doesn't change during operation - not necessary to bring them every time
+        private static List<Parts> parts;
 
         static DBHelper()
         {
@@ -537,6 +540,32 @@ namespace FinalProjectV1.Helpers
             part.partName = sqlDR["PartName"].ToString();
 
             return part; 
+        }
+		
+		public static List<Parts> getAllParts()
+        {
+            if (DBHelper.parts != null)
+                return DBHelper.parts;
+
+            Open();
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT * FROM Parts"));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+
+            List<Parts> parts = new List<Parts>();
+            do
+            {
+                Parts part = new Parts();
+                part.partID = Int32.Parse(sqlDR["PartID"].ToString());
+                part.partValue = Int32.Parse(sqlDR["PartValue"].ToString());
+                part.partName = sqlDR["PartName"].ToString();
+                parts.Add(part);
+            } while (sqlDR.Read());
+
+            DBHelper.parts = parts;
+            return parts;
         }
 		
 		public static bool insertPart(Parts part)

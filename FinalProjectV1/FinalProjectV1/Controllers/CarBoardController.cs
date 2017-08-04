@@ -84,12 +84,15 @@ namespace FinalProjectV1.Controllers
             //List<CarAD> carsBoard = DBHelper.search(productName, model, startYear, endYear, gear, location, minPrice, maxPrice);
             List<CarAD> carsBoard = DBHelper.search(productName, model, startYear, endYear, gear, "", minPrice, maxPrice);
             
-            List<Individual<List<CarAD>>> population = CarsPopulation.create(location, carsBoard, 100, 5);
-            GeneticAlgorithm<List<CarAD>> geneticAlgorithm = new GeneticAlgorithm<List<CarAD>>(80, 2);
-            List<CarAD> carsAfterGeneticFilter = geneticAlgorithm.run(population).getGenes();
-
+            if(carsBoard != null && carsBoard.Count > 5)
+            {
+                List<Individual<List<CarAD>>> population = CarsPopulation.create(location, carsBoard, 100, 5);
+                GeneticAlgorithm<List<CarAD>> geneticAlgorithm = new GeneticAlgorithm<List<CarAD>>(80, 2);
+                carsBoard = geneticAlgorithm.run(population).getGenes();
+            }
+            
             CarBoard cb = new CarBoard();
-            cb.cars = carsAfterGeneticFilter;
+            cb.cars = carsBoard;
             cb.carsProduct = DBHelper.getCarList();
             cb.carsProduct.Sort();
             cb.areas = DBHelper.getAreas();

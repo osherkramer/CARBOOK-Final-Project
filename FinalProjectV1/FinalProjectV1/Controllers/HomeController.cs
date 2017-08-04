@@ -16,6 +16,7 @@ namespace FinalProjectV1.Controllers
     {
         public ActionResult Index()
         {
+            CarFeatureExtractor.buildAllCarFeatures();
             return View();
         }
 

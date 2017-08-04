@@ -202,6 +202,11 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
+    <Compile Include="GeneticAlgorithm\CarsIndividual.cs" />
+    <Compile Include="GeneticAlgorithm\CarsPopulation.cs" />
+    <Compile Include="GeneticAlgorithm\CarFeatureExtractor.cs" />
+    <Compile Include="GeneticAlgorithm\Individual.cs" />
+    <Compile Include="GeneticAlgorithm\GeneticAlgorithm.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

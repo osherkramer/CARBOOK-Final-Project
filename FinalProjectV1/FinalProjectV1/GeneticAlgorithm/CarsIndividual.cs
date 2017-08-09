@@ -12,7 +12,7 @@ namespace FinalProjectV1
     public class CarsIndividual : Individual<List<CarAD>>
     {
         private static float prince_const = 1;
-        private static float distance_const = 1;
+        private static float distance_const = 100;
 
         private List<CarAD> individual_cars;
         private List<CarAD> all_cars;

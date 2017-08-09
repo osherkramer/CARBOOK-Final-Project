@@ -41,7 +41,7 @@ namespace FinalProjectV1
             if(isDuplicates(son))
                 son = parent_a;
             
-            return new CarsIndividual(son, all_cars, buyer_location);
+            return new CarsIndividual(son, this.all_cars,this.buyer_location);
         }
 
         private bool isDuplicates(List<CarAD> cars)
@@ -59,8 +59,8 @@ namespace FinalProjectV1
             int rand;
             Random r = new Random();
 
-            rand = r.Next(0, individual_cars.Count);
-            individual_cars.RemoveAt(rand);
+            rand = r.Next(0, this.individual_cars.Count);
+            this.individual_cars.RemoveAt(rand);
 
             rand = r.Next(0, all_cars.Count);
             individual_cars.Add(all_cars.ElementAt(rand));
@@ -68,13 +68,13 @@ namespace FinalProjectV1
 
         public List<CarAD> getGenes()
         {
-            return individual_cars;
+            return this.individual_cars;
         }
 
         public float getFitness()
         {
             float totalFitness = 0;
-            foreach (CarAD car in individual_cars)
+            foreach (CarAD car in this.individual_cars)
             {
                 totalFitness += getSingleCarFitness(car);
             }

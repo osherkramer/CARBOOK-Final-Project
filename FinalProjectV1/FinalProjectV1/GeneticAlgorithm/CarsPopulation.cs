@@ -16,6 +16,7 @@ namespace FinalProjectV1
             Random r = new Random();
             int rand;
 
+            //minimum 5 cars
             if (all_cars == null || all_cars.Count < cars_in_individual)
                 return null;
 
@@ -23,7 +24,7 @@ namespace FinalProjectV1
             for (int i = 0; i < population_size; i++)
             {
                 List<CarAD> cars_of_individual = new List<CarAD>();
-
+                
                 while(cars_of_individual.Count < cars_in_individual)
                 {
                     rand = r.Next(0, all_cars.Count);

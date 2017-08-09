@@ -28,16 +28,16 @@ namespace FinalProjectV1
             if (population == null || population.Count == 0)
                 return null;
 
-            float min_fitness = -1;
             Individual<T> best_individual = population.ElementAt(0);
-            
+            float min_fitness = best_individual.getFitness();
+
             for (int iteration = 0; iteration < number_of_iterations; iteration++)
             {
                 // Find minimum individual
                 foreach (Individual<T> individual in population)
                 {
                     float fitness = individual.getFitness();
-                    if ( fitness < min_fitness || min_fitness == -1)
+                    if ( fitness < min_fitness)
                     {
                         min_fitness = fitness;
                         best_individual = individual;

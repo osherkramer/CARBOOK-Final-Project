@@ -303,6 +303,49 @@ namespace FinalProjectV1.Helpers
             return HI;
         }
 
+        public static List<HistoryItem> getAllHistory()
+        {
+            Open();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Treatment");
+            cmd.Connection = sqlConnection;
+
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+
+            if (!sqlDR.Read())
+                return null;
+
+
+            List<HistoryItem> HIList = new List<HistoryItem>();
+            do
+            {
+                HistoryItem HI = new HistoryItem();
+                HI.CarNumber = sqlDR["CarID"].ToString();
+                HI.Date = Convert.ToDateTime(sqlDR["CareDate"].ToString());
+                HI.TreatmentID = Int32.Parse(sqlDR["TreatmentID"].ToString());
+                HI.CareType = sqlDR["CareType"].ToString();
+                HI.KM = Int32.Parse(sqlDR["KM"].ToString());
+                HI.GarageName = sqlDR["GarageName"].ToString();
+                List<Parts> parts = getPartsOfTreatment(HI.TreatmentID);
+
+                List<string> partsStr = new List<string>();
+                if (parts != null && parts.Count > 0)
+                {
+                    partsStr.Clear();
+                    foreach (var part in parts)
+                    {
+                        if (part == null)
+                            continue;
+                        partsStr.Add(part.partName);
+                    }
+                }
+
+                HI.Treatment = partsStr.ToArray();
+                HIList.Add(HI);
+            } while (sqlDR.Read());
+
+            return HIList;
+        }
+
         public static List<HistoryItem> getHistoryByCarNumber(int CarNumber)
         {
             Open();

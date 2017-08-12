@@ -128,6 +128,7 @@ namespace FinalProjectV1
             care_history = DBHelper.getAllHistory();
         }
 
+        //calculate distance between 2 cities
         private static int getDistanceBetweenCities(string start_city, string end_city)
         {
             var sCoord = new GeoCoordinate(location_lat[start_city], location_long[start_city]);
@@ -136,6 +137,8 @@ namespace FinalProjectV1
             return (int)sCoord.GetDistanceTo(eCoord)/1000;
         }
 
+
+        //create dictionery of a car (price,distance,halafim tipul)
         public static Dictionary<string, int> getFeatureOfCar(CarAD car, string buyerLocation)
         {
             int CarNumber = int.Parse(car.CarNumber);

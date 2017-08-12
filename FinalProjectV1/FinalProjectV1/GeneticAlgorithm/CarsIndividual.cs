@@ -27,7 +27,7 @@ namespace FinalProjectV1
 
         public Individual<List<CarAD>> crossover(Individual<List<CarAD>> partner)
         {
-            // Take two parents
+            // Take two car lists
             List<CarAD> parent_a = this.getGenes();
             List<CarAD> parent_b = partner.getGenes();
             List<CarAD> son = new List<CarAD>();
@@ -35,9 +35,11 @@ namespace FinalProjectV1
             int total_len = parent_a.Count;
             int split = total_len / 2;
 
+            // Mix car lists
             son.AddRange(parent_a.GetRange(0, split));
             son.AddRange(parent_b.GetRange(split, total_len - split));
 
+            
             if(isDuplicates(son))
                 son = parent_a;
             
@@ -71,6 +73,7 @@ namespace FinalProjectV1
             return this.individual_cars;
         }
 
+        // fintness func
         public float getFitness()
         {
             float totalFitness = 0;
@@ -92,6 +95,7 @@ namespace FinalProjectV1
 
             float fitness = 0;
 
+            //car feature extractor
             Dictionary<string, int> carFeature = CarFeatureExtractor.getFeatureOfCar(car, buyer_location);
 
             // Add the parts fitness cost

@@ -373,7 +373,7 @@ namespace FinalProjectV1.Helpers
         public static List<HistoryItem> getAllHistory()
         {
             Open();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Treatment");
+            SqlCommand cmd = new SqlCommand("SELECT * FROM TreatmentToParts INNER JOIN Treatment ON TreatmentToParts.TreatmentID = Treatment.TreatmentID");
             cmd.Connection = sqlConnection;
 
             SqlDataReader sqlDR = cmd.ExecuteReader();
@@ -383,30 +383,39 @@ namespace FinalProjectV1.Helpers
 
 
             List<HistoryItem> HIList = new List<HistoryItem>();
+            HistoryItem HI = new HistoryItem();
             do
             {
-                HistoryItem HI = new HistoryItem();
+                // If the same tratment add
+                if(HI.TreatmentID == Int32.Parse(sqlDR["TreatmentID"].ToString()))
+                {
+                    List<string> partsStr2 = new List<string>(HI.Treatment);
+                    foreach (Parts part in getAllParts())
+                        if (part.partID == Int32.Parse(sqlDR["PartID"].ToString()))
+                        {
+                            partsStr2.Add(part.partName);
+                            break;
+                        }
+                    HI.Treatment = partsStr2.ToArray();
+                    continue;
+                }
+                HI = new HistoryItem();
                 HI.CarNumber = sqlDR["CarID"].ToString();
                 HI.Date = Convert.ToDateTime(sqlDR["CareDate"].ToString());
                 HI.TreatmentID = Int32.Parse(sqlDR["TreatmentID"].ToString());
                 HI.CareType = sqlDR["CareType"].ToString();
                 HI.KM = Int32.Parse(sqlDR["KM"].ToString());
                 HI.GarageName = sqlDR["GarageName"].ToString();
-                List<Parts> parts = getPartsOfTreatment(HI.TreatmentID);
 
                 List<string> partsStr = new List<string>();
-                if (parts != null && parts.Count > 0)
-                {
-                    partsStr.Clear();
-                    foreach (var part in parts)
+                foreach (Parts part in getAllParts())
+                    if (part.partID == Int32.Parse(sqlDR["PartID"].ToString()))
                     {
-                        if (part == null)
-                            continue;
                         partsStr.Add(part.partName);
+                        break;
                     }
-                }
-
                 HI.Treatment = partsStr.ToArray();
+
                 HIList.Add(HI);
             } while (sqlDR.Read());
 

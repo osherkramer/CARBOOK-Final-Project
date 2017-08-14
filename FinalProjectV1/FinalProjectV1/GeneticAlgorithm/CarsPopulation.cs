@@ -39,7 +39,7 @@ namespace FinalProjectV1
 
             return population;
         }
-
+        //kfilut
         private static bool carExists(List<CarAD> cars, CarAD car)
         {
             for (int i = 0; i < cars.Count; i++)

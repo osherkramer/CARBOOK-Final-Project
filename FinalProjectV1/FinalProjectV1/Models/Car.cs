@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-
+using FinalProjectV1.Models;
 
 namespace FinalProjectV1
 {
@@ -69,5 +69,7 @@ namespace FinalProjectV1
         public string AgraGroup { get; set; }
         public string KM { get; set; }
         public string ownerShip { get; set; }
+        public float FGrade { get; set; }
+
     }
 }

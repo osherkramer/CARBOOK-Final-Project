@@ -23,3 +23,13 @@ C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\GarageServer\GarageServ
 C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\GarageServer\GarageServer\bin\Debug\GarageServer.pdb
 C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\GarageServer\GarageServer\obj\Debug\GarageServer.csprojResolveAssemblyReference.cache
 C:\Users\osher\Documents\Visual Studio 2015\Projects\dev\GarageServer\GarageServer\bin\Debug\ConfigFileGarageServer.xml
+C:\Users\ShayMalca\Desktop\Carbook\dev\GarageServer\GarageServer\obj\Debug\Interop.Microsoft.Office.Core.dll
+C:\Users\ShayMalca\Desktop\Carbook\dev\GarageServer\GarageServer\obj\Debug\Interop.Microsoft.Office.Interop.Excel.dll
+C:\Users\ShayMalca\Desktop\Carbook\dev\GarageServer\GarageServer\obj\Debug\Interop.VBIDE.dll
+C:\Users\ShayMalca\Desktop\Carbook\dev\GarageServer\GarageServer\obj\Debug\GarageServer.csproj.ResolveComReference.cache
+C:\Users\ShayMalca\Desktop\Carbook\dev\GarageServer\GarageServer\obj\Debug\GarageServer.exe
+C:\Users\ShayMalca\Desktop\Carbook\dev\GarageServer\GarageServer\obj\Debug\GarageServer.pdb
+C:\Users\ShayMalca\Desktop\Carbook\dev\GarageServer\GarageServer\bin\Debug\ConfigFileGarageServer.xml
+C:\Users\ShayMalca\Desktop\Carbook\dev\GarageServer\GarageServer\bin\Debug\GarageServer.exe
+C:\Users\ShayMalca\Desktop\Carbook\dev\GarageServer\GarageServer\bin\Debug\GarageServer.pdb
+C:\Users\ShayMalca\Desktop\Carbook\dev\GarageServer\GarageServer\obj\Debug\GarageServer.csprojResolveAssemblyReference.cache

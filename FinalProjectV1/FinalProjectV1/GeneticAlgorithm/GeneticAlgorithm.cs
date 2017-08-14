@@ -59,6 +59,16 @@ namespace FinalProjectV1
                     population.RemoveAt(rand);
                 }
 
+                sub_population_a.Sort(delegate(Individual<T> x, Individual<T> y)
+                {
+                    return x.getFitness().CompareTo(y.getFitness());
+                });
+
+                sub_population_b.Sort(delegate (Individual<T> x, Individual<T> y)
+                {
+                    return x.getFitness().CompareTo(y.getFitness());
+                });
+
                 // Perform crosuving
                 population = new List<Individual<T>>();
                 for (int i = 0; i < sub_population_a.Count; i++)

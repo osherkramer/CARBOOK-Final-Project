@@ -83,26 +83,19 @@ namespace FinalProjectV1
 
         private float getSingleCarFitness(CarAD car)
         {
+            
             float oldestCarAge = 20;
             float maxCarPrice = 100000;
             float maxCityDistance = 40;
 
             int currentYear = DateTime.Now.Year;
-            List<Parts> allParts = DBHelper.getAllParts();
 
             float fitness = 0;
-
+            Dictionary<string, float> gradeFitness = CarFeatureExtractor.FitnessGrades;
             Dictionary<string, int> carFeature = CarFeatureExtractor.getFeatureOfCar(car, buyer_location);
-
-            // Add the parts fitness cost
-            foreach (Parts part in allParts)
-            {
-                int partTreatmentYear = carFeature[part.partName];
-                int partShipua = -1 * part.partValue;
-
-                fitness += (float)(partShipua * (currentYear - partTreatmentYear)) / oldestCarAge;
-            }
             
+            fitness = gradeFitness[car.CarNumber];
+
             // Add the distance and the price cost
             fitness += CarsIndividual.prince_const * carFeature["price"] / maxCarPrice;
             fitness += CarsIndividual.distance_const * carFeature["distance"] / maxCityDistance;

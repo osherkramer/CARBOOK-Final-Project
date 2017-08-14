@@ -233,7 +233,7 @@ namespace GarageServer
                 Logger.writeMessage("Create No." + i + 1 + " history item for car " + carNumber);
                 HistoryItem hi = CreateHistoryItem(carNumber);
 
-                String file = "CarHistory_" + carNumber + "_" + hi.Date.ToString().Replace('-', '_').Replace(' ', '_').Replace(':','_') + ".CBDF.xml";
+                String file = "CarHistory_" + carNumber + "_" + hi.Date.ToString().Replace('-', '_').Replace(' ', '_').Replace(':', '_').Replace('/','_') + ".CBDF.xml";
                 string fileName = Path.Combine(directory, file);
 
                 if (!XMLHelper.WriteToFile(hi, getFilePath(fileName)))
@@ -443,7 +443,7 @@ namespace GarageServer
             foreach(var care in carsCares)
             {
                 HistoryItem hi = XMLHelper.ReadFromFile<HistoryItem>(care);
-                if (hi.Date > dt)
+                if (hi != null && hi.Date > dt)
                     dt = hi.Date;
             }
 
@@ -565,7 +565,7 @@ namespace GarageServer
         private List<String> getCareTreatment(DataTable datatable)
         {
             Random random = new Random();
-            int random1 = random.Next(1, 11);
+            int random1 = random.Next(1, 5);
             List<string> lines = new List<string>();
 
             int i = 0;

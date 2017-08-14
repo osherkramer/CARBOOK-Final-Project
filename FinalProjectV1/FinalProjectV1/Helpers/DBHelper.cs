@@ -11,8 +11,8 @@ namespace FinalProjectV1.Helpers
     {
         private static string connectionString = @"Server=db.cs.colman.ac.il;Database=CarBook;User Id=carbook;password=Car@Book;MultipleActiveResultSets=true";
         private static SqlConnection sqlConnection { get; set; }
-		
-		// Parts doesn't change during operation - not necessary to bring them every time
+
+        // Parts doesn't change during operation - not necessary to bring them every time
         private static List<Parts> parts;
 
         static DBHelper()
@@ -23,7 +23,7 @@ namespace FinalProjectV1.Helpers
 
         public static void Open()
         {
-            if(sqlConnection.State != ConnectionState.Open)
+            if (sqlConnection.State != ConnectionState.Open)
                 sqlConnection.Open();
         }
 
@@ -37,7 +37,7 @@ namespace FinalProjectV1.Helpers
         {
             Open();
             int carNum = 0;
-            if(carNumber != null && (carNumber.Length != 7 || carNumber[0].Equals('0') || !Int32.TryParse(carNumber, out carNum)))
+            if (carNumber != null && (carNumber.Length != 7 || carNumber[0].Equals('0') || !Int32.TryParse(carNumber, out carNum)))
                 return null;
 
             SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Car WHERE CarID = {0}", carNum));
@@ -97,7 +97,7 @@ namespace FinalProjectV1.Helpers
             Open();
 
             SqlDataReader sqlDR = cmd.ExecuteReader();
-            
+
             if (!sqlDR.Read())
                 return null;
 
@@ -141,12 +141,79 @@ namespace FinalProjectV1.Helpers
                 car.ownerShip = sqlDR["Ownerships"].ToString();
                 car.AC = sqlDR["AC"].ToString();
                 cars.Add(car);
-                
+
             } while (sqlDR.Read());
 
 
 
             return cars;
+        }
+
+
+        public static void UpdateGradeFitness(float grade,string carID)
+        {
+            Open();
+            SqlCommand cmd = new SqlCommand(string.Format("UPDATE Car SET FGrade = '{0}' WHERE CarID = '{1}'",grade,carID));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+        }
+
+        public static Dictionary<string, float> getGradeFitness()
+        {
+            Dictionary<string, float> dic = new Dictionary<string, float>();
+            Open();
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT FGrade,CarID FROM Car"));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+            do
+            {
+                string grade = sqlDR["FGrade"].ToString();
+                float Fitness = float.Parse(grade);
+                dic.Add(sqlDR["CarID"].ToString(), Fitness);
+            } while (sqlDR.Read());
+            return dic;
+        }
+        
+        public static List<Car> getAllCars()
+        {
+            Open();
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT * FROM Car"));
+            cmd.Connection = sqlConnection;
+
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            List<Car> allCars = new List<Car>();
+
+            if (!sqlDR.Read())
+                return null;
+
+            do
+            {
+                Car car = new Car();
+
+                car.CarNumber = sqlDR["CarID"].ToString();
+                car.RoadDate = Convert.ToDateTime(sqlDR["RoadDate"].ToString());
+                car.Yad = sqlDR["Yad"].ToString();
+                car.Year = sqlDR["StartYear"].ToString();
+                car.CarVIN = sqlDR["ShildaNumber"].ToString();
+                car.EngineCapacity = sqlDR["EngineCapacity"].ToString();
+                car.HorsePower = sqlDR["HorsePower"].ToString();
+                car.AirBags = sqlDR["AirBags"].ToString();
+                car.ABS = sqlDR["CarABS"].ToString();
+                car.PowerWindow = sqlDR["PowerWindow"].ToString();
+                car.Roof = sqlDR["Roof"].ToString();
+                car.MagnesiumWheels = sqlDR["MagnesiumWheels"].ToString();
+                car.CarOwnerID = Int32.Parse(sqlDR["OwnerID"].ToString());
+                car.ProductName = sqlDR["ProductName"].ToString();
+                car.FuelType = sqlDR["FuelType"].ToString();
+                car.CarColor = sqlDR["CarColor"].ToString();
+                car.Gaer = sqlDR["Gaer"].ToString();
+                car.CommericalAlias = sqlDR["CarModel"].ToString();
+                allCars.Add(car);
+            } while (sqlDR.Read());
+            return allCars;
+
         }
 
         public static Car getCar()
@@ -160,6 +227,7 @@ namespace FinalProjectV1.Helpers
             if (!sqlDR.Read())
                 return null;
 
+           
             Car car = new Car();
 
             car.CarNumber = sqlDR["CarID"].ToString();
@@ -180,7 +248,6 @@ namespace FinalProjectV1.Helpers
             car.CarColor = sqlDR["CarColor"].ToString();
             car.Gaer = sqlDR["Gaer"].ToString();
             car.CommericalAlias = sqlDR["CarModel"].ToString();
-
             return car;
 
         }
@@ -567,6 +634,8 @@ namespace FinalProjectV1.Helpers
             return parts;
         }
 
+   
+
         public static Parts getPart(int PartID)
         {
             Open();
@@ -585,7 +654,35 @@ namespace FinalProjectV1.Helpers
             return part; 
         }
 		
-		public static List<Parts> getAllParts()
+        public static List<Parts> getPartsByCarID(int carNumber)
+        {
+            if (DBHelper.parts != null)
+                return DBHelper.parts;
+
+            Open();
+            SqlCommand cmd = new SqlCommand(String.Format("SELECT * FROM Parts WHERE PartID = {0}", carNumber));
+            cmd.Connection = sqlConnection;
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            if (!sqlDR.Read())
+                return null;
+
+            List<Parts> parts = new List<Parts>();
+            do
+            {
+                Parts part = new Parts();
+                part.partID = Int32.Parse(sqlDR["PartID"].ToString());
+                part.partValue = Int32.Parse(sqlDR["PartValue"].ToString());
+                part.partName = sqlDR["PartName"].ToString();
+                parts.Add(part);
+            } while (sqlDR.Read());
+
+            DBHelper.parts = parts;
+            return parts;
+            
+        }
+
+
+        public static List<Parts> getAllParts()
         {
             if (DBHelper.parts != null)
                 return DBHelper.parts;

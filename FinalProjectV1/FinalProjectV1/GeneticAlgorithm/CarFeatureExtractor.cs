@@ -14,6 +14,7 @@ namespace FinalProjectV1
         private static List<HistoryItem> care_history;
         private static Dictionary<string, double> location_long;
         private static Dictionary<string, double> location_lat;
+        public static Dictionary<string, float> FitnessGrades;
 
         public static void init()
         {
@@ -125,7 +126,9 @@ namespace FinalProjectV1
             location_long["רמת גן"] = 34.824135;
             location_lat["רמת גן"] = 32.069038;
 
-            care_history = DBHelper.getAllHistory();
+            //care_history = DBHelper.getAllHistory();
+            FitnessGrades = DBHelper.getGradeFitness();
+
         }
 
         private static int getDistanceBetweenCities(string start_city, string end_city)
@@ -150,23 +153,6 @@ namespace FinalProjectV1
                 feature["distance"] = CarFeatureExtractor.getDistanceBetweenCities(buyerLocation, car.Location);
             else
                 feature["distance"] = 0;
-
-            // Create a list where all the treatment years are set to the date of manufactoring
-            List<Parts> allParts = DBHelper.getAllParts();
-            foreach (Parts part in allParts)
-                feature[part.partName] = yearOfManufactoring;
-
-            foreach (HistoryItem treatment in CarFeatureExtractor.care_history)
-            {
-                if (treatment.CarNumber != car.CarNumber)
-                    continue;
-
-                int visitYear = treatment.Date.Year;
-                foreach (string treatedPartName in treatment.Treatment)
-                    // Only if date is newer
-                    if (visitYear > feature[treatedPartName])
-                        feature[treatedPartName] = visitYear;
-            }
 
             return feature;
         }

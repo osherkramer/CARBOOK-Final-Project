@@ -11,7 +11,7 @@ namespace FinalProjectV1
 {
     public class CarsPopulation
     {
-        public static List<Individual<List<CarAD>>> create(string buyer_location, List<CarAD> all_cars, int population_size, int cars_in_individual)
+        public static List<Individual<List<CarAD>>> create(string buyer_location, List<CarAD> all_cars, List<CarAD> top5Cars, int population_size, int cars_in_individual)
         {
             Random r = new Random();
             int rand;
@@ -21,7 +21,8 @@ namespace FinalProjectV1
                 return null;
 
             List<Individual<List<CarAD>>> population = new List<Individual<List<CarAD>>>();
-            for (int i = 0; i < population_size; i++)
+            population.Add(new CarsIndividual(top5Cars, all_cars, buyer_location));
+            for (int i = 0; i < population_size - 1; i++)
             {
                 List<CarAD> cars_of_individual = new List<CarAD>();
                 

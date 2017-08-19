@@ -24,7 +24,7 @@ namespace FinalProjectV1.Models
         public string AC { get; set; }
         public string CarColor { get; set; }
         public string PowerWindow { get; set; }
-
+        public float FGrade { get; set; }
 
 
         public string Description { get; set; }

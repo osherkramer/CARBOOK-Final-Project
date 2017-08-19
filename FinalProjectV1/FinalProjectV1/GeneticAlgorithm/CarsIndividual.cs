@@ -11,8 +11,10 @@ namespace FinalProjectV1
 {
     public class CarsIndividual : Individual<List<CarAD>>
     {
-        private static float prince_const = 1;
-        private static float distance_const = 100;
+        private static float price_const = 25;
+        private static float distance_const = 65;
+        private static float year_const = 25;
+        private static float grade_const = 50;
 
         private List<CarAD> individual_cars;
         private List<CarAD> all_cars;
@@ -71,37 +73,65 @@ namespace FinalProjectV1
             return this.individual_cars;
         }
 
-        public float getFitness()
+        public double getFitness(int? startYear, int? endYear, string minPrice, string MaxPrice)
         {
-            float totalFitness = 0;
+            double totalFitness = 0;
             foreach (CarAD car in this.individual_cars)
             {
-                totalFitness += getSingleCarFitness(car);
+                totalFitness += getSingleCarFitness(car, startYear, endYear, minPrice, MaxPrice);
             }
             return totalFitness;
         }
 
-        private float getSingleCarFitness(CarAD car)
+        private double getSingleCarFitness(CarAD car, int? startYear, int? endYear, string MinPrice, string MaxPrice)
         {
             
-            float oldestCarAge = 20;
-            float maxCarPrice = 100000;
-            float maxCityDistance = 40;
-
-            int currentYear = DateTime.Now.Year;
-
-            float fitness = 0;
+            double fitness = 0;
             Dictionary<string, float> gradeFitness = CarFeatureExtractor.FitnessGrades;
             Dictionary<string, int> carFeature = CarFeatureExtractor.getFeatureOfCar(car, buyer_location);
-            
-            fitness = gradeFitness[car.CarNumber];
+            double price = Normalization(carFeature["price"], String.IsNullOrEmpty(MaxPrice) ? CarFeatureExtractor.MaxPrice : Double.Parse(MaxPrice), String.IsNullOrEmpty(MinPrice) ? CarFeatureExtractor.MinPrice : Double.Parse(MinPrice));
+            double distance = Normalization(carFeature["distance"], CarFeatureExtractor.MaxDistance, CarFeatureExtractor.MinDistance);
+            double year = Normalization(Double.Parse(car.Year),endYear == null ? CarFeatureExtractor.MaxYear : (double)endYear, startYear == null ? CarFeatureExtractor.MinYear : (double)startYear);
+            double grade = Normalization(gradeFitness[car.CarNumber], CarFeatureExtractor.MaxGrade, CarFeatureExtractor.MinGrade);
 
-            // Add the distance and the price cost
-            fitness += CarsIndividual.prince_const * carFeature["price"] / maxCarPrice;
-            fitness += CarsIndividual.distance_const * carFeature["distance"] / maxCityDistance;
+            year = year < 1 && year > 0 ? 1 - year : year; //New car is first.
+
+            year = year < 0 && year > -1 ? year * -1 + 1 : year < 0 ? year * - 1 : year;
+            price = price < 0 && price > -1 ? price * -1 + 1 : price < 0 ? price * -1 : price;
+            
+            if(!String.IsNullOrEmpty(MinPrice) || !String.IsNullOrEmpty(MaxPrice))            
+                fitness += price_const * price;
+
+            fitness += distance_const * distance;
+
+            if(startYear != null || endYear != null)
+                fitness += year_const * year;
+
+            fitness += grade_const * grade;
 
             return fitness;
         }
 
+        public double Normalization(double value, double max, double min)
+        {
+            if(max == min)
+            {
+                max += 0.25;
+                if (min > 0)
+                    min -= 0.25;
+            }
+            return (value - min) / (max - min);
+        }
+
+        public bool isEqual(List<CarAD> carsIndividual)
+        {
+            foreach(var car in carsIndividual)
+            {
+                if (!individual_cars.Contains(car))
+                    return false;
+            }
+
+            return true;
+        }
     }
 }

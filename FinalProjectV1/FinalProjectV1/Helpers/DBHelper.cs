@@ -167,9 +167,12 @@ namespace FinalProjectV1.Helpers
             SqlDataReader sqlDR = cmd.ExecuteReader();
             if (!sqlDR.Read())
                 return null;
+          
             do
             {
                 string grade = sqlDR["FGrade"].ToString();
+                if (string.IsNullOrEmpty(grade))
+                    continue;
                 float Fitness = float.Parse(grade);
                 dic.Add(sqlDR["CarID"].ToString(), Fitness);
             } while (sqlDR.Read());
@@ -1076,6 +1079,7 @@ namespace FinalProjectV1.Helpers
                 car.KM = sqlDR["KM"].ToString();
                 car.ownerShip = sqlDR["Ownerships"].ToString();
                 car.AC = sqlDR["AC"].ToString();
+                car.FGrade = float.Parse(sqlDR["FGrade"].ToString());
                 cars.Add(car);
 
             } while (sqlDR.Read());
@@ -1101,6 +1105,7 @@ namespace FinalProjectV1.Helpers
                 cb.Roof = car.Roof;
                 cb.Yad = car.Yad;
                 cb.Year = car.Year;
+                cb.FGrade = car.FGrade;
 
                 foreach (var ad in ads)
                 {
@@ -1467,6 +1472,30 @@ namespace FinalProjectV1.Helpers
             cmd2.Connection.Close();
             return true;
 
+        }
+
+        public static double GetMaxMinValue(bool isMax, string column, string table)
+        {
+            Open();
+            string MaxMin = isMax ? "MAX" : "MIN";
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT {0}({1}) as {0} FROM {2}", MaxMin, column, table));
+            cmd.Connection = sqlConnection;
+
+            SqlDataReader sqlDR;
+
+            try
+            {
+                sqlDR = cmd.ExecuteReader();
+                if (!sqlDR.Read())
+                    return -1;
+
+                return Double.Parse(sqlDR[MaxMin].ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return -1;
         }
 
         public static bool editPhoneNumber(string phone, string ID, string IsraeliID)

@@ -20,7 +20,7 @@ namespace FinalProjectV1
             this.number_of_mutations = number_of_mutations;
         }
 
-        public Individual<T> run(List<Individual<T>> population)
+        public Individual<T> run(List<Individual<T>> population, int? startYear, int? endYear, string minPrice, string MaxPrice)
         {
             Random r = new Random();
             int rand = 0;
@@ -29,14 +29,16 @@ namespace FinalProjectV1
                 return null;
 
             Individual<T> best_individual = population.ElementAt(0);
-            float min_fitness = best_individual.getFitness();
+            Individual<T> last_individual = population.ElementAt(0);
+            int count = 0;
+            double min_fitness = best_individual.getFitness(startYear, endYear, minPrice, MaxPrice);
 
             for (int iteration = 0; iteration < number_of_iterations; iteration++)
             {
                 // Find minimum individual
                 foreach (Individual<T> individual in population)
                 {
-                    float fitness = individual.getFitness();
+                    double fitness = individual.getFitness(startYear, endYear, minPrice, MaxPrice);
                     if ( fitness < min_fitness)
                     {
                         min_fitness = fitness;
@@ -44,6 +46,13 @@ namespace FinalProjectV1
                     }
                 }
 
+                if (best_individual.isEqual(last_individual.getGenes()))
+                {
+                    count++;
+                    if (count == 5)
+                        break;
+                }
+                
                 // Split population into two parent groups
                 List<Individual<T>> sub_population_a = new List<Individual<T>>();
                 List<Individual<T>> sub_population_b = new List<Individual<T>>();
@@ -61,12 +70,12 @@ namespace FinalProjectV1
 
                 sub_population_a.Sort(delegate(Individual<T> x, Individual<T> y)
                 {
-                    return x.getFitness().CompareTo(y.getFitness());
+                    return x.getFitness(startYear, endYear, minPrice, MaxPrice).CompareTo(y.getFitness(startYear, endYear, minPrice, MaxPrice));
                 });
 
                 sub_population_b.Sort(delegate (Individual<T> x, Individual<T> y)
                 {
-                    return x.getFitness().CompareTo(y.getFitness());
+                    return x.getFitness(startYear, endYear, minPrice, MaxPrice).CompareTo(y.getFitness(startYear, endYear, minPrice, MaxPrice));
                 });
 
                 // Perform crosuving

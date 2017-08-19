@@ -79,16 +79,23 @@ namespace FinalProjectV1.Controllers
 
 		public ActionResult Index(string productName, string model, int? startYear, int? endYear, string gear, string location, string minPrice, string maxPrice)
         {
-            //DBHelper db = new DBHelper();
-
-            //List<CarAD> carsBoard = DBHelper.search(productName, model, startYear, endYear, gear, location, minPrice, maxPrice);
             List<CarAD> carsBoard = DBHelper.search(productName, model, startYear, endYear, gear, "", minPrice, maxPrice);
-            
-            if(carsBoard != null && carsBoard.Count > 5)
+            List<CarAD> tempList = DBHelper.search(productName, model, startYear, endYear, gear, "", minPrice, maxPrice);
+
+            tempList.Sort(delegate (CarAD x, CarAD y)
             {
-                List<Individual<List<CarAD>>> population = CarsPopulation.create(location, carsBoard, 100, 5);
-                GeneticAlgorithm<List<CarAD>> geneticAlgorithm = new GeneticAlgorithm<List<CarAD>>(80, 2);
-                carsBoard = geneticAlgorithm.run(population).getGenes();
+                return x.FGrade.CompareTo(y.FGrade);
+            });
+
+            tempList = tempList.Take(5).ToList();
+
+            CarFeatureExtractor.InitMinMax();
+
+            if (carsBoard != null && carsBoard.Count > 5)
+            {
+                List<Individual<List<CarAD>>> population = CarsPopulation.create(location, carsBoard, tempList, 100, 5);
+                GeneticAlgorithm<List<CarAD>> geneticAlgorithm = new GeneticAlgorithm<List<CarAD>>(300, 2);
+                carsBoard = geneticAlgorithm.run(population, startYear, endYear, minPrice, maxPrice).getGenes();
             }
             
             CarBoard cb = new CarBoard();

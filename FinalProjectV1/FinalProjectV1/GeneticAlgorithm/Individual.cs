@@ -10,8 +10,9 @@ namespace FinalProjectV1
     public interface Individual<T>
     {
         Individual<T> crossover(Individual<T> partner);
-        float getFitness();
+        double getFitness(int? startYear, int? endYear, string minPrice, string MaxPrice);
         void mutate();
         T getGenes();
+        bool isEqual(T carsIndividual);
     }
 }

@@ -11,10 +11,48 @@ namespace FinalProjectV1
 {
     public class CarFeatureExtractor
     {
-        private static List<HistoryItem> care_history;
+        
         private static Dictionary<string, double> location_long;
         private static Dictionary<string, double> location_lat;
         public static Dictionary<string, float> FitnessGrades;
+        public static double MinPrice { get; set; }
+        public static double MaxPrice { get; set; }
+        public static double MinGrade { get; set; }
+        public static double MaxGrade { get; set; }
+        public static double MinYear { get; set; }
+        public static double MaxYear { get; set; }
+        public static double MinDistance { get; set; }
+        public static double MaxDistance { get; set; }
+
+        public static void InitMinMax()
+        {
+            MinDistance = 0;
+            MaxDistance = 520; //Distance between Eilat to Atola
+
+            MinPrice = DBHelper.GetMaxMinValue(false, "Price", "Advertisement");
+            if (MinPrice == -1)
+                MinPrice = 0;
+
+            MaxPrice = DBHelper.GetMaxMinValue(true, "Price", "Advertisement");
+            if (MaxPrice == -1)
+                MaxPrice = Double.MaxValue;
+
+            MinYear = DBHelper.GetMaxMinValue(false, "StartYear", "Car");
+            if (MinYear == -1)
+                MinYear = 1900;
+
+            MaxYear = DBHelper.GetMaxMinValue(true, "StartYear", "Car");
+            if (MaxYear == -1)
+                MaxYear = DateTime.Now.Year;
+
+            MinGrade = DBHelper.GetMaxMinValue(false, "FGrade", "Car");
+            if (MinGrade == -1)
+                MinGrade = 0;
+
+            MaxGrade = DBHelper.GetMaxMinValue(true, "FGrade", "Car");
+            if (MaxGrade == -1)
+                MaxGrade = 0;
+        }
 
         public static void init()
         {
@@ -59,10 +97,10 @@ namespace FinalProjectV1
             location_lat["רעננה - כפר סבא"] = 32.185769;
             location_long["הוד השרון והסביבה"] = 34.893963;
             location_lat["הוד השרון והסביבה"] = 32.152373;
-            location_long["דרום השרון"] = 0;
-            location_lat["דרום השרון"] = 0;
-            location_long["צפון השרון"] = 0;
-            location_lat["צפון השרון"] = 0;
+            location_long["דרום השרון"] = 34.824268;
+            location_lat["דרום השרון"] = 32.201872;
+            location_long["צפון השרון"] = 34.923040;
+            location_lat["צפון השרון"] = 32.406763;
             location_long["תל אביב"] = 34.789471;
             location_lat["תל אביב"] = 32.076323;
             location_long["אשדוד"] = 34.649661;
@@ -73,8 +111,8 @@ namespace FinalProjectV1
             location_lat["פתח תקווה והסביבה"] = 32.085081;
             location_long["ראש העין והסביבה"] = 34.956657;
             location_lat["ראש העין והסביבה"] = 32.095609;
-            location_long["בקעת אונו"] = 0;
-            location_lat["בקעת אונו"] = 0;
+            location_long["בקעת אונו"] = 34.863055;
+            location_lat["בקעת אונו"] = 32.033580;
             location_long["רמלה - לוד"] = 34.866379;
             location_lat["רמלה - לוד"] = 31.928205;
             location_long["בני ברק - גבעת שמואל"] = 34.834866;
@@ -95,8 +133,8 @@ namespace FinalProjectV1
             location_lat["מעלה אדומים והסביבה"] = 31.779543;
             location_long["ישובי שומרון"] = 35.195;
             location_lat["ישובי שומרון"] = 32.276111;
-            location_long["גוש עציון"] = 0;
-            location_lat["גוש עציון"] = 0;
+            location_long["גוש עציון"] = 35.227536;
+            location_lat["גוש עציון"] = 31.653817;
             location_long["בקעת הירדן וצפון ים המלח"] = 35.57;
             location_lat["בקעת הירדן וצפון ים המלח"] = 32.317222;
             location_long["אריאל וישובי יהודה"] = 35.189928;
@@ -126,7 +164,7 @@ namespace FinalProjectV1
             location_long["רמת גן"] = 34.824135;
             location_lat["רמת גן"] = 32.069038;
 
-            //care_history = DBHelper.getAllHistory();
+            CarFeatureExtractor.InitMinMax();
             FitnessGrades = DBHelper.getGradeFitness();
 
         }
@@ -152,7 +190,7 @@ namespace FinalProjectV1
             feature["price"] = int.Parse(car.Price);
 
             // Save distance
-            if (buyerLocation != null && buyerLocation != "")
+            if (!String.IsNullOrEmpty(buyerLocation))
                 feature["distance"] = CarFeatureExtractor.getDistanceBetweenCities(buyerLocation, car.Location);
             else
                 feature["distance"] = 0;
